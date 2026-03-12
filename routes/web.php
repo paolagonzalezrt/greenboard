@@ -45,10 +45,19 @@ Route::post('/register', function (Request $request) {
 });
 
 // CAMBIO DE IDIOMA
+// Route::get('/lang/{locale}', function ($locale) {
+//     if (in_array($locale, ['en','es','de'])) {
+//         Session::put('locale', $locale);
+//         Session::save();
+//     }
+//     return redirect()->route('login');
+// });
 Route::get('/lang/{locale}', function ($locale) {
+
     if (in_array($locale, ['en','es','de'])) {
-        Session::put('locale', $locale);
-        Session::save();
+        session(['locale' => $locale]);
     }
-    return redirect()->route('login');
+
+    return redirect()->to(url()->previous());
+
 });
