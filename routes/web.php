@@ -5,12 +5,46 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
-// Página inicial → LOGIN
+/*
+|--------------------------------------------------------------------------
+| RUTAS PÚBLICAS (WELCOME)
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
-    return view('auth.login');
-});
+    // Simulamos los datos que antes eran estáticos en el HTML
+    // En el futuro, esto vendrá de un Modelo: Tip::all();
+    $tips = [
+        [
+            'category' => 'Zero Waste',
+            'user' => '@eco_felix',
+            'title' => 'Mastering the Art of Backyard Composting',
+            'description' => 'Learn how to turn your kitchen scraps into nutrient-rich soil gold.',
+            'likes' => 412, 'comments' => 24,
+            'image' => 'https://picsum.photos/id/10/400/300',
+            'avatar' => 'https://i.pravatar.cc/150?u=felix'
+        ],
+        [
+            'category' => 'Energy',
+            'user' => '@solar_pro',
+            'title' => "Switching to Solar: A Beginner's Guide",
+            'description' => 'Navigate the financial landscape of renewable energy easily.',
+            'likes' => 254, 'comments' => 12,
+            'image' => 'https://picsum.photos/id/20/400/300',
+            'avatar' => 'https://i.pravatar.cc/150?u=solar'
+        ],
+        // Puedes añadir aquí los otros 6 tips para que se vean en el grid
+    ];
+
+    return view('welcome', compact('tips'));
+})->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| RUTAS DE AUTENTICACIÓN
+|--------------------------------------------------------------------------
+*/
 
 // LOGIN
 Route::get('/login', function () {
@@ -18,15 +52,20 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::post('/login', function (Request $request) {
-    $credentials = $request->only('email', 'password');
+    $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
 
     if (Auth::attempt($credentials)) {
-        return "Login correcto ✔";
+        $request->session()->regenerate();
+        // Redirige al inicio (welcome) con sesión iniciada
+        return redirect()->intended('/'); 
     }
 
     return back()->withErrors([
-        'email' => 'Credenciales incorrectas',
-    ]);
+        'email' => 'Las credenciales no coinciden.',
+    ])->onlyInput('email');
 });
 
 // REGISTRO
@@ -35,29 +74,38 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::post('/register', function (Request $request) {
-    $user = User::create([
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8',
+    ]);
+
+    User::create([
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
     ]);
 
-    return redirect()->route('login');
+    return redirect()->route('login')->with('success', 'Cuenta creada con éxito');
 });
 
-// CAMBIO DE IDIOMA
-// Route::get('/lang/{locale}', function ($locale) {
-//     if (in_array($locale, ['en','es','de'])) {
-//         Session::put('locale', $locale);
-//         Session::save();
-//     }
-//     return redirect()->route('login');
-// });
-Route::get('/lang/{locale}', function ($locale) {
+// LOGOUT (IMPORTANTE: Laravel recomienda que sea POST por seguridad)
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
 
-    if (in_array($locale, ['en','es','de'])) {
+/*
+|--------------------------------------------------------------------------
+| IDIOMA
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'es', 'de'])) {
         session(['locale' => $locale]);
     }
-
-    return redirect()->to(url()->previous());
-
+    return redirect()->back();
 });
