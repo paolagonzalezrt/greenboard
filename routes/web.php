@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    // Simulamos los datos que antes eran estáticos en el HTML
-    // En el futuro, esto vendrá de un Modelo: Tip::all();
+    // Modelo: Tip::all();
     $tips = [
         [
             'category' => 'Zero Waste',
@@ -34,11 +33,75 @@ Route::get('/', function () {
             'image' => 'https://picsum.photos/id/20/400/300',
             'avatar' => 'https://i.pravatar.cc/150?u=solar'
         ],
-        // Puedes añadir aquí los otros 6 tips para que se vean en el grid
+          [
+            'category' => 'Zero Waste',
+            'user' => '@eco_felix',
+            'title' => 'Mastering the Art of Backyard Composting',
+            'description' => 'Learn how to turn your kitchen scraps into nutrient-rich soil gold.',
+            'likes' => 412, 'comments' => 24,
+            'image' => 'https://picsum.photos/id/10/400/300',
+            'avatar' => 'https://i.pravatar.cc/150?u=felix'
+        ],
+        [
+            'category' => 'Energy',
+            'user' => '@solar_pro',
+            'title' => "Switching to Solar: A Beginner's Guide",
+            'description' => 'Navigate the financial landscape of renewable energy easily.',
+            'likes' => 254, 'comments' => 12,
+            'image' => 'https://picsum.photos/id/20/400/300',
+            'avatar' => 'https://i.pravatar.cc/150?u=solar'
+        ],
+        [
+            'category' => 'Energy',
+            'user' => '@solar_pro',
+            'title' => "Switching to Solar: A Beginner's Guide",
+            'description' => 'Navigate the financial landscape of renewable energy easily.',
+            'likes' => 254, 'comments' => 12,
+            'image' => 'https://picsum.photos/id/20/400/300',
+            'avatar' => 'https://i.pravatar.cc/150?u=solar'
+        ],
+          [
+            'category' => 'Zero Waste',
+            'user' => '@eco_felix',
+            'title' => 'Mastering the Art of Backyard Composting',
+            'description' => 'Learn how to turn your kitchen scraps into nutrient-rich soil gold.',
+            'likes' => 412, 'comments' => 24,
+            'image' => 'https://picsum.photos/id/10/400/300',
+            'avatar' => 'https://i.pravatar.cc/150?u=felix'
+        ],
+        [
+            'category' => 'Energy',
+            'user' => '@solar_pro',
+            'title' => "Switching to Solar: A Beginner's Guide",
+            'description' => 'Navigate the financial landscape of renewable energy easily.',
+            'likes' => 254, 'comments' => 12,
+            'image' => 'https://picsum.photos/id/20/400/300',
+            'avatar' => 'https://i.pravatar.cc/150?u=solar'
+        ],
+          [
+            'category' => 'Zero Waste',
+            'user' => '@eco_felix',
+            'title' => 'Mastering the Art of Backyard Composting',
+            'description' => 'Learn how to turn your kitchen scraps into nutrient-rich soil gold.',
+            'likes' => 412, 'comments' => 24,
+            'image' => 'https://picsum.photos/id/10/400/300',
+            'avatar' => 'https://i.pravatar.cc/150?u=felix'
+        ],
+        
     ];
 
     return view('welcome', compact('tips'));
 })->name('home');
+
+// ABOUT US
+Route::get('/about-us', function () {
+    return view('about-us');
+})->name('about-us');
+
+// PRIVACY POLICY
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy-policy');
 
 /*
 |--------------------------------------------------------------------------

@@ -1,55 +1,10 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
+@extends('layouts.app')
 
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+@section('title', __('register.hero_title'))
 
-<title>GreenBoard - {{ __('register.hero_title') }}</title>
+@section('no-layout', true)
 
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-
-<script id="tailwind-config">
-tailwind.config = {
-darkMode: "class",
-theme: {
-extend: {
-colors: {
-primary: "#13ec5b",
-"background-light": "#f6f8f6",
-"background-dark": "#102216",
-},
-fontFamily: { display: ["Plus Jakarta Sans"] },
-borderRadius: { xl: "0.75rem" },
-},
-},
-}
-</script>
-
-<style>
-
-body{
-font-family:'Plus Jakarta Sans',sans-serif;
-}
-
-.fade-in{
-animation:fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(10px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-</style>
-
-</head>
-
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen p-0 m-0 overflow-x-hidden">
-
+@section('content')
 @php $currentLang = app()->getLocale(); @endphp
 
 <div class="flex min-h-screen w-full flex-col lg:flex-row">
@@ -95,7 +50,7 @@ style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4
 
 <div class="w-full max-w-[440px] flex items-center justify-between mb-8 absolute top-8 px-6 lg:px-0 lg:static lg:mb-12">
 
-<a href="{{ url('/explore') }}" class="flex items-center gap-1.5 text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-primary transition-colors">
+<a href="{{ route('home') }}" class="flex items-center gap-1.5 text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-primary transition-colors">
 <span class="material-symbols-outlined text-xl">explore</span>
 {{ __('register.explore') }}
 </a>
@@ -106,11 +61,11 @@ style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4
 
 <div class="relative">
 
-<button onclick="toggleLangDropdown()" class="flex items-center gap-1 text-xs font-black text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-2 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center w-10 h-10">
+<button onclick="toggleLangDropdown()" class="flex items-center gap-1 text-xs font-black text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-2 rounded-full bg-slate-100 dark:bg-custom-dark-button flex items-center justify-center w-10 h-10">
 {{ strtoupper($currentLang) }}
 </button>
 
-<div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-24 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl overflow-hidden z-50">
+<div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-24 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl shadow-xl overflow-hidden z-50">
 
 <a href="{{ url('/lang/en') }}" class="block px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors">EN</a>
 
@@ -124,7 +79,7 @@ style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4
 
 <!-- DARK MODE -->
 
-<button onclick="toggleDarkMode()" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center">
+<button onclick="toggleDarkMode()" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center">
 <span class="material-symbols-outlined text-xl" id="dark-icon">dark_mode</span>
 </button>
 
@@ -171,7 +126,7 @@ name="name"
 value="{{ old('name') }}"
 required
 placeholder="{{ __('register.name_placeholder') }}"
-class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
+class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
 
 </div>
 
@@ -198,7 +153,7 @@ value="{{ old('email') }}"
 required
 type="email"
 placeholder="{{ __('register.email_placeholder') }}"
-class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
+class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
 
 </div>
 
@@ -224,7 +179,7 @@ name="password"
 required
 type="password"
 placeholder="{{ __('register.password_placeholder') }}"
-class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
+class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
 
 </div>
 
@@ -250,7 +205,7 @@ name="password_confirmation"
 required
 type="password"
 placeholder="{{ __('register.confirm_password_placeholder') }}"
-class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
+class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
 
 </div>
 
@@ -311,6 +266,4 @@ dropdown.classList.toggle('hidden');
 }
 
 </script>
-
-</body>
-</html>
+@endsection

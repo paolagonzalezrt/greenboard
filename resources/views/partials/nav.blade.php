@@ -7,7 +7,7 @@
     </div>
     <div class="flex items-center gap-6">
         <nav class="hidden md:flex items-center gap-8 text-sm font-semibold mr-4">
-            <a class="text-primary transition-colors border-b-2 border-primary pb-1" href="{{ url('/') }}">Explore</a>
+            <a class="text-primary transition-colors border-b-2 border-primary pb-1" href="{{ route('home') }}">Explore</a>
         </nav>
         <div class="flex items-center gap-4">
             @guest
