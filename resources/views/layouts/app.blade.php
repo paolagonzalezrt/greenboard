@@ -45,7 +45,7 @@
         <div class="relative z-10 flex flex-col min-h-screen">
             @include('partials.nav')
 
-            <main class="flex-1 flex flex-col items-center pt-24 pb-24 px-6 max-w-7xl mx-auto w-full">
+            <main class="flex-1 flex flex-col items-center pt-8 sm:pt-16 lg:pt-24 pb-12 sm:pb-16 lg:pb-24 px-4 sm:px-6 max-w-7xl mx-auto w-full">
                 @yield('content')
             </main>
 
@@ -54,5 +54,80 @@
     @else
         @yield('content')
     @endif
+
+    <script>
+        // Theme Toggle (Dark Mode)
+        const themeToggle = () => {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            const themeBtn = document.getElementById('theme-toggle');
+            const themeIcon = themeBtn?.querySelector('.material-symbols-outlined');
+
+            if (isDark) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.setItem('theme', 'light');
+                if (themeIcon) themeIcon.textContent = 'dark_mode';
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                if (themeIcon) themeIcon.textContent = 'light_mode';
+            }
+        };
+
+        // Language Toggle
+        const languageToggle = () => {
+            const currentLang = localStorage.getItem('language') || 'en';
+            const newLang = currentLang === 'en' ? 'es' : 'en';
+            localStorage.setItem('language', newLang);
+
+            // Mostrar notificación visual (opcional)
+            const langBtn = document.getElementById('language-toggle');
+            const originalText = langBtn?.querySelector('.material-symbols-outlined')?.textContent;
+
+            if (langBtn) {
+                const icon = langBtn.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.textContent = 'check_circle';
+                    setTimeout(() => {
+                        icon.textContent = 'language';
+                    }, 1000);
+                }
+            }
+
+            // Puedes redirigir para cambiar el idioma del lado del servidor
+            // window.location.href = `${window.location.pathname}?lang=${newLang}`;
+
+            console.log('Language changed to:', newLang === 'en' ? 'English' : 'Español');
+        };
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedLang = localStorage.getItem('language') || 'en';
+            const html = document.documentElement;
+
+            // Apply saved theme
+            html.classList.remove('light', 'dark');
+            html.classList.add(savedTheme);
+
+            // Update theme icon
+            const themeBtn = document.getElementById('theme-toggle');
+            const themeIcon = themeBtn?.querySelector('.material-symbols-outlined');
+            if (themeIcon) {
+                themeIcon.textContent = savedTheme === 'dark' ? 'light_mode' : 'dark_mode';
+            }
+
+            // Add event listeners to buttons
+            const langBtn = document.getElementById('language-toggle');
+
+            if (themeBtn) themeBtn.addEventListener('click', themeToggle);
+            if (langBtn) langBtn.addEventListener('click', languageToggle);
+
+            // Update HTML lang attribute
+            html.setAttribute('lang', savedLang);
+        });
+    </script>
 </body>
 </html>
