@@ -62,17 +62,20 @@
             const isDark = html.classList.contains('dark');
             const themeBtn = document.getElementById('theme-toggle');
             const themeIcon = themeBtn?.querySelector('.material-symbols-outlined');
+            const mobileThemeIcon = document.getElementById('mobile-theme-icon');
 
             if (isDark) {
                 html.classList.remove('dark');
                 html.classList.add('light');
                 localStorage.setItem('theme', 'light');
                 if (themeIcon) themeIcon.textContent = 'dark_mode';
+                if (mobileThemeIcon) mobileThemeIcon.textContent = 'dark_mode';
             } else {
                 html.classList.remove('light');
                 html.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
-                if (themeIcon) themeIcon.textContent = 'light_mode';
+                if (themeIcon) themeIcon.textContent = 'lightbulb_2';
+                if (mobileThemeIcon) mobileThemeIcon.textContent = 'lightbulb_2';
             }
         };
 
@@ -112,11 +115,16 @@
             html.classList.remove('light', 'dark');
             html.classList.add(savedTheme);
 
-            // Update theme icon
+            // Update theme icons (desktop and mobile)
             const themeBtn = document.getElementById('theme-toggle');
             const themeIcon = themeBtn?.querySelector('.material-symbols-outlined');
+            const mobileThemeIcon = document.getElementById('mobile-theme-icon');
+
             if (themeIcon) {
-                themeIcon.textContent = savedTheme === 'dark' ? 'light_mode' : 'dark_mode';
+                themeIcon.textContent = savedTheme === 'dark' ? 'lightbulb_2' : 'dark_mode';
+            }
+            if (mobileThemeIcon) {
+                mobileThemeIcon.textContent = savedTheme === 'dark' ? 'lightbulb_2' : 'dark_mode';
             }
 
             // Add event listeners to buttons

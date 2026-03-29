@@ -255,7 +255,7 @@ html.classList.remove('dark');
 icon.innerText='dark_mode';
 }else{
 html.classList.add('dark');
-icon.innerText='light_mode';
+icon.innerText='lightbulb_2';
 }
 
 }
