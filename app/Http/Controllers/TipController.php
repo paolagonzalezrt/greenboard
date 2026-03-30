@@ -191,5 +191,65 @@ class TipController extends Controller
 
         return view('tips.show', compact('tip', 'comments'));
     }
+
+    /**
+     * Mostrar el perfil del usuario con sus tips
+     */
+    public function profile(Request $request)
+    {
+        $user = Auth::user();
+        $tab = $request->query('tab', 'my-tips'); // Default to 'my-tips'
+
+        // Conteo de posts del usuario
+        $postsCount = $user->tips()->count();
+
+        if ($tab === 'saved') {
+            // Obtener los tips guardados por el usuario
+            $tips = $user->bookmarkedTips()
+                ->with(['user', 'likes', 'comments'])
+                ->withCount(['likes', 'comments'])
+                ->orderBy('bookmarks.created_at', 'desc')
+                ->get()
+                ->map(function ($tip) use ($user) {
+                    return [
+                        'id' => $tip->id,
+                        'category' => $tip->category,
+                        'user' => $tip->user->name,
+                        'title' => $tip->title,
+                        'description' => $tip->description,
+                        'likes' => $tip->likes_count,
+                        'comments' => $tip->comments_count,
+                        'image' => $tip->image,
+                        'avatar' => $tip->user->photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($tip->user->name) . '&size=100&background=13ec5b&color=102216&bold=true',
+                        'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
+                        'is_bookmarked' => true,
+                    ];
+                });
+        } else {
+            // Obtener los tips publicados por el usuario
+            $tips = $user->tips()
+                ->with(['user', 'likes', 'comments'])
+                ->withCount(['likes', 'comments'])
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->map(function ($tip) use ($user) {
+                    return [
+                        'id' => $tip->id,
+                        'category' => $tip->category,
+                        'user' => $tip->user->name,
+                        'title' => $tip->title,
+                        'description' => $tip->description,
+                        'likes' => $tip->likes_count,
+                        'comments' => $tip->comments_count,
+                        'image' => $tip->image,
+                        'avatar' => $tip->user->photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($tip->user->name) . '&size=100&background=13ec5b&color=102216&bold=true',
+                        'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
+                        'is_bookmarked' => $tip->bookmarks()->where('user_id', $user->id)->exists(),
+                    ];
+                });
+        }
+
+        return view('profile', compact('tips', 'postsCount', 'tab'));
+    }
 }
 
