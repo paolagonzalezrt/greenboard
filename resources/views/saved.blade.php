@@ -32,6 +32,7 @@
                     :avatar="$tip['avatar']"
                     :published_at="$tip['published_at']"
                     :isLiked="$tip['is_liked']"
+                    :isBookmarked="$tip['is_bookmarked']"
                 />
             @empty
                 <div class="col-span-full text-center py-16">

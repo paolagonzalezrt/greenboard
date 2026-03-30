@@ -1,4 +1,4 @@
-@props(['id' => null, 'category', 'user', 'title', 'description', 'likes', 'comments', 'image' => null, 'avatar', 'published_at' => null, 'isLiked' => false])
+@props(['id' => null, 'category', 'user', 'title', 'description', 'likes', 'comments', 'image' => null, 'avatar', 'published_at' => null, 'isLiked' => false, 'isBookmarked' => false])
 
 @php
     $categoryColors = [
@@ -66,8 +66,8 @@
                     <button class="hover:text-primary transition-colors p-1" onclick="event.stopPropagation()">
                         <span class="material-symbols-outlined text-[18px] sm:text-[20px]">share</span>
                     </button>
-                    <button class="hover:text-primary transition-colors p-1" onclick="event.stopPropagation()">
-                        <span class="material-symbols-outlined text-[18px] sm:text-[20px]">bookmark</span>
+                    <button class="hover:text-primary transition-colors p-1 bookmark-btn" onclick="event.stopPropagation(); toggleBookmark({{ $id }}, this)" data-tip-id="{{ $id }}">
+                        <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isBookmarked ? 'filled text-primary' : '' }}" style="{{ $isBookmarked ? 'font-variation-settings: \'FILL\' 1;' : '' }}">bookmark</span>
                     </button>
                 </div>
             </div>
@@ -124,8 +124,8 @@
                     <button class="hover:text-primary transition-colors p-1" onclick="event.stopPropagation()">
                         <span class="material-symbols-outlined text-[18px] sm:text-[20px]">share</span>
                     </button>
-                    <button class="hover:text-primary transition-colors p-1" onclick="event.stopPropagation()">
-                        <span class="material-symbols-outlined text-[18px] sm:text-[20px]">bookmark</span>
+                    <button class="hover:text-primary transition-colors p-1 bookmark-btn" onclick="event.stopPropagation(); toggleBookmark({{ $id }}, this)" data-tip-id="{{ $id }}">
+                        <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isBookmarked ? 'filled text-primary' : '' }}" style="{{ $isBookmarked ? 'font-variation-settings: \'FILL\' 1;' : '' }}">bookmark</span>
                     </button>
                 </div>
             </div>

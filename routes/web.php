@@ -52,6 +52,9 @@ Route::post('/comments/{comment}/reply', [\App\Http\Controllers\CommentControlle
 // LIKES
 Route::post('/tips/{tip}/like', [\App\Http\Controllers\LikeController::class, 'toggle'])->middleware('auth')->name('tips.like');
 
+// BOOKMARKS
+Route::post('/tips/{tip}/bookmark', [\App\Http\Controllers\BookmarkController::class, 'toggle'])->middleware('auth')->name('tips.bookmark');
+
 // PROFILE (Protected Route - Solo para usuarios autenticados)
 Route::get('/profile', function () {
     return view('profile');

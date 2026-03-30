@@ -30,6 +30,7 @@ class TipController extends Controller
                     'avatar' => $tip->user->photo ?? 'https://via.placeholder.com/50',
                     'published_at' => $tip->created_at->diffForHumans(),
                     'is_liked' => $user ? $tip->likes()->where('user_id', $user->id)->exists() : false,
+                    'is_bookmarked' => $user ? $tip->bookmarks()->where('user_id', $user->id)->exists() : false,
                 ];
             });
 
@@ -57,6 +58,7 @@ class TipController extends Controller
                     'avatar' => $tip->user->photo ?? 'https://via.placeholder.com/50',
                     'published_at' => $tip->created_at->diffForHumans(),
                     'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
+                    'is_bookmarked' => $tip->bookmarks()->where('user_id', $user->id)->exists(),
                 ];
             });
 
@@ -94,6 +96,7 @@ class TipController extends Controller
                     'avatar' => $tip->user->photo ?? 'https://via.placeholder.com/50',
                     'published_at' => $tip->created_at->diffForHumans(),
                     'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
+                    'is_bookmarked' => $tip->bookmarks()->where('user_id', $user->id)->exists(),
                 ];
             });
 
@@ -123,6 +126,7 @@ class TipController extends Controller
                     'avatar' => $tip->user->photo ?? 'https://via.placeholder.com/50',
                     'published_at' => $tip->created_at->diffForHumans(),
                     'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
+                    'is_bookmarked' => true, // Always true in saved page
                 ];
             });
 

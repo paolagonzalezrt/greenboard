@@ -211,6 +211,89 @@
             @endauth
         }
 
+        // Toggle bookmark functionality
+        function toggleBookmark(tipId, element) {
+            @auth
+                // Send request to backend
+                fetch(`/tips/${tipId}/bookmark`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update the bookmark icon
+                        const bookmarkIcon = element.querySelector('.material-symbols-outlined');
+
+                        if (data.bookmarked) {
+                            // Add filled style
+                            bookmarkIcon.classList.add('filled', 'text-primary');
+                            bookmarkIcon.style.fontVariationSettings = "'FILL' 1";
+                        } else {
+                            // Remove filled style
+                            bookmarkIcon.classList.remove('filled', 'text-primary');
+                            bookmarkIcon.style.fontVariationSettings = "'FILL' 0";
+
+                            // If we're on the saved page, remove the card
+                            if (window.location.pathname === '/saved') {
+                                // Find the card container (it's the parent with bg-white or dark:bg-slate-800 classes)
+                                const card = element.closest('div[class*="bg-white"]');
+                                if (card) {
+                                    card.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                                    card.style.opacity = '0';
+                                    card.style.transform = 'scale(0.9)';
+
+                                    setTimeout(() => {
+                                        card.remove();
+
+                                        // Check if there are no more cards
+                                        const grid = document.querySelector('.grid');
+                                        const remainingCards = grid.querySelectorAll('div[class*="bg-white"]').length;
+
+                                        if (remainingCards === 0) {
+                                            // Show empty state
+                                            grid.innerHTML = `
+                                                <div class="col-span-full text-center py-16">
+                                                    <span class="material-symbols-outlined text-slate-300 dark:text-slate-700 text-6xl mb-4 block">bookmark</span>
+                                                    <h3 class="text-xl font-bold text-slate-600 dark:text-slate-400 mb-2">No saved posts yet</h3>
+                                                    <p class="text-slate-500 dark:text-slate-500">Start saving posts to build your personal collection</p>
+                                                    <a href="{{ route('dashboard') }}" class="inline-block mt-6 px-6 py-3 bg-primary text-background-dark font-bold rounded-xl hover:brightness-105 transition-all">
+                                                        Explore Posts
+                                                    </a>
+                                                </div>
+                                            `;
+
+                                            // Update counter
+                                            const counterSpan = document.querySelector('span.bg-primary\\/20');
+                                            if (counterSpan) {
+                                                counterSpan.textContent = '0 Saved';
+                                            }
+                                        } else {
+                                            // Update counter
+                                            const counterSpan = document.querySelector('span.bg-primary\\/20');
+                                            if (counterSpan) {
+                                                counterSpan.textContent = `${remainingCards} Saved`;
+                                            }
+                                        }
+                                    }, 300);
+                                }
+                            }
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al procesar el bookmark. Por favor intenta de nuevo.');
+                });
+            @else
+                // Redirect to login if not authenticated
+                window.location.href = '{{ route('login') }}';
+            @endauth
+        }
+
         // Close all card menus when clicking outside
         document.addEventListener('click', function(event) {
             if (!event.target.closest('[onclick^="toggleCardMenu"]')) {

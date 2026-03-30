@@ -85,6 +85,7 @@
                     :avatar="$tip['avatar']"
                     :published_at="$tip['published_at']"
                     :isLiked="$tip['is_liked']"
+                    :isBookmarked="$tip['is_bookmarked']"
                 />
             @endforeach
         </div>
