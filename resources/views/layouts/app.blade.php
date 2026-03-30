@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'GreenBoard - Explore Community Tips')</title>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -135,6 +136,89 @@
 
             // Update HTML lang attribute
             html.setAttribute('lang', savedLang);
+        });
+
+        // Card Menu Functions
+        function toggleCardMenu(cardId) {
+            const menu = document.getElementById('menu-' + cardId);
+            const allMenus = document.querySelectorAll('[id^="menu-"]');
+
+            // Close all other menus
+            allMenus.forEach(m => {
+                if (m.id !== 'menu-' + cardId) {
+                    m.classList.add('hidden');
+                }
+            });
+
+            // Toggle current menu
+            menu.classList.toggle('hidden');
+
+            // Prevent event from bubbling
+            event.stopPropagation();
+        }
+
+        function reportPost(cardId) {
+            // Close the menu
+            const menu = document.getElementById('menu-' + cardId);
+            menu.classList.add('hidden');
+
+            // Show confirmation (you can replace this with a modal)
+            alert('Post reportado. Gracias por ayudarnos a mantener la comunidad segura.');
+
+            // Here you would typically send a request to your backend
+            // Example: fetch('/report-post', { method: 'POST', body: JSON.stringify({ cardId }) })
+        }
+
+        // Toggle like functionality
+        function toggleLike(tipId, element) {
+            @auth
+                // Send request to backend
+                fetch(`/tips/${tipId}/like`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update the heart icon
+                        const heartIcon = element.querySelector('.material-symbols-outlined');
+                        const likeCount = element.querySelector('.like-count');
+
+                        if (data.liked) {
+                            // Add filled style
+                            heartIcon.classList.add('filled', 'text-red-500');
+                            heartIcon.style.fontVariationSettings = "'FILL' 1";
+                        } else {
+                            // Remove filled style
+                            heartIcon.classList.remove('filled', 'text-red-500');
+                            heartIcon.style.fontVariationSettings = "'FILL' 0";
+                        }
+
+                        // Update count
+                        likeCount.textContent = data.likes_count;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al procesar el like. Por favor intenta de nuevo.');
+                });
+            @else
+                // Redirect to login if not authenticated
+                window.location.href = '{{ route('login') }}';
+            @endauth
+        }
+
+        // Close all card menus when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('[onclick^="toggleCardMenu"]')) {
+                const allMenus = document.querySelectorAll('[id^="menu-"]');
+                allMenus.forEach(menu => {
+                    menu.classList.add('hidden');
+                });
+            }
         });
     </script>
 </body>

@@ -21,5 +21,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Llamar a los seeders en orden
+        $this->call([
+            TipSeeder::class,
+            FollowSeeder::class,
+            BookmarkSeeder::class,
+        ]);
     }
 }

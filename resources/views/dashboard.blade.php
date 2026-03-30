@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+    <!-- Success Message -->
+    @if(session('success'))
+        <div class="mb-6 p-4 bg-green-100 dark:bg-green-900/30 border border-green-500 text-green-700 dark:text-green-400 rounded-xl flex items-center gap-3">
+            <span class="material-symbols-outlined">check_circle</span>
+            <span class="font-semibold">{{ session('success') }}</span>
+        </div>
+    @endif
+
     <!-- Hero Search Section -->
     <div class="text-center mb-8 sm:mb-10 lg:mb-12 w-full">
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-6 sm:mb-8">Discover Sustainable Living</h1>
@@ -66,6 +74,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 items-start">
             @foreach($tips as $tip)
                 <x-tip-card
+                    :id="$tip['id']"
                     :category="$tip['category']"
                     :user="$tip['user']"
                     :title="$tip['title']"
@@ -74,6 +83,8 @@
                     :comments="$tip['comments']"
                     :image="$tip['image']"
                     :avatar="$tip['avatar']"
+                    :published_at="$tip['published_at']"
+                    :isLiked="$tip['is_liked']"
                 />
             @endforeach
         </div>
@@ -87,8 +98,8 @@
     </section>
 
     <!-- Floating Action Button (FAB) -->
-    <button class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 h-12 sm:h-14 px-4 sm:px-6 bg-primary text-background-dark font-bold rounded-xl shadow-2xl shadow-primary/40 hover:scale-110 active:scale-95 transition-all flex items-center justify-center gap-2 z-50">
+    <a href="{{ route('tips.create') }}" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 h-12 sm:h-14 px-4 sm:px-6 bg-primary text-background-dark font-bold rounded-xl shadow-2xl shadow-primary/40 hover:scale-110 active:scale-95 transition-all flex items-center justify-center gap-2 z-50">
         <span class="material-symbols-outlined text-xl sm:text-2xl">add</span>
         <span class="hidden sm:inline text-sm sm:text-base">Create Post</span>
-    </button>
+    </a>
 @endsection

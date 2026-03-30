@@ -20,14 +20,15 @@
     </div>
 
     <!-- Featured Tips Section -->
-    <section class="w-full mb-16 sm:mb-24 lg:mb-32">
+    <section class="w-full mb-12 sm:mb-16">
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
             <h2 class="text-xl sm:text-2xl font-bold">Featured Sustainable Tips</h2>
             <span class="px-2.5 sm:px-3 py-0.5 sm:py-1 bg-primary/20 text-primary text-[9px] sm:text-[10px] font-bold rounded-full uppercase tracking-wider">Trending Now</span>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 items-start">
             @foreach($tips as $tip)
                 <x-tip-card 
+                    :id="$tip['id']"
                     :category="$tip['category']"
                     :user="$tip['user']"
                     :title="$tip['title']"
@@ -36,13 +37,22 @@
                     :comments="$tip['comments']"
                     :image="$tip['image']"
                     :avatar="$tip['avatar']"
+                    :published_at="$tip['published_at']"
+                    :isLiked="$tip['is_liked']"
                 />
             @endforeach
+        </div>
+
+        <!-- Load More Button -->
+        <div class="flex justify-center mt-8 sm:mt-10 lg:mt-12">
+            <button class="px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl border-2 border-primary text-primary font-bold hover:bg-primary hover:text-background-dark transition-all text-sm sm:text-base">
+                Load More Tips
+            </button>
         </div>
     </section>
 
     {{-- CTA Section --}}
-    <div class="w-full max-w-4xl mx-auto bg-white dark:bg-slate-900 p-8 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl shadow-2xl border border-primary/20 text-center relative overflow-hidden">
+    <div class="w-full max-w-4xl mx-auto bg-white dark:bg-slate-900 p-8 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl shadow-2xl border border-primary/20 text-center relative overflow-hidden mb-12 sm:mb-16">
         <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-primary/5 rounded-full"></div>
         <div class="relative z-10">
             <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-6 sm:mb-8 tracking-tight px-2">Start Your Sustainable Journey Today</h3>
