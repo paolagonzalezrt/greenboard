@@ -237,8 +237,8 @@
                             bookmarkIcon.classList.remove('filled', 'text-primary');
                             bookmarkIcon.style.fontVariationSettings = "'FILL' 0";
 
-                            // If we're on the saved page, remove the card
-                            if (window.location.pathname === '/saved') {
+                            // If we're on the saved page or saved tab in profile, remove the card
+                            if (window.location.pathname === '/saved' || (window.location.pathname === '/profile' && window.location.search.includes('tab=saved'))) {
                                 // Find the card container (it's the parent with bg-white or dark:bg-slate-800 classes)
                                 const card = element.closest('div[class*="bg-white"]');
                                 if (card) {

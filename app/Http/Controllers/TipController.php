@@ -221,6 +221,7 @@ class TipController extends Controller
                         'comments' => $tip->comments_count,
                         'image' => $tip->image,
                         'avatar' => $tip->user->photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($tip->user->name) . '&size=100&background=13ec5b&color=102216&bold=true',
+                        'published_at' => $tip->created_at->diffForHumans(),
                         'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
                         'is_bookmarked' => true,
                     ];
@@ -243,6 +244,7 @@ class TipController extends Controller
                         'comments' => $tip->comments_count,
                         'image' => $tip->image,
                         'avatar' => $tip->user->photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($tip->user->name) . '&size=100&background=13ec5b&color=102216&bold=true',
+                        'published_at' => $tip->created_at->diffForHumans(),
                         'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
                         'is_bookmarked' => $tip->bookmarks()->where('user_id', $user->id)->exists(),
                     ];

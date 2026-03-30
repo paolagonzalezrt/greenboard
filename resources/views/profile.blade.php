@@ -78,9 +78,10 @@
                 @endif
             </div>
         @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-stretch">
                 @foreach($tips as $tip)
                     <x-tip-card 
+                        :id="$tip['id']"
                         :category="$tip['category']"
                         :user="$tip['user']"
                         :title="$tip['title']"
@@ -89,6 +90,9 @@
                         :comments="$tip['comments']"
                         :image="$tip['image']"
                         :avatar="$tip['avatar']"
+                        :published_at="$tip['published_at']"
+                        :isLiked="$tip['is_liked']"
+                        :isBookmarked="$tip['is_bookmarked']"
                     />
                 @endforeach
             </div>
