@@ -52,7 +52,7 @@
                     <span class="hidden sm:inline">Edit Profile</span>
                     <span class="sm:hidden">Edit</span>
                 </a>
-                <button class="flex items-center gap-2 rounded-full bg-white dark:bg-slate-800 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold shadow-md transition-all border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700">
+                <button onclick="shareProfile({{ Auth::id() }}, '{{ addslashes(Auth::user()->name) }}')" class="flex items-center gap-2 rounded-full bg-white dark:bg-slate-800 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold shadow-md transition-all border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700">
                     <span class="material-symbols-outlined text-base sm:text-lg">share</span>
                     <span class="hidden sm:inline">Share</span>
                 </button>

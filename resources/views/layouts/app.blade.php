@@ -667,6 +667,106 @@
                 }
             }
         });
+
+        // Share Tip Function
+        function shareTip(tipId, tipTitle) {
+            const url = `${window.location.origin}/tips/${tipId}`;
+            const text = `¡Mira este tip sobre sostenibilidad! ${tipTitle}`;
+
+            // Check if Web Share API is supported
+            if (navigator.share) {
+                navigator.share({
+                    title: tipTitle,
+                    text: text,
+                    url: url
+                })
+                .then(() => {
+                    showNotification('¡Tip compartido exitosamente!', 'success');
+                })
+                .catch((error) => {
+                    // User cancelled or error occurred
+                    if (error.name !== 'AbortError') {
+                        console.error('Error sharing:', error);
+                        // Fallback to copy link
+                        copyToClipboard(url);
+                    }
+                });
+            } else {
+                // Fallback: Copy to clipboard
+                copyToClipboard(url);
+            }
+        }
+
+        // Share Profile Function
+        function shareProfile(userId, userName) {
+            const url = `${window.location.origin}/users/${userId}`;
+            const text = `¡Mira el perfil de ${userName} en GreenBoard!`;
+
+            // Check if Web Share API is supported
+            if (navigator.share) {
+                navigator.share({
+                    title: `Perfil de ${userName}`,
+                    text: text,
+                    url: url
+                })
+                .then(() => {
+                    showNotification('¡Perfil compartido exitosamente!', 'success');
+                })
+                .catch((error) => {
+                    // User cancelled or error occurred
+                    if (error.name !== 'AbortError') {
+                        console.error('Error sharing:', error);
+                        // Fallback to copy link
+                        copyToClipboard(url);
+                    }
+                });
+            } else {
+                // Fallback: Copy to clipboard
+                copyToClipboard(url);
+            }
+        }
+
+        // Copy to Clipboard Function
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        showNotification('¡Enlace copiado al portapapeles!', 'success');
+                    })
+                    .catch(err => {
+                        console.error('Error copying to clipboard:', err);
+                        fallbackCopyToClipboard(text);
+                    });
+            } else {
+                fallbackCopyToClipboard(text);
+            }
+        }
+
+        // Fallback copy method for older browsers
+        function fallbackCopyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showNotification('¡Enlace copiado al portapapeles!', 'success');
+                } else {
+                    showNotification('No se pudo copiar el enlace', 'error');
+                }
+            } catch (err) {
+                console.error('Fallback: Could not copy text: ', err);
+                showNotification('No se pudo copiar el enlace', 'error');
+            }
+
+            document.body.removeChild(textArea);
+        }
     </script>
 
     <style>

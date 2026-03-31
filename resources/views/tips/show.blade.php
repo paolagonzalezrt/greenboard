@@ -113,7 +113,7 @@
                     <button class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                         <span class="material-symbols-outlined text-xl">bookmark</span>
                     </button>
-                    <button class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors ml-auto">
+                    <button onclick="shareTip({{ $tip->id }}, '{{ addslashes($tip->title) }}')" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors ml-auto">
                         <span class="material-symbols-outlined text-xl">share</span>
                     </button>
                 </div>

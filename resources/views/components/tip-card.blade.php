@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2 sm:gap-4">
-                    <button class="hover:text-primary transition-colors p-1" onclick="event.stopPropagation()">
+                    <button class="hover:text-primary transition-colors p-1" onclick="event.stopPropagation(); shareTip({{ $id }}, '{{ addslashes($title) }}')">
                         <span class="material-symbols-outlined text-[18px] sm:text-[20px]">share</span>
                     </button>
                     <button class="hover:text-primary transition-colors p-1 bookmark-btn" onclick="event.stopPropagation(); toggleBookmark({{ $id }}, this)" data-tip-id="{{ $id }}">
@@ -149,7 +149,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2 sm:gap-4">
-                    <button class="hover:text-primary transition-colors p-1" onclick="event.stopPropagation()">
+                    <button class="hover:text-primary transition-colors p-1" onclick="event.stopPropagation(); shareTip({{ $id }}, '{{ addslashes($title) }}')">
                         <span class="material-symbols-outlined text-[18px] sm:text-[20px]">share</span>
                     </button>
                     <button class="hover:text-primary transition-colors p-1 bookmark-btn" onclick="event.stopPropagation(); toggleBookmark({{ $id }}, this)" data-tip-id="{{ $id }}">
