@@ -10,14 +10,35 @@ use Illuminate\Support\Facades\Storage;
 
 class TipController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+        $search = $request->input('search');
+        $sortBy = $request->input('sort', 'desc');
+        $category = $request->input('category');
 
-        $tips = Tip::with(['user', 'likes', 'comments'])
-            ->withCount(['likes', 'comments'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(20)
+        $query = Tip::with(['user', 'likes', 'comments'])
+            ->withCount(['likes', 'comments']);
+
+        // Aplicar filtro de categoría si existe
+        if ($category) {
+            $query->where('category', $category);
+        }
+
+        // Aplicar búsqueda si existe
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%')
+                  ->orWhere('category', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Aplicar ordenamiento por fecha
+        $query->orderBy('created_at', $sortBy === 'asc' ? 'asc' : 'desc');
+
+        $tips = $query->paginate(20)
+            ->appends(['search' => $search, 'sort' => $sortBy, 'category' => $category])
             ->through(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
@@ -36,17 +57,38 @@ class TipController extends Controller
                 ];
             });
 
-        return view('welcome', compact('tips'));
+        return view('welcome', compact('tips', 'search', 'sortBy', 'category'));
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $user = Auth::user();
+        $search = $request->input('search');
+        $sortBy = $request->input('sort', 'desc');
+        $category = $request->input('category');
 
-        $tips = Tip::with(['user', 'likes', 'comments'])
-            ->withCount(['likes', 'comments'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(20)
+        $query = Tip::with(['user', 'likes', 'comments'])
+            ->withCount(['likes', 'comments']);
+
+        // Aplicar filtro de categoría si existe
+        if ($category) {
+            $query->where('category', $category);
+        }
+
+        // Aplicar búsqueda si existe
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%')
+                  ->orWhere('category', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Aplicar ordenamiento por fecha
+        $query->orderBy('created_at', $sortBy === 'asc' ? 'asc' : 'desc');
+
+        $tips = $query->paginate(20)
+            ->appends(['search' => $search, 'sort' => $sortBy, 'category' => $category])
             ->through(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
@@ -65,7 +107,7 @@ class TipController extends Controller
                 ];
             });
 
-        return view('dashboard', compact('tips'));
+        return view('dashboard', compact('tips', 'search', 'sortBy', 'category'));
     }
 
     public function following()
