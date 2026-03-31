@@ -17,8 +17,8 @@ class TipController extends Controller
         $tips = Tip::with(['user', 'likes', 'comments'])
             ->withCount(['likes', 'comments'])
             ->orderBy('created_at', 'desc')
-            ->get()
-            ->map(function ($tip) use ($user) {
+            ->paginate(20)
+            ->through(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
                     'user_id' => $tip->user->id,
@@ -46,8 +46,8 @@ class TipController extends Controller
         $tips = Tip::with(['user', 'likes', 'comments'])
             ->withCount(['likes', 'comments'])
             ->orderBy('created_at', 'desc')
-            ->get()
-            ->map(function ($tip) use ($user) {
+            ->paginate(20)
+            ->through(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
                     'user_id' => $tip->user->id,
@@ -85,8 +85,8 @@ class TipController extends Controller
             ->withCount(['likes', 'comments'])
             ->whereIn('user_id', $followingIds)
             ->orderBy('created_at', 'desc')
-            ->get()
-            ->map(function ($tip) use ($user) {
+            ->paginate(20)
+            ->through(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
                     'user_id' => $tip->user->id,
@@ -116,8 +116,8 @@ class TipController extends Controller
             ->with(['user', 'likes', 'comments'])
             ->withCount(['likes', 'comments'])
             ->orderBy('bookmarks.created_at', 'desc')
-            ->get()
-            ->map(function ($tip) use ($user) {
+            ->paginate(20)
+            ->through(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
                     'user_id' => $tip->user->id,
@@ -214,8 +214,8 @@ class TipController extends Controller
                 ->with(['user', 'likes', 'comments'])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('bookmarks.created_at', 'desc')
-                ->get()
-                ->map(function ($tip) use ($user) {
+                ->paginate(20)
+                ->through(function ($tip) use ($user) {
                     return [
                         'id' => $tip->id,
                         'user_id' => $tip->user->id,
@@ -238,8 +238,8 @@ class TipController extends Controller
                 ->with(['user', 'likes', 'comments'])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('created_at', 'desc')
-                ->get()
-                ->map(function ($tip) use ($user) {
+                ->paginate(20)
+                ->through(function ($tip) use ($user) {
                     return [
                         'id' => $tip->id,
                         'user_id' => $tip->user->id,
@@ -281,8 +281,8 @@ class TipController extends Controller
                 ->with(['user', 'likes', 'comments'])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('bookmarks.created_at', 'desc')
-                ->get()
-                ->map(function ($tip) use ($currentUser) {
+                ->paginate(20)
+                ->through(function ($tip) use ($currentUser) {
                     return [
                         'id' => $tip->id,
                         'user_id' => $tip->user->id,
@@ -305,8 +305,8 @@ class TipController extends Controller
                 ->with(['user', 'likes', 'comments'])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('created_at', 'desc')
-                ->get()
-                ->map(function ($tip) use ($currentUser) {
+                ->paginate(20)
+                ->through(function ($tip) use ($currentUser) {
                     return [
                         'id' => $tip->id,
                         'user_id' => $tip->user->id,

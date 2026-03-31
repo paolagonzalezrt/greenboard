@@ -90,12 +90,10 @@
                 />
             @endforeach
         </div>
-        
-        <!-- Load More Button -->
-        <div class="flex justify-center mt-8 sm:mt-10 lg:mt-12">
-            <button class="px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl border-2 border-primary text-primary font-bold hover:bg-primary hover:text-background-dark transition-all text-sm sm:text-base">
-                Load More Tips
-            </button>
+
+        <!-- Pagination -->
+        <div class="mt-8 sm:mt-10 lg:mt-12">
+            {{ $tips->links() }}
         </div>
     </section>
 

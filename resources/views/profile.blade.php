@@ -54,7 +54,7 @@
                 </a>
                 <button onclick="shareProfile({{ Auth::id() }}, '{{ addslashes(Auth::user()->name) }}')" class="flex items-center gap-2 rounded-full bg-white dark:bg-slate-800 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold shadow-md transition-all border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700">
                     <span class="material-symbols-outlined text-base sm:text-lg">share</span>
-                    <span class="hidden sm:inline">Share</span>
+                    <span>Share</span>
                 </button>
             </div>
         </div>
@@ -106,6 +106,13 @@
                         :isBookmarked="$tip['is_bookmarked']"
                     />
                 @endforeach
+            </div>
+        @endif
+
+        <!-- Pagination -->
+        @if(!$tips->isEmpty())
+            <div class="mt-8 sm:mt-10 lg:mt-12">
+                {{ $tips->appends(['tab' => $tab])->links() }}
             </div>
         @endif
     </div>

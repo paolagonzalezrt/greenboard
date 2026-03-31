@@ -60,124 +60,71 @@ class TipSeeder extends Seeder
             ]
         );
 
-        $tips = [
-            [
-                'user_index' => 0,
-                'category' => 'Zero Waste',
-                'title' => 'Mastering the Art of Backyard Composting',
-                'description' => 'Learn how to turn your kitchen scraps into nutrient-rich soil gold.',
-                'image' => 'https://picsum.photos/id/10/400/300',
-            ],
-            [
-                'user_index' => 1,
-                'category' => 'Energy',
-                'title' => 'Switch to LED Bulbs',
-                'description' => 'Save energy and money by replacing traditional bulbs with LED alternatives.',
-                'image' => null,
-            ],
-            [
-                'user_index' => 2,
-                'category' => 'Food',
-                'title' => 'Reduce Food Waste',
-                'description' => 'Plan your meals ahead and use leftovers creatively to minimize waste.',
-                'image' => 'https://picsum.photos/id/20/400/300',
-            ],
-            [
-                'user_index' => 3,
-                'category' => 'Transport',
-                'title' => 'Bike to Work',
-                'description' => 'Reduce your carbon footprint by cycling instead of driving.',
-                'image' => null,
-            ],
-            [
-                'user_index' => 4,
-                'category' => 'Home',
-                'title' => 'Use Natural Cleaning Products',
-                'description' => 'Make your own cleaning products with vinegar, baking soda, and lemon.',
-                'image' => 'https://picsum.photos/id/30/400/300',
-            ],
-            [
-                'user_index' => 0,
-                'category' => 'Consumption',
-                'title' => 'Buy Second-Hand',
-                'description' => 'Give items a second life by shopping at thrift stores and online marketplaces.',
-                'image' => null,
-            ],
-            [
-                'user_index' => 1,
-                'category' => 'Energy',
-                'title' => 'Solar Panels Investment',
-                'description' => 'A comprehensive guide to installing solar panels and calculating your ROI.',
-                'image' => 'https://picsum.photos/id/40/400/300',
-            ],
-            [
-                'user_index' => 2,
-                'category' => 'Food',
-                'title' => 'Plant-Based Mondays',
-                'description' => 'Start your week with delicious plant-based meals that are good for you and the planet.',
-                'image' => null,
-            ],
+        // Generar 50 posts de prueba SIN IMAGEN para probar la paginación
+        $categories = ['Home', 'Energy', 'Consumption', 'Transport', 'Food', 'Zero Waste'];
+
+        $titles = [
+            'Reduce Water Usage with Simple Tricks',
+            'How to Start a Small Garden',
+            'Energy-Saving Tips for Winter',
+            'Eco-Friendly Shopping Guide',
+            'DIY Natural Cleaners',
+            'Plant-Based Meals for Beginners',
+            'Reduce Plastic in Your Kitchen',
+            'Solar Panel Basics',
+            'Sustainable Fashion Tips',
+            'Composting 101',
+            'Public Transport Benefits',
+            'Zero Waste Bathroom',
+            'Reusable Products Guide',
+            'Home Insulation Tips',
+            'Electric Vehicles Overview',
+            'Organic Food Shopping',
+            'Rainwater Collection',
+            'Green Office Practices',
+            'Recycling Best Practices',
+            'Energy Efficient Appliances',
         ];
 
-        $createdTips = [];
-        foreach ($tips as $tipData) {
-            $tip = Tip::create([
-                'user_id' => $users[$tipData['user_index']]->id,
-                'category' => $tipData['category'],
-                'title' => $tipData['title'],
-                'description' => $tipData['description'],
-                'image' => $tipData['image'],
+        $descriptions = [
+            'Discover practical ways to conserve water in your daily routine and reduce your environmental impact.',
+            'Start growing your own vegetables and herbs with these beginner-friendly tips.',
+            'Keep your home warm while reducing energy consumption with these smart strategies.',
+            'Learn how to make sustainable choices when shopping for everyday items.',
+            'Create effective cleaning products using natural ingredients found in your pantry.',
+            'Explore delicious plant-based recipes that are good for you and the planet.',
+            'Simple swaps to eliminate single-use plastics from your cooking space.',
+            'Everything you need to know about installing solar panels in your home.',
+            'Build a sustainable wardrobe with eco-friendly fashion choices.',
+            'Transform your organic waste into nutrient-rich compost for your garden.',
+            'Why choosing public transportation is better for the environment.',
+            'Steps to create a waste-free bathroom using sustainable products.',
+            'Replace disposable items with reusable alternatives to reduce waste.',
+            'Improve your home\'s insulation to save energy and money.',
+            'Understanding the environmental benefits of electric vehicles.',
+            'Tips for finding and choosing organic, locally-sourced food.',
+            'Set up a rainwater collection system for your garden.',
+            'Implement eco-friendly practices in your workplace.',
+            'Master the art of proper recycling to maximize environmental impact.',
+            'Choose appliances that save energy and reduce your carbon footprint.',
+        ];
+
+        for ($i = 0; $i < 50; $i++) {
+            $randomUser = $users[array_rand($users)];
+            $randomCategory = $categories[array_rand($categories)];
+            $randomTitle = $titles[$i % count($titles)] . ' #' . ($i + 1);
+            $randomDescription = $descriptions[$i % count($descriptions)];
+
+            Tip::create([
+                'user_id' => $randomUser->id,
+                'category' => $randomCategory,
+                'title' => $randomTitle,
+                'description' => $randomDescription,
+                'image' => null, // SIN IMAGEN para pruebas rápidas
             ]);
-            $createdTips[] = $tip;
         }
 
-        // Crear likes de ejemplo
-        foreach ($createdTips as $tip) {
-            $numLikes = rand(5, 50);
-            for ($i = 0; $i < $numLikes; $i++) {
-                $randomUser = $users[array_rand($users)];
-                Like::firstOrCreate([
-                    'user_id' => $randomUser->id,
-                    'tip_id' => $tip->id,
-                ]);
-            }
-        }
-
-        // Crear comentarios de ejemplo
-        $sampleComments = [
-            'Great tip! I\'ll definitely try this.',
-            'This is so helpful, thank you for sharing!',
-            'I\'ve been doing this for years and it works great.',
-            'Does anyone have more information about this?',
-            'Amazing! I never thought of it that way.',
-            'This should be shared more widely!',
-        ];
-
-        foreach ($createdTips as $tip) {
-            $numComments = rand(2, 10);
-            for ($i = 0; $i < $numComments; $i++) {
-                $randomUser = $users[array_rand($users)];
-                Comment::create([
-                    'user_id' => $randomUser->id,
-                    'tip_id' => $tip->id,
-                    'content' => $sampleComments[array_rand($sampleComments)],
-                ]);
-            }
-        }
-
-        // Crear bookmarks de ejemplo
-        foreach ($createdTips as $index => $tip) {
-            if ($index % 2 == 0) { // Solo algunos tips
-                $numBookmarks = rand(1, 3);
-                for ($i = 0; $i < $numBookmarks; $i++) {
-                    $randomUser = $users[array_rand($users)];
-                    Bookmark::firstOrCreate([
-                        'user_id' => $randomUser->id,
-                        'tip_id' => $tip->id,
-                    ]);
-                }
-            }
-        }
+        echo "✅ 50 posts de prueba creados exitosamente!\n";
     }
 }
 
