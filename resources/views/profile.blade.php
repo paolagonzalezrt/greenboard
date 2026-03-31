@@ -17,11 +17,13 @@
                     <div>
                         <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-100">{{ Auth::user()->name }}</h1>
                     </div>
+                    @if(Auth::user()->bio)
                     <div class="max-w-2xl">
                         <p class="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-400">
-                            Urban gardener and zero-waste enthusiast. I've been on a mission to reduce my environmental footprint since 2020. Lover of composting, native plants, and DIY upcycling. Join me in making the world a bit greener, one tip at a time! 🌱
+                            {{ Auth::user()->bio }}
                         </p>
                     </div>
+                    @endif
                     <div class="flex flex-wrap justify-center sm:justify-start gap-x-4 sm:gap-x-8 gap-y-2">
                         <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                             <span class="material-symbols-outlined text-primary text-lg sm:text-xl">calendar_today</span>
@@ -45,11 +47,11 @@
 
             <!-- Action Buttons -->
             <div class="flex gap-2 sm:gap-3 flex-shrink-0 items-start justify-center sm:justify-start">
-                <button class="flex items-center gap-2 rounded-full bg-primary px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-background-dark shadow-md transition-all hover:brightness-105">
+                <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 rounded-full bg-primary px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-background-dark shadow-md transition-all hover:brightness-105">
                     <span class="material-symbols-outlined text-base sm:text-lg">edit</span>
                     <span class="hidden sm:inline">Edit Profile</span>
                     <span class="sm:hidden">Edit</span>
-                </button>
+                </a>
                 <button class="flex items-center gap-2 rounded-full bg-white dark:bg-slate-800 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold shadow-md transition-all border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700">
                     <span class="material-symbols-outlined text-base sm:text-lg">share</span>
                     <span class="hidden sm:inline">Share</span>

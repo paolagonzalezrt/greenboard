@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TipController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,12 @@ Route::delete('/users/{follower}/remove-follower', [\App\Http\Controllers\Follow
 
 // PROFILE (Protected Route - Solo para usuarios autenticados)
 Route::get('/profile', [TipController::class, 'profile'])->middleware('auth')->name('profile');
+
+// PROFILE EDIT (Protected Route - Editar perfil del usuario autenticado)
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->middleware('auth')->name('profile.edit');
+Route::patch('/profile/update', [ProfileController::class, 'update'])->middleware('auth')->name('profile.update');
+Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->middleware('auth')->name('profile.updatePassword');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->middleware('auth')->name('profile.destroy');
 
 // USER PROFILE (Public Route - Ver perfil de cualquier usuario)
 Route::get('/users/{user}', [TipController::class, 'showUserProfile'])->name('users.show');
