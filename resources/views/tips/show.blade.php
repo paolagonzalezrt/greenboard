@@ -38,11 +38,25 @@
                 <!-- Header -->
                 <div class="flex items-start justify-between mb-4">
                     <div class="flex items-center gap-3 flex-1 min-w-0">
-                        <img src="{{ $tip->user->photo ?? 'https://via.placeholder.com/50' }}" alt="{{ $tip->user->name }}" class="size-12 rounded-full object-cover flex-shrink-0">
-                        <div class="flex flex-col min-w-0">
-                            <span class="text-base font-bold text-slate-900 dark:text-slate-100">{{ $tip->user->name }}</span>
-                            <span class="text-sm text-slate-500 dark:text-slate-400">{{ $tip->created_at->diffForHumans() }}</span>
-                        </div>
+                        <a href="{{ route('users.show', $tip->user->id) }}" class="flex items-center gap-3 flex-1 min-w-0">
+                            <img src="{{ $tip->user->photo ?? 'https://via.placeholder.com/50' }}" alt="{{ $tip->user->name }}" class="size-12 rounded-full object-cover flex-shrink-0 hover:opacity-80 transition-opacity">
+                            <div class="flex flex-col min-w-0">
+                                <span class="text-base font-bold text-slate-900 dark:text-slate-100 hover:text-primary transition-colors">{{ $tip->user->name }}</span>
+                                <span class="text-sm text-slate-500 dark:text-slate-400">{{ $tip->created_at->diffForHumans() }}</span>
+                            </div>
+                        </a>
+                        @auth
+                            @if(Auth::id() !== $tip->user_id)
+                                <button 
+                                    id="follow-btn-{{ $tip->user_id }}" 
+                                    onclick="toggleFollow({{ $tip->user_id }})" 
+                                    class="follow-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex-shrink-0
+                                    {{ Auth::user()->isFollowing($tip->user_id) ? 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' : 'bg-primary text-background-dark hover:brightness-105' }}">
+                                    <span class="material-symbols-outlined text-base">{{ Auth::user()->isFollowing($tip->user_id) ? 'person_check' : 'person_add' }}</span>
+                                    <span class="follow-text">{{ Auth::user()->isFollowing($tip->user_id) ? 'Following' : 'Follow' }}</span>
+                                </button>
+                            @endif
+                        @endauth
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="{{ $colors['bg'] }} {{ $colors['text'] }} text-xs font-extrabold px-3 py-1.5 rounded-full uppercase whitespace-nowrap">
@@ -261,6 +275,41 @@
             } else {
                 replyForm.classList.add('hidden');
             }
+        }
+
+        // Toggle Follow/Unfollow
+        function toggleFollow(userId) {
+            const button = document.getElementById(`follow-btn-${userId}`);
+            const icon = button.querySelector('.material-symbols-outlined');
+            const text = button.querySelector('.follow-text');
+
+            fetch(`/users/${userId}/follow`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.following) {
+                        button.classList.remove('bg-primary', 'text-background-dark', 'hover:brightness-105');
+                        button.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-300', 'hover:bg-slate-300', 'dark:hover:bg-slate-600');
+                        icon.textContent = 'person_check';
+                        text.textContent = 'Following';
+                    } else {
+                        button.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-300', 'hover:bg-slate-300', 'dark:hover:bg-slate-600');
+                        button.classList.add('bg-primary', 'text-background-dark', 'hover:brightness-105');
+                        icon.textContent = 'person_add';
+                        text.textContent = 'Follow';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al procesar la solicitud. Por favor intenta de nuevo.');
+            });
         }
     </script>
 @endsection

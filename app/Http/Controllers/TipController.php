@@ -272,6 +272,9 @@ class TipController extends Controller
         // Conteo de posts del usuario
         $postsCount = $user->tips()->count();
 
+        // Check if current user is following this user
+        $isFollowing = $currentUser ? $currentUser->isFollowing($user->id) : false;
+
         if ($tab === 'saved') {
             // Obtener los tips guardados por el usuario
             $tips = $user->bookmarkedTips()
@@ -322,7 +325,7 @@ class TipController extends Controller
                 });
         }
 
-        return view('users.show', compact('user', 'tips', 'postsCount', 'tab'));
+        return view('users.show', compact('user', 'tips', 'postsCount', 'tab', 'isFollowing'));
     }
 
     /**

@@ -31,6 +31,14 @@
                             <span class="material-symbols-outlined text-primary text-lg sm:text-xl">article</span>
                             <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">{{ $postsCount }} {{ $postsCount == 1 ? 'Post' : 'Posts' }}</span>
                         </div>
+                        <button onclick="showFollowersList()" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">group</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="followers-count">{{ Auth::user()->followers()->count() }}</span> Followers</span>
+                        </button>
+                        <button onclick="showFollowingList()" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person_add</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="following-count">{{ Auth::user()->following()->count() }}</span> Following</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -99,6 +107,185 @@
             </div>
         @endif
     </div>
+
+    <!-- Modal for Followers/Following List -->
+    <div id="users-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-[100] flex items-center justify-center p-4" onclick="closeModal(event)">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden flex flex-col" onclick="event.stopPropagation()">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-4 sm:p-6 border-b border-slate-200 dark:border-slate-700">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" id="modal-title">Followers</h3>
+                <button onclick="closeModal()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                    <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">close</span>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="flex-1 overflow-y-auto p-4 sm:p-6" id="users-list">
+                <!-- Users will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const currentUserId = {{ Auth::id() }};
+
+        // Show followers list
+        function showFollowersList() {
+            document.getElementById('modal-title').textContent = 'Followers';
+            document.getElementById('users-modal').classList.remove('hidden');
+            loadFollowers();
+        }
+
+        // Show following list
+        function showFollowingList() {
+            document.getElementById('modal-title').textContent = 'Following';
+            document.getElementById('users-modal').classList.remove('hidden');
+            loadFollowing();
+        }
+
+        // Load followers
+        function loadFollowers() {
+            const usersList = document.getElementById('users-list');
+            usersList.innerHTML = '<div class="text-center py-8"><span class="material-symbols-outlined text-4xl text-slate-300 dark:text-slate-600 animate-spin">progress_activity</span></div>';
+
+            fetch(`/users/${currentUserId}/followers`, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.followers.length === 0) {
+                        usersList.innerHTML = `
+                            <div class="text-center py-8">
+                                <span class="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-600 mb-4 block">group</span>
+                                <p class="text-slate-500 dark:text-slate-400">No followers yet</p>
+                            </div>
+                        `;
+                    } else {
+                        usersList.innerHTML = data.followers.map(user => `
+                            <div class="flex items-center justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
+                                <div class="flex items-center gap-3 flex-1 min-w-0 cursor-pointer" onclick="window.location.href='/users/${user.id}'">
+                                    <img src="${user.avatar}" alt="${user.name}" class="size-10 rounded-full object-cover flex-shrink-0">
+                                    <span class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">${user.name}</span>
+                                </div>
+                                <button 
+                                    onclick="removeFollower(${user.id})" 
+                                    class="px-3 py-1.5 text-xs font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors flex-shrink-0">
+                                    Remove
+                                </button>
+                            </div>
+                        `).join('');
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                usersList.innerHTML = '<div class="text-center py-8 text-red-500">Error al cargar seguidores</div>';
+            });
+        }
+
+        // Load following
+        function loadFollowing() {
+            const usersList = document.getElementById('users-list');
+            usersList.innerHTML = '<div class="text-center py-8"><span class="material-symbols-outlined text-4xl text-slate-300 dark:text-slate-600 animate-spin">progress_activity</span></div>';
+
+            fetch(`/users/${currentUserId}/following`, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.following.length === 0) {
+                        usersList.innerHTML = `
+                            <div class="text-center py-8">
+                                <span class="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-600 mb-4 block">group</span>
+                                <p class="text-slate-500 dark:text-slate-400">Not following anyone yet</p>
+                            </div>
+                        `;
+                    } else {
+                        usersList.innerHTML = data.following.map(user => `
+                            <div class="flex items-center justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
+                                <div class="flex items-center gap-3 flex-1 min-w-0 cursor-pointer" onclick="window.location.href='/users/${user.id}'">
+                                    <img src="${user.avatar}" alt="${user.name}" class="size-10 rounded-full object-cover flex-shrink-0">
+                                    <span class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">${user.name}</span>
+                                </div>
+                                <button 
+                                    onclick="toggleFollowInModal(${user.id}, this)" 
+                                    class="px-3 py-1.5 text-xs font-bold rounded-lg transition-colors flex-shrink-0 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600">
+                                    Unfollow
+                                </button>
+                            </div>
+                        `).join('');
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                usersList.innerHTML = '<div class="text-center py-8 text-red-500">Error al cargar seguidos</div>';
+            });
+        }
+
+        // Remove follower
+        function removeFollower(followerId) {
+            if (!confirm('¿Estás seguro de que quieres eliminar este seguidor?')) {
+                return;
+            }
+
+            fetch(`/users/${followerId}/remove-follower`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('followers-count').textContent = data.followers_count;
+                    loadFollowers(); // Reload the list
+                } else {
+                    alert(data.message || 'Error al eliminar seguidor');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al eliminar seguidor. Por favor intenta de nuevo.');
+            });
+        }
+
+        // Toggle follow in modal
+        function toggleFollowInModal(userId, button) {
+            fetch(`/users/${userId}/follow`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('following-count').textContent = data.following_count;
+                    loadFollowing(); // Reload the list
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al procesar la solicitud. Por favor intenta de nuevo.');
+            });
+        }
+
+        // Close modal
+        function closeModal(event) {
+            if (!event || event.target === event.currentTarget) {
+                document.getElementById('users-modal').classList.add('hidden');
+            }
+        }
+    </script>
 
     <style>
         .no-scrollbar::-webkit-scrollbar {

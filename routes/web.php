@@ -56,6 +56,12 @@ Route::post('/tips/{tip}/like', [\App\Http\Controllers\LikeController::class, 't
 // BOOKMARKS
 Route::post('/tips/{tip}/bookmark', [\App\Http\Controllers\BookmarkController::class, 'toggle'])->middleware('auth')->name('tips.bookmark');
 
+// FOLLOWS
+Route::post('/users/{user}/follow', [\App\Http\Controllers\FollowController::class, 'toggle'])->middleware('auth')->name('users.follow');
+Route::get('/users/{user}/followers', [\App\Http\Controllers\FollowController::class, 'followers'])->middleware('auth')->name('users.followers');
+Route::get('/users/{user}/following', [\App\Http\Controllers\FollowController::class, 'following'])->middleware('auth')->name('users.following');
+Route::delete('/users/{follower}/remove-follower', [\App\Http\Controllers\FollowController::class, 'removeFollower'])->middleware('auth')->name('users.removeFollower');
+
 // PROFILE (Protected Route - Solo para usuarios autenticados)
 Route::get('/profile', [TipController::class, 'profile'])->middleware('auth')->name('profile');
 
