@@ -58,6 +58,9 @@ Route::post('/tips/{tip}/bookmark', [\App\Http\Controllers\BookmarkController::c
 // PROFILE (Protected Route - Solo para usuarios autenticados)
 Route::get('/profile', [TipController::class, 'profile'])->middleware('auth')->name('profile');
 
+// USER PROFILE (Public Route - Ver perfil de cualquier usuario)
+Route::get('/users/{user}', [TipController::class, 'showUserProfile'])->name('users.show');
+
 // LOGIN
 Route::get('/login', function () {
     return view('auth.login');

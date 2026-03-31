@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tip;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,7 @@ class TipController extends Controller
             ->map(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
+                    'user_id' => $tip->user->id,
                     'category' => $tip->category,
                     'user' => '@' . $tip->user->name,
                     'title' => $tip->title,
@@ -48,6 +50,7 @@ class TipController extends Controller
             ->map(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
+                    'user_id' => $tip->user->id,
                     'category' => $tip->category,
                     'user' => $tip->user->name,
                     'title' => $tip->title,
@@ -86,6 +89,7 @@ class TipController extends Controller
             ->map(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
+                    'user_id' => $tip->user->id,
                     'category' => $tip->category,
                     'user' => '@' . $tip->user->name,
                     'title' => $tip->title,
@@ -116,6 +120,7 @@ class TipController extends Controller
             ->map(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
+                    'user_id' => $tip->user->id,
                     'category' => $tip->category,
                     'user' => '@' . $tip->user->name,
                     'title' => $tip->title,
@@ -213,6 +218,7 @@ class TipController extends Controller
                 ->map(function ($tip) use ($user) {
                     return [
                         'id' => $tip->id,
+                        'user_id' => $tip->user->id,
                         'category' => $tip->category,
                         'user' => $tip->user->name,
                         'title' => $tip->title,
@@ -236,6 +242,7 @@ class TipController extends Controller
                 ->map(function ($tip) use ($user) {
                     return [
                         'id' => $tip->id,
+                        'user_id' => $tip->user->id,
                         'category' => $tip->category,
                         'user' => $tip->user->name,
                         'title' => $tip->title,
@@ -252,6 +259,70 @@ class TipController extends Controller
         }
 
         return view('profile', compact('tips', 'postsCount', 'tab'));
+    }
+
+    /**
+     * Mostrar el perfil de un usuario específico
+     */
+    public function showUserProfile(Request $request, User $user)
+    {
+        $currentUser = Auth::user();
+        $tab = $request->query('tab', 'posts'); // Default to 'posts'
+
+        // Conteo de posts del usuario
+        $postsCount = $user->tips()->count();
+
+        if ($tab === 'saved') {
+            // Obtener los tips guardados por el usuario
+            $tips = $user->bookmarkedTips()
+                ->with(['user', 'likes', 'comments'])
+                ->withCount(['likes', 'comments'])
+                ->orderBy('bookmarks.created_at', 'desc')
+                ->get()
+                ->map(function ($tip) use ($currentUser) {
+                    return [
+                        'id' => $tip->id,
+                        'user_id' => $tip->user->id,
+                        'category' => $tip->category,
+                        'user' => $tip->user->name,
+                        'title' => $tip->title,
+                        'description' => $tip->description,
+                        'likes' => $tip->likes_count,
+                        'comments' => $tip->comments_count,
+                        'image' => $tip->image,
+                        'avatar' => $tip->user->photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($tip->user->name) . '&size=100&background=13ec5b&color=102216&bold=true',
+                        'published_at' => $tip->created_at->diffForHumans(),
+                        'is_liked' => $currentUser ? $tip->likes()->where('user_id', $currentUser->id)->exists() : false,
+                        'is_bookmarked' => true,
+                    ];
+                });
+        } else {
+            // Obtener los tips publicados por el usuario
+            $tips = $user->tips()
+                ->with(['user', 'likes', 'comments'])
+                ->withCount(['likes', 'comments'])
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->map(function ($tip) use ($currentUser) {
+                    return [
+                        'id' => $tip->id,
+                        'user_id' => $tip->user->id,
+                        'category' => $tip->category,
+                        'user' => $tip->user->name,
+                        'title' => $tip->title,
+                        'description' => $tip->description,
+                        'likes' => $tip->likes_count,
+                        'comments' => $tip->comments_count,
+                        'image' => $tip->image,
+                        'avatar' => $tip->user->photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($tip->user->name) . '&size=100&background=13ec5b&color=102216&bold=true',
+                        'published_at' => $tip->created_at->diffForHumans(),
+                        'is_liked' => $currentUser ? $tip->likes()->where('user_id', $currentUser->id)->exists() : false,
+                        'is_bookmarked' => $currentUser ? $tip->bookmarks()->where('user_id', $currentUser->id)->exists() : false,
+                    ];
+                });
+        }
+
+        return view('users.show', compact('user', 'tips', 'postsCount', 'tab'));
     }
 }
 

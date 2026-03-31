@@ -75,6 +75,7 @@
             @foreach($tips as $tip)
                 <x-tip-card
                     :id="$tip['id']"
+                    :userId="$tip['user_id']"
                     :category="$tip['category']"
                     :user="$tip['user']"
                     :title="$tip['title']"
