@@ -45,4 +45,32 @@ class CommentController extends Controller
 
         return redirect()->route('tips.show', $comment->tip)->with('success', 'Reply posted successfully!');
     }
+
+    /**
+     * Toggle like en un comentario
+     */
+    public function like(Comment $comment)
+    {
+        $user = Auth::user();
+
+        $existingLike = $user->commentLikes()->where('comment_id', $comment->id)->first();
+
+        if ($existingLike) {
+            // Si ya existe el like, lo eliminamos
+            $existingLike->delete();
+            $liked = false;
+        } else {
+            // Si no existe, lo creamos
+            $user->commentLikes()->create([
+                'comment_id' => $comment->id,
+            ]);
+            $liked = true;
+        }
+
+        return response()->json([
+            'success' => true,
+            'liked' => $liked,
+            'likes_count' => $comment->likes()->count(),
+        ]);
+    }
 }

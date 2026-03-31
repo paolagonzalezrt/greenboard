@@ -61,4 +61,20 @@ class Comment extends Model
     {
         return !is_null($this->parent_id);
     }
+
+    /**
+     * Relación con los likes del comentario
+     */
+    public function likes()
+    {
+        return $this->hasMany(CommentLike::class);
+    }
+
+    /**
+     * Usuarios que han dado like a este comentario
+     */
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'comment_likes')->withTimestamps();
+    }
 }

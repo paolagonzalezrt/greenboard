@@ -101,21 +101,38 @@
                 </div>
 
                 <!-- Interactions -->
-                <div class="flex items-center gap-6 pt-4 border-t border-slate-200 dark:border-slate-700">
-                    <button class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors group">
-                        <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">favorite</span>
-                        <span class="text-sm font-semibold">{{ $tip->likes()->count() }}</span>
-                    </button>
-                    <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                        <span class="material-symbols-outlined text-xl">comment</span>
-                        <span class="text-sm font-semibold">{{ $tip->comments()->count() }}</span>
+                <div class="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center gap-4 sm:gap-6">
+                        @auth
+                            <button onclick="toggleLike({{ $tip->id }}, this)" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors group cursor-pointer">
+                                <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform {{ Auth::user()->hasLiked($tip) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLiked($tip) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
+                                <span class="text-sm font-semibold like-count">{{ $tip->likes()->count() }}</span>
+                            </button>
+                        @else
+                            <a href="{{ route('login') }}" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors group">
+                                <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">favorite</span>
+                                <span class="text-sm font-semibold">{{ $tip->likes()->count() }}</span>
+                            </a>
+                        @endauth
+                        <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                            <span class="material-symbols-outlined text-xl">chat_bubble</span>
+                            <span class="text-sm font-semibold">{{ $tip->comments()->count() }}</span>
+                        </div>
                     </div>
-                    <button class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                        <span class="material-symbols-outlined text-xl">bookmark</span>
-                    </button>
-                    <button onclick="shareTip({{ $tip->id }}, '{{ addslashes($tip->title) }}')" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors ml-auto">
-                        <span class="material-symbols-outlined text-xl">share</span>
-                    </button>
+                    <div class="flex items-center gap-3 sm:gap-4">
+                        <button onclick="shareTip({{ $tip->id }}, '{{ addslashes($tip->title) }}')" class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-1">
+                            <span class="material-symbols-outlined text-xl">share</span>
+                        </button>
+                        @auth
+                            <button class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-1 bookmark-btn" onclick="toggleBookmark({{ $tip->id }}, this)" data-tip-id="{{ $tip->id }}">
+                                <span class="material-symbols-outlined text-xl {{ Auth::user()->hasBookmarked($tip) ? 'filled text-primary' : '' }}" style="{{ Auth::user()->hasBookmarked($tip) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">bookmark</span>
+                            </button>
+                        @else
+                            <a href="{{ route('login') }}" class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-1">
+                                <span class="material-symbols-outlined text-xl">bookmark</span>
+                            </a>
+                        @endauth
+                    </div>
                 </div>
             </div>
         </article>
@@ -179,10 +196,17 @@
 
                             <!-- Actions -->
                             <div class="flex items-center gap-4">
-                                <button class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group">
-                                    <span class="material-symbols-outlined text-sm">favorite</span>
-                                    <span class="font-semibold">Like</span>
-                                </button>
+                                @auth
+                                    <button onclick="toggleCommentLike({{ $comment->id }}, this)" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group cursor-pointer">
+                                        <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($comment) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLikedComment($comment) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
+                                        <span class="font-semibold comment-like-count">{{ $comment->likes()->count() > 0 ? $comment->likes()->count() : 'Like' }}</span>
+                                    </button>
+                                @else
+                                    <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group">
+                                        <span class="material-symbols-outlined text-sm">favorite</span>
+                                        <span class="font-semibold">{{ $comment->likes()->count() > 0 ? $comment->likes()->count() : 'Like' }}</span>
+                                    </a>
+                                @endauth
                                 @auth
                                     <button 
                                         onclick="toggleReplyForm({{ $comment->id }})"
@@ -236,10 +260,17 @@
                                                 <p class="text-sm text-slate-700 dark:text-slate-300 mb-2 break-words">
                                                     {{ $reply->content }}
                                                 </p>
-                                                <button class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group">
-                                                    <span class="material-symbols-outlined text-sm">favorite</span>
-                                                    <span class="font-semibold">Like</span>
-                                                </button>
+                                                @auth
+                                                    <button onclick="toggleCommentLike({{ $reply->id }}, this)" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group cursor-pointer">
+                                                        <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($reply) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLikedComment($reply) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
+                                                        <span class="font-semibold comment-like-count">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : 'Like' }}</span>
+                                                    </button>
+                                                @else
+                                                    <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group">
+                                                        <span class="material-symbols-outlined text-sm">favorite</span>
+                                                        <span class="font-semibold">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : 'Like' }}</span>
+                                                    </a>
+                                                @endauth
                                             </div>
                                         </div>
                                     @endforeach
@@ -309,6 +340,46 @@
             .catch(error => {
                 console.error('Error:', error);
                 alert('Error al procesar la solicitud. Por favor intenta de nuevo.');
+            });
+        }
+
+        // Toggle like on comments
+        function toggleCommentLike(commentId, element) {
+            fetch(`/comments/${commentId}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update the heart icon
+                    const heartIcon = element.querySelector('.material-symbols-outlined');
+                    const likeCount = element.querySelector('.comment-like-count');
+
+                    if (data.liked) {
+                        // Add filled style
+                        heartIcon.classList.add('filled', 'text-red-500');
+                        heartIcon.style.fontVariationSettings = "'FILL' 1";
+                    } else {
+                        // Remove filled style
+                        heartIcon.classList.remove('filled', 'text-red-500');
+                        heartIcon.style.fontVariationSettings = "'FILL' 0";
+                    }
+
+                    // Update count - show number or "Like" text
+                    if (data.likes_count > 0) {
+                        likeCount.textContent = data.likes_count;
+                    } else {
+                        likeCount.textContent = 'Like';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al procesar el like. Por favor intenta de nuevo.');
             });
         }
     </script>

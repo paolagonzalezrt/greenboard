@@ -138,4 +138,47 @@ class User extends Authenticatable
     {
         return $this->followers()->where('follower_id', $userId)->exists();
     }
+
+    /**
+     * Verificar si el usuario ha dado like a un tip
+     */
+    public function hasLiked($tip)
+    {
+        $tipId = is_object($tip) ? $tip->id : $tip;
+        return $this->likedTips()->where('tip_id', $tipId)->exists();
+    }
+
+    /**
+     * Verificar si el usuario ha guardado un tip
+     */
+    public function hasBookmarked($tip)
+    {
+        $tipId = is_object($tip) ? $tip->id : $tip;
+        return $this->bookmarkedTips()->where('tip_id', $tipId)->exists();
+    }
+
+    /**
+     * Relación con los likes de comentarios dados
+     */
+    public function commentLikes()
+    {
+        return $this->hasMany(CommentLike::class);
+    }
+
+    /**
+     * Comentarios que le gustan al usuario
+     */
+    public function likedComments()
+    {
+        return $this->belongsToMany(Comment::class, 'comment_likes')->withTimestamps();
+    }
+
+    /**
+     * Verificar si el usuario ha dado like a un comentario
+     */
+    public function hasLikedComment($comment)
+    {
+        $commentId = is_object($comment) ? $comment->id : $comment;
+        return $this->likedComments()->where('comment_id', $commentId)->exists();
+    }
 }

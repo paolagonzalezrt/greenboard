@@ -54,6 +54,7 @@ Route::post('/tips/{tip}/report', [\App\Http\Controllers\ReportController::class
 // COMMENTS
 Route::post('/tips/{tip}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->middleware('auth')->name('comments.store');
 Route::post('/comments/{comment}/reply', [\App\Http\Controllers\CommentController::class, 'reply'])->middleware('auth')->name('comments.reply');
+Route::post('/comments/{comment}/like', [\App\Http\Controllers\CommentController::class, 'like'])->middleware('auth')->name('comments.like');
 
 // LIKES
 Route::post('/tips/{tip}/like', [\App\Http\Controllers\LikeController::class, 'toggle'])->middleware('auth')->name('tips.like');
