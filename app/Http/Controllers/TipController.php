@@ -324,5 +324,41 @@ class TipController extends Controller
 
         return view('users.show', compact('user', 'tips', 'postsCount', 'tab'));
     }
+
+    /**
+     * Eliminar un tip
+     */
+    public function destroy(Tip $tip)
+    {
+        // Verificar que el usuario autenticado sea el dueño del tip
+        if (Auth::id() !== $tip->user_id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No tienes permiso para eliminar este post.'
+            ], 403);
+        }
+
+        try {
+            // Si el tip tiene una imagen, eliminarla del storage
+            if ($tip->image) {
+                // Extraer la ruta relativa de la imagen
+                $imagePath = str_replace('/storage/', '', $tip->image);
+                Storage::disk('public')->delete($imagePath);
+            }
+
+            // Eliminar el tip (los likes, bookmarks y comments se eliminan automáticamente por cascada)
+            $tip->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Post eliminado exitosamente.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al eliminar el post. Por favor intenta de nuevo.'
+            ], 500);
+        }
+    }
 }
 

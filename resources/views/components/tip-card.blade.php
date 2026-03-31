@@ -39,10 +39,24 @@
                             <span class="material-symbols-outlined text-[18px]">more_vert</span>
                         </button>
                         <div id="menu-{{ $uniqueId }}" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-xl overflow-hidden z-10">
-                            <button onclick="event.stopPropagation(); reportPost('{{ $uniqueId }}')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
-                                <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
-                                <span>Reportar</span>
-                            </button>
+                            @auth
+                                @if(Auth::id() === $userId)
+                                    <button onclick="event.stopPropagation(); deletePost({{ $id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                        <span class="material-symbols-outlined text-[16px] text-red-500">delete</span>
+                                        <span>Eliminar</span>
+                                    </button>
+                                @else
+                                    <button onclick="event.stopPropagation(); reportPost('{{ $uniqueId }}')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                        <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
+                                        <span>Reportar</span>
+                                    </button>
+                                @endif
+                            @else
+                                <button onclick="event.stopPropagation(); reportPost('{{ $uniqueId }}')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                    <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
+                                    <span>Reportar</span>
+                                </button>
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -93,10 +107,24 @@
                             <span class="material-symbols-outlined text-[18px]">more_vert</span>
                         </button>
                         <div id="menu-{{ $uniqueId }}" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-xl overflow-hidden z-10">
-                            <button onclick="event.stopPropagation(); reportPost('{{ $uniqueId }}')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
-                                <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
-                                <span>Reportar</span>
-                            </button>
+                            @auth
+                                @if(Auth::id() === $userId)
+                                    <button onclick="event.stopPropagation(); deletePost({{ $id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                        <span class="material-symbols-outlined text-[16px] text-red-500">delete</span>
+                                        <span>Eliminar</span>
+                                    </button>
+                                @else
+                                    <button onclick="event.stopPropagation(); reportPost('{{ $uniqueId }}')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                        <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
+                                        <span>Reportar</span>
+                                    </button>
+                                @endif
+                            @else
+                                <button onclick="event.stopPropagation(); reportPost('{{ $uniqueId }}')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                    <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
+                                    <span>Reportar</span>
+                                </button>
+                            @endauth
                         </div>
                     </div>
                 </div>

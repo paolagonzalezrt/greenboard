@@ -44,9 +44,36 @@
                             <span class="text-sm text-slate-500 dark:text-slate-400">{{ $tip->created_at->diffForHumans() }}</span>
                         </div>
                     </div>
-                    <span class="{{ $colors['bg'] }} {{ $colors['text'] }} text-xs font-extrabold px-3 py-1.5 rounded-full uppercase whitespace-nowrap">
-                        {{ $tip->category }}
-                    </span>
+                    <div class="flex items-center gap-2">
+                        <span class="{{ $colors['bg'] }} {{ $colors['text'] }} text-xs font-extrabold px-3 py-1.5 rounded-full uppercase whitespace-nowrap">
+                            {{ $tip->category }}
+                        </span>
+                        <div class="relative">
+                            <button onclick="toggleCardMenu('show-tip')" class="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+                                <span class="material-symbols-outlined text-xl">more_vert</span>
+                            </button>
+                            <div id="menu-show-tip" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-xl overflow-hidden z-10">
+                                @auth
+                                    @if(Auth::id() === $tip->user_id)
+                                        <button onclick="deletePost({{ $tip->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                            <span class="material-symbols-outlined text-[16px] text-red-500">delete</span>
+                                            <span>Eliminar</span>
+                                        </button>
+                                    @else
+                                        <button onclick="reportPost('show-tip')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                            <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
+                                            <span>Reportar</span>
+                                        </button>
+                                    @endif
+                                @else
+                                    <button onclick="reportPost('show-tip')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                        <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
+                                        <span>Reportar</span>
+                                    </button>
+                                @endauth
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Title -->

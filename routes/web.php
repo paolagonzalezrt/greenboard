@@ -44,6 +44,7 @@ Route::get('/saved', [TipController::class, 'saved'])->middleware('auth')->name(
 Route::get('/tips/create', [TipController::class, 'create'])->middleware('auth')->name('tips.create');
 Route::post('/tips', [TipController::class, 'store'])->middleware('auth')->name('tips.store');
 Route::get('/tips/{tip}', [TipController::class, 'show'])->name('tips.show');
+Route::delete('/tips/{tip}', [TipController::class, 'destroy'])->middleware('auth')->name('tips.destroy');
 
 // COMMENTS
 Route::post('/tips/{tip}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->middleware('auth')->name('comments.store');

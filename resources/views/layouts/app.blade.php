@@ -169,6 +169,124 @@
             // Example: fetch('/report-post', { method: 'POST', body: JSON.stringify({ cardId }) })
         }
 
+        function deletePost(tipId) {
+            // Close any open menus first
+            const allMenus = document.querySelectorAll('[id^="menu-"]');
+            allMenus.forEach(menu => menu.classList.add('hidden'));
+
+            // Ask for confirmation
+            if (!confirm('¿Estás seguro de que quieres eliminar este post? Esta acción no se puede deshacer.')) {
+                return;
+            }
+
+            // Send delete request to backend
+            fetch(`/tips/${tipId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // If we're on the post detail page, redirect to dashboard
+                    if (window.location.pathname.includes(`/tips/${tipId}`)) {
+                        // Show success message briefly before redirect
+                        const successMsg = document.createElement('div');
+                        successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
+                        successMsg.textContent = 'Post eliminado exitosamente';
+                        document.body.appendChild(successMsg);
+
+                        setTimeout(() => {
+                            window.location.href = '{{ route('dashboard') }}';
+                        }, 1000);
+                        return;
+                    }
+
+                    // Find and remove the specific card
+                    // The onclick attribute contains: window.location.href='/tips/ID'
+                    let cardRemoved = false;
+                    const allElements = document.querySelectorAll('[onclick]');
+
+                    allElements.forEach(element => {
+                        const onclickAttr = element.getAttribute('onclick');
+
+                        // Check if onclick contains the URL to this specific tip
+                        // Format: window.location.href='/tips/123' or similar
+                        if (onclickAttr && onclickAttr.includes(`/tips/${tipId}`)) {
+                            cardRemoved = true;
+
+                            // Animate removal
+                            element.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                            element.style.opacity = '0';
+                            element.style.transform = 'scale(0.95)';
+
+                            setTimeout(() => {
+                                element.remove();
+                            }, 300);
+                        }
+                    });
+
+                    // Show success notification
+                    const successMsg = document.createElement('div');
+                    successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
+                    successMsg.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span>Post eliminado exitosamente</span>
+                        </div>
+                    `;
+                    document.body.appendChild(successMsg);
+
+                    // Remove notification after 3 seconds
+                    setTimeout(() => {
+                        successMsg.style.transition = 'opacity 0.3s ease-out';
+                        successMsg.style.opacity = '0';
+                        setTimeout(() => successMsg.remove(), 300);
+                    }, 3000);
+
+                } else {
+                    // Show error notification
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
+                    errorMsg.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined">error</span>
+                            <span>${data.message || 'Error al eliminar el post'}</span>
+                        </div>
+                    `;
+                    document.body.appendChild(errorMsg);
+
+                    setTimeout(() => {
+                        errorMsg.style.transition = 'opacity 0.3s ease-out';
+                        errorMsg.style.opacity = '0';
+                        setTimeout(() => errorMsg.remove(), 300);
+                    }, 3000);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+
+                // Show error notification
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
+                errorMsg.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined">error</span>
+                        <span>Error al eliminar el post. Por favor intenta de nuevo.</span>
+                    </div>
+                `;
+                document.body.appendChild(errorMsg);
+
+                setTimeout(() => {
+                    errorMsg.style.transition = 'opacity 0.3s ease-out';
+                    errorMsg.style.opacity = '0';
+                    setTimeout(() => errorMsg.remove(), 300);
+                }, 3000);
+            });
+        }
+
         // Toggle like functionality
         function toggleLike(tipId, element) {
             @auth
