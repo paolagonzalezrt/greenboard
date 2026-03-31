@@ -15,7 +15,7 @@
             <input 
                 name="search" 
                 value="{{ $search ?? '' }}" 
-                class="block w-full pl-4 sm:pl-6 pr-12 sm:pr-14 py-3 sm:py-4 lg:py-5 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-full text-sm sm:text-base lg:text-lg shadow-xl shadow-slate-200/50 dark:shadow-none focus:ring-4 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-400 [&::-webkit-search-cancel-button]:hidden" 
+                class="block w-full pl-4 sm:pl-6 pr-12 sm:pr-14 py-3 sm:py-4 lg:py-5 bg-white dark:bg-custom-dark-input border-2 border-slate-100 dark:border-slate-800 rounded-full text-sm sm:text-base lg:text-lg shadow-xl shadow-slate-200/50 dark:shadow-none focus:ring-4 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-400 [&::-webkit-search-cancel-button]:hidden" 
                 placeholder="Search for sustainable tips..." 
                 type="search"
             />
@@ -113,25 +113,22 @@
     <!-- Featured Tips Section -->
     <section class="w-full mb-12 sm:mb-16">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
-            <div class="flex items-center gap-2 sm:gap-3">
-                <h2 class="text-xl sm:text-2xl font-bold">Featured Sustainable Tips</h2>
-                <span class="px-2.5 sm:px-3 py-0.5 sm:py-1 bg-primary/20 text-primary text-[9px] sm:text-[10px] font-bold rounded-full uppercase tracking-wider">Trending Now</span>
-            </div>
+            <h2 class="text-xl sm:text-2xl font-bold">Featured Sustainable Tips</h2>
 
             <!-- Sort Options -->
             <div class="flex items-center gap-2">
-                <span class="text-sm text-slate-600 dark:text-slate-400 hidden sm:block">Sort by:</span>
-                <form action="{{ route('home') }}" method="GET" class="flex gap-2">
+                <span class="text-sm text-sort-text-light dark:text-sort-border-dark sm:block">Sort by:</span>
+                <form action="{{ route('home') }}" method="GET" class="flex gap-1">
                     @if($search ?? false)
                         <input type="hidden" name="search" value="{{ $search }}">
                     @endif
                     @if($category ?? false)
                         <input type="hidden" name="category" value="{{ $category }}">
                     @endif
-                    <button type="submit" name="sort" value="desc" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full transition-all {{ ($sortBy ?? 'desc') === 'desc' ? 'bg-slate-700 dark:bg-slate-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' }}">
+                    <button type="submit" name="sort" value="desc" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full transition-all {{ ($sortBy ?? 'desc') === 'desc' ? 'bg-white dark:bg-custom-dark-button text-sort-text-light dark:text-white shadow-md dark:shadow-none' : 'bg-transparent text-sort-text-light dark:text-sort-border-dark hover:text-sort-text-light dark:hover:text-white' }}">
                         Newest
                     </button>
-                    <button type="submit" name="sort" value="asc" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full transition-all {{ ($sortBy ?? 'desc') === 'asc' ? 'bg-slate-700 dark:bg-slate-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' }}">
+                    <button type="submit" name="sort" value="asc" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full transition-all {{ ($sortBy ?? 'desc') === 'asc' ? 'bg-white dark:bg-custom-dark-button text-sort-text-light dark:text-white shadow-md dark:shadow-none' : 'bg-transparent text-sort-text-light dark:text-sort-border-dark hover:text-sort-text-light dark:hover:text-white' }}">
                         Oldest
                     </button>
                 </form>
@@ -164,14 +161,12 @@
     </section>
 
     {{-- CTA Section --}}
-    <div class="w-full max-w-4xl mx-auto bg-white dark:bg-slate-900 p-8 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl shadow-2xl border border-primary/20 text-center relative overflow-hidden mb-12 sm:mb-16">
-        <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-primary/5 rounded-full"></div>
+    <div class="w-full max-w-4xl mx-auto bg-white dark:bg-custom-dark-button p-8 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl shadow-2xl border border-primary/20 text-center relative overflow-hidden mb-12 sm:mb-16">
         <div class="relative z-10">
             <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-6 sm:mb-8 tracking-tight px-2">Start Your Sustainable Journey Today</h3>
-            <button class="bg-primary text-background-dark px-8 sm:px-10 lg:px-14 py-4 sm:py-5 lg:py-6 rounded-xl sm:rounded-2xl font-extrabold text-lg sm:text-xl lg:text-2xl hover:brightness-105 shadow-2xl shadow-primary/40 transition-all flex items-center justify-center gap-3 sm:gap-4 mx-auto group w-full sm:w-auto">
+            <a href="{{ route('register') }}" class="inline-block bg-primary text-background-dark px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-base sm:text-lg hover:brightness-105 hover:scale-105 hover:shadow-[0_0_30px_rgba(19,236,91,0.4)] shadow-lg shadow-primary/30 transition-all duration-300">
                 Join the Movement
-                <span class="material-symbols-outlined text-2xl sm:text-3xl font-bold group-hover:translate-x-1 transition-transform">arrow_forward</span>
-            </button>
+            </a>
         </div>
     </div>
 @endsection

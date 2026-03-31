@@ -21,6 +21,9 @@
                         "background-dark": "#212121",
                         "custom-dark-input": "#1c1c1c",
                         "custom-dark-button": "#2d2d2d",
+                        "sort-border-dark": "#a6a6a6",
+                        "sort-bg-light": "#d6d6d6",
+                        "sort-text-light": "#585858",
                     },
                     fontFamily: { "display": ["Plus Jakarta Sans"] },
                     borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
@@ -34,6 +37,12 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-float-slow { animation: floatSlow 4s ease-in-out infinite; }
+        .animate-float-delayed { animation: floatSlow 5s ease-in-out infinite 1s; }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-20px) translateX(10px); }
         }
     </style>
 </head>

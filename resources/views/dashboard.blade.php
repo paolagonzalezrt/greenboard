@@ -17,7 +17,7 @@
                 <input 
                     name="search" 
                     value="{{ $search ?? '' }}" 
-                    class="w-full h-12 sm:h-14 pl-4 pr-12 bg-white dark:bg-slate-800 border-2 border-primary/20 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base sm:text-lg font-medium placeholder:text-slate-400 outline-none shadow-sm [&::-webkit-search-cancel-button]:hidden" 
+                    class="w-full h-12 sm:h-14 pl-4 pr-12 bg-white dark:bg-custom-dark-input border-2 border-primary/20 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base sm:text-lg font-medium placeholder:text-slate-400 outline-none shadow-sm [&::-webkit-search-cancel-button]:hidden" 
                     placeholder="Find your next sustainable habit..." 
                     type="search"
                 />
