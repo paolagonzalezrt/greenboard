@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TipController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,9 @@ Route::get('/tips/create', [TipController::class, 'create'])->middleware('auth')
 Route::post('/tips', [TipController::class, 'store'])->middleware('auth')->name('tips.store');
 Route::get('/tips/{tip}', [TipController::class, 'show'])->name('tips.show');
 Route::delete('/tips/{tip}', [TipController::class, 'destroy'])->middleware('auth')->name('tips.destroy');
+
+// REPORTS - Report Tips
+Route::post('/tips/{tip}/report', [\App\Http\Controllers\ReportController::class, 'store'])->middleware('auth')->name('tips.report');
 
 // COMMENTS
 Route::post('/tips/{tip}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->middleware('auth')->name('comments.store');
@@ -125,6 +129,19 @@ Route::post('/logout', function (Request $request) {
     $request->session()->regenerateToken();
     return redirect('/');
 })->name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| RUTAS DE ADMINISTRACIÓN
+|--------------------------------------------------------------------------
+*/
+
+// Admin - Gestión de tips reportados
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/reported-tips', [AdminController::class, 'reportedTips'])->name('reported-tips');
+    Route::delete('/tips/{tip}', [AdminController::class, 'deleteTip'])->name('tips.delete');
+    Route::patch('/reports/{report}/status', [AdminController::class, 'updateReportStatus'])->name('reports.update-status');
+});
 
 /*
 |--------------------------------------------------------------------------

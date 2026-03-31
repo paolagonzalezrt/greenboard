@@ -17,6 +17,12 @@
             <a class="{{ request()->routeIs('saved') ? 'text-primary font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium' }} text-sm hover:text-primary transition-colors" href="{{ route('saved') }}">
                 Saved
             </a>
+            @if(Auth::user()->is_admin)
+                <a class="{{ request()->routeIs('admin.*') ? 'text-primary font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium' }} text-sm hover:text-primary transition-colors flex items-center gap-1" href="{{ route('admin.reported-tips') }}">
+                    <span class="material-symbols-outlined text-[18px]">shield_person</span>
+                    Admin
+                </a>
+            @endif
         </nav>
     @endauth
 
@@ -68,6 +74,12 @@
                         <span class="material-symbols-outlined text-[20px]">person</span>
                         <span>Mi Perfil</span>
                     </a>
+                    @if(Auth::user()->is_admin)
+                        <a href="{{ route('admin.reported-tips') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                            <span class="material-symbols-outlined text-[20px]">shield_person</span>
+                            <span>Admin Panel</span>
+                        </a>
+                    @endif
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-left">
@@ -125,6 +137,12 @@
                             <span class="material-symbols-outlined text-[22px]">bookmark</span>
                             <span class="font-medium">Saved</span>
                         </a>
+                        @if(Auth::user()->is_admin)
+                            <a class="{{ request()->routeIs('admin.*') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('admin.reported-tips') }}" onclick="toggleMobileMenu()">
+                                <span class="material-symbols-outlined text-[22px]">shield_person</span>
+                                <span class="font-medium">Admin Panel</span>
+                            </a>
+                        @endif
                     </nav>
                 </div>
 

@@ -160,13 +160,32 @@
         function reportPost(cardId) {
             // Close the menu
             const menu = document.getElementById('menu-' + cardId);
-            menu.classList.add('hidden');
+            if (menu) {
+                menu.classList.add('hidden');
+            }
 
-            // Show confirmation (you can replace this with a modal)
-            alert('Post reportado. Gracias por ayudarnos a mantener la comunidad segura.');
+            // Extract tip ID from the card
+            const cardElement = document.querySelector(`#menu-${cardId}`);
+            if (!cardElement) return;
 
-            // Here you would typically send a request to your backend
-            // Example: fetch('/report-post', { method: 'POST', body: JSON.stringify({ cardId }) })
+            // Find the closest parent card element
+            const card = cardElement.closest('[onclick*="/tips/"]');
+            if (!card) return;
+
+            // Extract tip ID from onclick attribute
+            const onclickAttr = card.getAttribute('onclick');
+            const tipIdMatch = onclickAttr.match(/\/tips\/(\d+)/);
+
+            if (!tipIdMatch) return;
+
+            const tipId = tipIdMatch[1];
+
+            // Set the tip ID in the modal
+            document.getElementById('report-tip-id').value = tipId;
+
+            // Show the report modal
+            document.getElementById('report-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
 
         function deletePost(tipId) {
@@ -422,5 +441,254 @@
             }
         });
     </script>
+
+    <!-- Report Modal -->
+    <div id="report-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4" onclick="closeReportModal(event)">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-red-500 text-3xl">report</span>
+                    <h3 class="text-xl sm:text-2xl font-bold">Reportar Tip</h3>
+                </div>
+                <button onclick="closeReportModal()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors">
+                    <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">close</span>
+                </button>
+            </div>
+
+            <!-- Description -->
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">
+                Ayúdanos a mantener la comunidad segura. Selecciona la razón del reporte y proporciona detalles adicionales.
+            </p>
+
+            <!-- Form -->
+            <form id="report-form" onsubmit="submitReport(event)">
+                <input type="hidden" id="report-tip-id" name="tip_id">
+
+                <!-- Reason Selection -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">
+                        Razón del reporte <span class="text-red-500">*</span>
+                    </label>
+                    <div class="space-y-2">
+                        <label class="flex items-start gap-3 p-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary cursor-pointer transition-colors">
+                            <input type="radio" name="reason" value="spam" required class="mt-1 text-primary focus:ring-primary">
+                            <div>
+                                <span class="font-semibold text-slate-800 dark:text-slate-200">Spam</span>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Contenido repetitivo o promocional</p>
+                            </div>
+                        </label>
+
+                        <label class="flex items-start gap-3 p-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary cursor-pointer transition-colors">
+                            <input type="radio" name="reason" value="inappropriate" required class="mt-1 text-primary focus:ring-primary">
+                            <div>
+                                <span class="font-semibold text-slate-800 dark:text-slate-200">Contenido inapropiado</span>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Contenido ofensivo o inapropiado</p>
+                            </div>
+                        </label>
+
+                        <label class="flex items-start gap-3 p-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary cursor-pointer transition-colors">
+                            <input type="radio" name="reason" value="misleading" required class="mt-1 text-primary focus:ring-primary">
+                            <div>
+                                <span class="font-semibold text-slate-800 dark:text-slate-200">Información falsa</span>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Información incorrecta o engañosa</p>
+                            </div>
+                        </label>
+
+                        <label class="flex items-start gap-3 p-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary cursor-pointer transition-colors">
+                            <input type="radio" name="reason" value="harassment" required class="mt-1 text-primary focus:ring-primary">
+                            <div>
+                                <span class="font-semibold text-slate-800 dark:text-slate-200">Acoso</span>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Acoso o intimidación</p>
+                            </div>
+                        </label>
+
+                        <label class="flex items-start gap-3 p-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary cursor-pointer transition-colors">
+                            <input type="radio" name="reason" value="other" required class="mt-1 text-primary focus:ring-primary">
+                            <div>
+                                <span class="font-semibold text-slate-800 dark:text-slate-200">Otro</span>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Otra razón no listada</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-6">
+                    <label for="report-description" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                        Descripción adicional (opcional)
+                    </label>
+                    <textarea 
+                        id="report-description" 
+                        name="description" 
+                        rows="4" 
+                        maxlength="500"
+                        class="w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 resize-none"
+                        placeholder="Proporciona más detalles sobre el reporte..."
+                    ></textarea>
+                    <div class="flex justify-end mt-1">
+                        <span class="text-xs text-slate-500 dark:text-slate-400" id="char-count">0/500</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button 
+                        type="button" 
+                        onclick="closeReportModal()" 
+                        class="flex-1 px-6 py-3 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                    >
+                        Cancelar
+                    </button>
+                    <button 
+                        type="submit" 
+                        class="flex-1 px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
+                        id="submit-report-btn"
+                    >
+                        <span class="material-symbols-outlined">send</span>
+                        <span>Enviar Reporte</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Character counter for description
+        const reportDescription = document.getElementById('report-description');
+        const charCount = document.getElementById('char-count');
+
+        if (reportDescription && charCount) {
+            reportDescription.addEventListener('input', function() {
+                const count = this.value.length;
+                charCount.textContent = `${count}/500`;
+            });
+        }
+
+        // Close report modal
+        function closeReportModal(event) {
+            // If event is provided and clicked target is not the backdrop, don't close
+            if (event && event.target !== event.currentTarget) {
+                return;
+            }
+
+            const modal = document.getElementById('report-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore scrolling
+
+            // Reset form
+            document.getElementById('report-form').reset();
+            if (charCount) {
+                charCount.textContent = '0/500';
+            }
+        }
+
+        // Submit report
+        function submitReport(event) {
+            event.preventDefault();
+
+            const tipId = document.getElementById('report-tip-id').value;
+            const reason = document.querySelector('input[name="reason"]:checked')?.value;
+            const description = document.getElementById('report-description').value;
+
+            if (!reason) {
+                showNotification('Por favor selecciona una razón para el reporte', 'error');
+                return;
+            }
+
+            // Disable submit button
+            const submitBtn = document.getElementById('submit-report-btn');
+            const originalContent = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span><span>Enviando...</span>';
+
+            // Send report to backend
+            fetch(`/tips/${tipId}/report`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    reason: reason,
+                    description: description
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    closeReportModal();
+                    showNotification(data.message || 'Reporte enviado exitosamente', 'success');
+                } else {
+                    showNotification(data.message || 'Error al enviar el reporte', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Error al enviar el reporte. Por favor intenta de nuevo.', 'error');
+            })
+            .finally(() => {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalContent;
+            });
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+            const icon = type === 'success' ? 'check_circle' : 'error';
+
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-4 rounded-xl shadow-2xl z-[110] font-semibold max-w-md animate-slide-in`;
+            notification.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-2xl">${icon}</span>
+                    <span>${message}</span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+
+            // Remove notification after 4 seconds
+            setTimeout(() => {
+                notification.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // Close modal when pressing Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('report-modal');
+                if (modal && !modal.classList.contains('hidden')) {
+                    closeReportModal();
+                }
+            }
+        });
+    </script>
+
+    <style>
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .animate-slide-in {
+            animation: slide-in 0.3s ease-out;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+    </style>
 </body>
 </html>
