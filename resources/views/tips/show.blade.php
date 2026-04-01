@@ -6,14 +6,14 @@
     <div class="max-w-4xl mx-auto">
         <!-- Back Button -->
         <div class="mb-6">
-            <a href="{{ url()->previous() }}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+            <a href="{{route('dashboard')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                 <span class="material-symbols-outlined">arrow_back</span>
                 <span class="font-semibold">Back</span>
             </a>
         </div>
 
         <!-- Post Content -->
-        <article class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg overflow-hidden mb-8">
+        <article class="bg-white dark:bg-custom-dark-button rounded-2xl border border-slate-200 dark:border-transparent shadow-lg overflow-hidden mb-8">
             @php
                 $categoryColors = [
                     'Consumption' => ['bg' => 'bg-purple-100/90', 'text' => 'text-purple-600'],
@@ -50,18 +50,13 @@
                                 <button 
                                     id="follow-btn-{{ $tip->user_id }}" 
                                     onclick="toggleFollow({{ $tip->user_id }})" 
-                                    class="follow-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex-shrink-0
+                                    class="follow-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all flex-shrink-0
                                     {{ Auth::user()->isFollowing($tip->user_id) ? 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' : 'bg-primary text-background-dark hover:brightness-105' }}">
                                     <span class="material-symbols-outlined text-base">{{ Auth::user()->isFollowing($tip->user_id) ? 'person_check' : 'person_add' }}</span>
                                     <span class="follow-text">{{ Auth::user()->isFollowing($tip->user_id) ? 'Following' : 'Follow' }}</span>
                                 </button>
                             @endif
                         @endauth
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="{{ $colors['bg'] }} {{ $colors['text'] }} text-xs font-extrabold px-3 py-1.5 rounded-full uppercase whitespace-nowrap">
-                            {{ $tip->category }}
-                        </span>
                         <div class="relative">
                             <button onclick="toggleCardMenu('show-tip')" class="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
                                 <span class="material-symbols-outlined text-xl">more_vert</span>
@@ -87,7 +82,9 @@
                                 @endauth
                             </div>
                         </div>
+
                     </div>
+                   
                 </div>
 
                 <!-- Title -->
@@ -96,12 +93,12 @@
                 </h1>
 
                 <!-- Description -->
-                <div class="text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6 whitespace-pre-wrap">
+                <div class="text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                     {{ $tip->description }}
                 </div>
 
                 <!-- Interactions -->
-                <div class="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between pt-4">
                     <div class="flex items-center gap-4 sm:gap-6">
                         @auth
                             <button onclick="toggleLike({{ $tip->id }}, this)" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors group cursor-pointer">
@@ -138,7 +135,7 @@
         </article>
 
         <!-- Comments Section -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg p-6 sm:p-8">
+        <div class="p-6 sm:p-8">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
                 Comments ({{ $tip->comments()->count() }})
             </h2>
@@ -154,11 +151,11 @@
                                 name="content" 
                                 rows="3" 
                                 placeholder="Add a comment..."
-                                class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none"
+                                class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-button border border-slate-200 dark:border-slate-700 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none"
                                 required
                             ></textarea>
                             <div class="flex justify-end mt-2">
-                                <button type="submit" class="px-6 py-2 bg-primary text-background-dark font-bold rounded-lg hover:brightness-105 transition-all text-sm">
+                                <button type="submit" class="px-6 py-2 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 transition-all text-sm">
                                     Post Comment
                                 </button>
                             </div>
@@ -227,17 +224,17 @@
                                             name="content" 
                                             rows="2" 
                                             placeholder="Write a reply..."
-                                            class="flex-1 px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none"
+                                            class="flex-1 px-3 py-2 bg-slate-50 dark:bg-custom-dark-button border border-slate-200 dark:border-slate-700 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none"
                                             required
                                         ></textarea>
-                                        <div class="flex flex-col gap-1">
-                                            <button type="submit" class="px-4 py-1 bg-primary text-background-dark font-bold rounded-lg hover:brightness-105 transition-all text-xs">
+                                        <div class="flex flex-col gap-2">
+                                            <button type="submit" class="px-4 py-1 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 transition-all text-xs">
                                                 Reply
                                             </button>
                                             <button 
                                                 type="button" 
                                                 onclick="toggleReplyForm({{ $comment->id }})"
-                                                class="px-4 py-1 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-all text-xs"
+                                                class="px-4 py-1 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-full hover:bg-slate-300 dark:hover:bg-slate-600 transition-all text-xs"
                                             >
                                                 Cancel
                                             </button>

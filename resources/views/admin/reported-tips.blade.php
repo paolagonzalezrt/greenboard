@@ -7,7 +7,7 @@
         <!-- Header -->
         <div class="mb-8">
             <div class="flex items-center gap-3 mb-2">
-                <span class="material-symbols-outlined text-red-500 text-4xl">report</span>
+                
                 <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Panel de Administración</h1>
             </div>
             <p class="text-slate-600 dark:text-slate-400 text-lg">Gestión de tips reportados por la comunidad</p>
@@ -83,15 +83,12 @@
                         <div class="p-6 border-b-2 border-slate-200 dark:border-slate-700">
                             <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
                                 <div class="flex-1">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <span class="px-2 py-1 bg-{{ $tip['category'] === 'Energy' ? 'amber' : ($tip['category'] === 'Home' ? 'blue' : ($tip['category'] === 'Transport' ? 'emerald' : ($tip['category'] === 'Food' ? 'orange' : 'purple'))) }}-100 text-{{ $tip['category'] === 'Energy' ? 'amber' : ($tip['category'] === 'Home' ? 'blue' : ($tip['category'] === 'Transport' ? 'emerald' : ($tip['category'] === 'Food' ? 'orange' : 'purple'))) }}-700 text-xs font-bold rounded-full">
-                                            {{ $tip['category'] }}
-                                        </span>
+                                    <!-- <div class="flex items-center gap-2 mb-2">
                                         <span class="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-bold rounded-full flex items-center gap-1">
                                             <span class="material-symbols-outlined text-sm">report</span>
                                             {{ $tip['reports_count'] }} {{ $tip['reports_count'] === 1 ? 'Reporte' : 'Reportes' }}
                                         </span>
-                                    </div>
+                                    </div> -->
                                     <h3 class="text-xl font-bold mb-2">{{ $tip['title'] }}</h3>
                                     <p class="text-slate-600 dark:text-slate-400 mb-3 line-clamp-2">{{ $tip['description'] }}</p>
                                     <div class="flex items-center gap-2 text-sm text-slate-500">

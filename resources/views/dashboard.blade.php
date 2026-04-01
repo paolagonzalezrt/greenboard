@@ -13,53 +13,53 @@
     <div class="text-center mb-8 sm:mb-10 lg:mb-12 w-full">
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-6 sm:mb-8">Discover Sustainable Living</h1>
         <div class="max-w-3xl mx-auto">
-            <form action="{{ route('dashboard') }}" method="GET" class="relative group w-full">
-                <input 
-                    name="search" 
-                    value="{{ $search ?? '' }}" 
-                    class="w-full h-12 sm:h-14 pl-4 pr-12 bg-white dark:bg-custom-dark-input border-2 border-primary/20 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base sm:text-lg font-medium placeholder:text-slate-400 outline-none shadow-sm [&::-webkit-search-cancel-button]:hidden" 
-                    placeholder="Find your next sustainable habit..." 
-                    type="search"
-                />
-                <button type="submit" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-primary text-[20px] sm:text-[24px]">search</span>
-                </button>
-                <input type="hidden" name="sort" value="{{ $sortBy ?? 'desc' }}">
-                @if($category ?? false)
-                    <input type="hidden" name="category" value="{{ $category }}">
-                @endif
-            </form>
-
-            @if(($search ?? false) || ($category ?? false))
-                <div class="flex flex-wrap items-center justify-center gap-2 mt-3">
-                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Active filters:</span>
-
-                    @if($search ?? false)
-                        <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold">
-                            <span>{{ $search }}</span>
-                            <a href="{{ route('dashboard') }}?sort={{ $sortBy ?? 'desc' }}{{ ($category ?? false) ? '&category=' . $category : '' }}" class="hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-[14px]">close</span>
-                            </a>
-                        </div>
-                    @endif
-
-                    @if($category ?? false)
-                        <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold">
-                            <span>{{ $category }}</span>
-                            <a href="{{ route('dashboard') }}?sort={{ $sortBy ?? 'desc' }}{{ ($search ?? false) ? '&search=' . $search : '' }}" class="hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-[14px]">close</span>
-                            </a>
-                        </div>
-                    @endif
-
-                    @if(($search ?? false) && ($category ?? false))
-                        <a href="{{ route('dashboard') }}?sort={{ $sortBy ?? 'desc' }}" class="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
-                            <span class="material-symbols-outlined text-[14px]">clear_all</span>
-                            <span>Clear all</span>
-                        </a>
-                    @endif
-                </div>
+            <form action="{{ route('dashboard') }}" method="GET" class="relative max-w-2xl mx-auto group px-2">
+            <input 
+                name="search" 
+                value="{{ $search ?? '' }}" 
+                class="block w-full pl-4 sm:pl-6 pr-12 sm:pr-14 py-3 sm:py-4 lg:py-5 bg-white dark:bg-custom-dark-input border-2 border-slate-100 dark:border-slate-800 rounded-full text-sm sm:text-base lg:text-lg shadow-xl shadow-slate-200/50 dark:shadow-none focus:ring-4 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-400 [&::-webkit-search-cancel-button]:hidden" 
+                placeholder="Search for sustainable tips..." 
+                type="search"
+            />
+            <button type="submit" class="absolute inset-y-0 right-0 pr-4 sm:pr-8 flex items-center cursor-pointer hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary hover:text-primary transition-colors text-[20px] sm:text-[24px]">search</span>
+            </button>
+            <input type="hidden" name="sort" value="{{ $sortBy ?? 'desc' }}">
+            @if($category ?? false)
+                <input type="hidden" name="category" value="{{ $category }}">
             @endif
+        </form>
+
+        @if(($search ?? false) || ($category ?? false))
+            <div class="flex flex-wrap items-center justify-center gap-2 mt-4">
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Active filters:</span>
+
+                @if($search ?? false)
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold">
+                        <span>{{ $search }}</span>
+                        <a href="{{ route('dashboard') }}?sort={{ $sortBy ?? 'desc' }}{{ ($category ?? false) ? '&category=' . $category : '' }}" class="hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[14px]">close</span>
+                        </a>
+                    </div>
+                @endif
+
+                @if($category ?? false)
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold">
+                        <span>{{ $category }}</span>
+                        <a href="{{ route('dashboard') }}?sort={{ $sortBy ?? 'desc' }}{{ ($search ?? false) ? '&search=' . $search : '' }}" class="hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[14px]">close</span>
+                        </a>
+                    </div>
+                @endif
+
+                @if(($search ?? false) && ($category ?? false))
+                    <a href="{{ route('dashboard') }}?sort={{ $sortBy ?? 'desc' }}" class="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                        <span class="material-symbols-outlined text-[14px]">clear_all</span>
+                        <span>Clear all</span>
+                    </a>
+                @endif
+            </div>
+        @endif
         </div>
     </div>
 
@@ -118,23 +118,22 @@
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
             <div class="flex items-center gap-2 sm:gap-3">
                 <h2 class="text-xl sm:text-2xl font-bold">Featured Sustainable Tips</h2>
-                <span class="px-2.5 sm:px-3 py-0.5 sm:py-1 bg-primary/20 text-primary text-[9px] sm:text-[10px] font-bold rounded-full uppercase tracking-wider">Trending Now</span>
             </div>
 
             <!-- Sort Options -->
             <div class="flex items-center gap-2">
-                <span class="text-sm text-slate-600 dark:text-slate-400 hidden sm:block">Sort by:</span>
-                <form action="{{ route('dashboard') }}" method="GET" class="flex gap-2">
+                <span class="text-sm text-sort-text-light dark:text-sort-border-dark sm:block">Sort by:</span>
+                <form action="{{ route('dashboard') }}" method="GET" class="flex gap-0">
                     @if($search ?? false)
                         <input type="hidden" name="search" value="{{ $search }}">
                     @endif
                     @if($category ?? false)
                         <input type="hidden" name="category" value="{{ $category }}">
                     @endif
-                    <button type="submit" name="sort" value="desc" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full transition-all {{ ($sortBy ?? 'desc') === 'desc' ? 'bg-slate-700 dark:bg-slate-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' }}">
+                    <button type="submit" name="sort" value="desc" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full transition-all {{ ($sortBy ?? 'desc') === 'desc' ? 'bg-white dark:bg-custom-dark-button text-sort-text-light dark:text-white shadow-md dark:shadow-none' : 'bg-transparent text-sort-text-light dark:text-sort-border-dark hover:text-sort-text-light dark:hover:text-white' }}">
                         Newest
                     </button>
-                    <button type="submit" name="sort" value="asc" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full transition-all {{ ($sortBy ?? 'desc') === 'asc' ? 'bg-slate-700 dark:bg-slate-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' }}">
+                    <button type="submit" name="sort" value="asc" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full transition-all {{ ($sortBy ?? 'desc') === 'asc' ? 'bg-white dark:bg-custom-dark-button text-sort-text-light dark:text-white shadow-md dark:shadow-none' : 'bg-transparent text-sort-text-light dark:text-sort-border-dark hover:text-sort-text-light dark:hover:text-white' }}">
                         Oldest
                     </button>
                 </form>
@@ -167,7 +166,7 @@
     </section>
 
     <!-- Floating Action Button (FAB) -->
-    <a href="{{ route('tips.create') }}" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 h-12 sm:h-14 px-4 sm:px-6 bg-primary text-background-dark font-bold rounded-xl shadow-2xl shadow-primary/40 hover:scale-110 active:scale-95 transition-all flex items-center justify-center gap-2 z-50">
+    <a href="{{ route('tips.create') }}" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 h-12 sm:h-14 px-4 sm:px-6 bg-primary text-background-dark font-bold rounded-full shadow-2xl shadow-primary/40 hover:scale-110 active:scale-95 transition-all flex items-center justify-center gap-2 z-50">
         <span class="material-symbols-outlined text-xl sm:text-2xl">add</span>
         <span class="hidden sm:inline text-sm sm:text-base">Create Post</span>
     </a>

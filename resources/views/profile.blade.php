@@ -25,20 +25,17 @@
                     </div>
                     @endif
                     <div class="flex flex-wrap justify-center sm:justify-start gap-x-4 sm:gap-x-8 gap-y-2">
-                        <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">calendar_today</span>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">Joined {{ Auth::user()->created_at->format('F Y') }}</span>
-                        </div>
+                       
                         <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                             <span class="material-symbols-outlined text-primary text-lg sm:text-xl">article</span>
                             <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">{{ $postsCount }} {{ $postsCount == 1 ? 'Post' : 'Posts' }}</span>
                         </div>
                         <button onclick="showFollowersList()" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">group</span>
+                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person</span>
                             <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="followers-count">{{ Auth::user()->followers()->count() }}</span> Followers</span>
                         </button>
                         <button onclick="showFollowingList()" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person_add</span>
+                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person</span>
                             <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="following-count">{{ Auth::user()->following()->count() }}</span> Following</span>
                         </button>
                     </div>

@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<header class="relative overflow-hidden pt-16 pb-24 lg:pt-32 lg:pb-40">
+<header class="relative  pt-16 pb-24 lg:pt-32 lg:pb-40">
 <div class="max-w-7xl mx-auto px-6 relative z-10">
 <div class="grid lg:grid-cols-12 gap-12 items-center">
 <div class="lg:col-span-7">

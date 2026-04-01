@@ -4,12 +4,16 @@
 
 @section('content')
     <div class="max-w-3xl mx-auto">
+        <!-- Back Button -->
+        <div class="mb-6">
+            <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">arrow_back</span>
+                <span class="font-semibold">Back</span>
+            </a>
+        </div>
         <!-- Header -->
-        <div class="mb-8 sm:mb-10">
-            <div class="flex items-center gap-3 mb-4">
-                <a href="{{ route('dashboard') }}" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
-                    <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">arrow_back</span>
-                </a>
+        <div class="mb-8 sm:mb-10 text-center">
+            <div class="flex justify-center items-center gap-3 mb-4">
                 <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Create New Post</h1>
             </div>
             <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg">
@@ -141,20 +145,23 @@
 
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <button 
-                    type="submit"
-                    class="flex-1 px-6 py-4 bg-primary text-background-dark font-bold rounded-xl hover:brightness-105 shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2"
-                >
-                    <span class="material-symbols-outlined">send</span>
-                    <span>Publish Post</span>
-                </button>
-                <a 
+             <a 
                     href="{{ route('dashboard') }}"
-                    class="px-6 py-4 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2"
+                    class="px-6 py-4 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-bold rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2"
                 >
-                    <span class="material-symbols-outlined">close</span>
+                    
                     <span>Cancel</span>
-                </a>
+                    
+                </a>    
+            <button 
+                    type="submit"
+                    class="flex-1 px-6 py-4 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2"
+                >
+                    
+                    <span>Publish Post</span>
+                    
+                </button>
+               
             </div>
         </form>
     </div>

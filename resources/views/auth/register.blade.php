@@ -220,13 +220,13 @@ class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border border
 
 
 <p class="text-center mt-8 text-slate-600 dark:text-slate-400">
+    <span class="block">
+        {{ __('register.have_account') }}
+    </span>
 
-<span>{{ __('register.have_account') }}</span>
-
-<a class="text-primary font-bold hover:underline" href="{{ route('login') }}">
-{{ __('register.login') }}
-</a>
-
+    <a class="block text-primary font-bold hover:underline" href="{{ route('login') }}">
+        {{ __('register.login') }}
+    </a>
 </p>
 
 </div>

@@ -83,8 +83,10 @@
             </form>
 
             <p class="text-center mt-8 text-slate-600 dark:text-slate-400">
-                <span>{{ __('login.no_account') }}</span>
-                <a class="text-primary font-bold hover:underline" href="{{ route('register') }}">{{ __('login.sign_up') }}</a>
+                <span class="block">{{ __('login.no_account') }}</span>
+                <a class="block text-primary font-bold hover:underline" href="{{ route('register') }}">
+                    {{ __('login.sign_up') }}
+                </a>
             </p>
         </div>
     </div>

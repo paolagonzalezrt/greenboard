@@ -118,7 +118,7 @@
             <!-- Sort Options -->
             <div class="flex items-center gap-2">
                 <span class="text-sm text-sort-text-light dark:text-sort-border-dark sm:block">Sort by:</span>
-                <form action="{{ route('home') }}" method="GET" class="flex gap-1">
+                <form action="{{ route('home') }}" method="GET" class="flex gap-0">
                     @if($search ?? false)
                         <input type="hidden" name="search" value="{{ $search }}">
                     @endif

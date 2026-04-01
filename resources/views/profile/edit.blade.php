@@ -21,7 +21,7 @@
         @endif
 
         <!-- Update Profile Information -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-6">
+        <div class="bg-white dark:bg-custom-dark-button rounded-2xl shadow-lg p-6 sm:p-8 mb-6">
             <div class="mb-6">
                 <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Información del Perfil</h2>
                 <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Actualiza tu información de perfil y dirección de correo electrónico.</p>
@@ -40,7 +40,7 @@
                         </div>
                         <div>
                             <input type="file" name="photo" id="photo" accept="image/*" class="hidden" onchange="previewPhoto(event)">
-                            <label for="photo" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-lg font-semibold text-sm cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors">
+                            <label for="photo" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-200 bg-white dark:bg-custom-dark-input text-slate-900 dark:text-slate-100 rounded-lg font-semibold text-sm cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors">
                                 <span class="material-symbols-outlined text-lg">upload</span>
                                 Cambiar Foto
                             </label>
@@ -56,7 +56,7 @@
                 <div class="mb-6">
                     <label for="name" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Nombre</label>
                     <input type="text" name="name" id="name" value="{{ old('name', Auth::user()->name) }}" required
-                        class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                        class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-input border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
                     @error('name')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
@@ -66,7 +66,7 @@
                 <div class="mb-6">
                     <label for="email" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Email</label>
                     <input type="email" name="email" id="email" value="{{ old('email', Auth::user()->email) }}" required
-                        class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                        class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-input border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
                     @error('email')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
@@ -76,7 +76,7 @@
                 <div class="mb-6">
                     <label for="bio" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Biografía</label>
                     <textarea name="bio" id="bio" rows="4" maxlength="500"
-                        class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                        class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-input border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                         placeholder="Cuéntanos algo sobre ti...">{{ old('bio', Auth::user()->bio) }}</textarea>
                     <p class="mt-1 text-xs text-slate-500 dark:text-slate-400"><span id="bio-count">{{ strlen(Auth::user()->bio ?? '') }}</span>/500 caracteres</p>
                     @error('bio')
@@ -95,7 +95,7 @@
         </div>
 
         <!-- Update Password -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-6">
+        <div class="bg-white dark:bg-custom-dark-button rounded-2xl shadow-lg p-6 sm:p-8 mb-6">
             <div class="mb-6">
                 <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Actualizar Contraseña</h2>
                 <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Asegúrate de que tu cuenta esté usando una contraseña larga y aleatoria para mantenerte seguro.</p>
@@ -109,7 +109,7 @@
                 <div class="mb-6">
                     <label for="current_password" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Contraseña Actual</label>
                     <input type="password" name="current_password" id="current_password" required
-                        class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                        class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-input border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
                     @error('current_password')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
@@ -119,7 +119,7 @@
                 <div class="mb-6">
                     <label for="password" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Nueva Contraseña</label>
                     <input type="password" name="password" id="password" required
-                        class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                        class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-input border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
                     @error('password')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
@@ -129,7 +129,7 @@
                 <div class="mb-6">
                     <label for="password_confirmation" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Confirmar Contraseña</label>
                     <input type="password" name="password_confirmation" id="password_confirmation" required
-                        class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                        class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-input border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
                 </div>
 
                 <!-- Submit Button -->
@@ -143,7 +143,7 @@
         </div>
 
         <!-- Delete Account -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 sm:p-8 border-2 border-red-200 dark:border-red-900">
+        <div class="bg-white dark:bg-custom-dark-button rounded-2xl shadow-lg p-6 sm:p-8 border-2 border-red-200 dark:border-red-900">
             <div class="mb-6">
                 <h2 class="text-xl font-bold text-red-600 dark:text-red-400">Eliminar Cuenta</h2>
                 <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados permanentemente. Esta acción no se puede deshacer.</p>
