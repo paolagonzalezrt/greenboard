@@ -6,10 +6,17 @@
     <div class="max-w-4xl mx-auto">
         <!-- Back Button -->
         <div class="mb-6">
-            <a href="{{route('dashboard')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">arrow_back</span>
-                <span class="font-semibold">Back</span>
-            </a>
+            @auth
+                <a href="{{route('dashboard')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    <span class="font-semibold">Back</span>
+                </a>
+            @else
+                <a href="{{route('home')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    <span class="font-semibold">Back</span>
+                </a>
+            @endauth
         </div>
 
         <!-- Post Content -->
