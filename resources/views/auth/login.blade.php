@@ -71,7 +71,10 @@
                     </div>
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock</span>
-                        <input name="password" required class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="••••••••" type="password"/>
+                        <input id="login-password" name="password" required class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="••••••••" type="password"/>
+                        <button type="button" onclick="togglePasswordVisibility('login-password')" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+                            <span class="material-symbols-outlined text-xl" id="login-password-icon" style="font-variation-settings: 'wght' 200">visibility_off</span>
+                        </button>
                     </div>
                 </div>
 
@@ -91,6 +94,19 @@
 </div>
 
 <script>
+
+function togglePasswordVisibility(fieldId) {
+    const input = document.getElementById(fieldId);
+    const icon = document.getElementById(fieldId + '-icon');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.innerText = 'visibility';
+    } else {
+        input.type = 'password';
+        icon.innerText = 'visibility_off';
+    }
+}
 
 function toggleDarkMode() {
     const html = document.documentElement;
