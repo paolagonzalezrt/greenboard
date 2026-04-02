@@ -17,11 +17,13 @@
                     <div>
                         <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-100">{{ $user->name }}</h1>
                     </div>
+                    @if($user->bio)
                     <div class="max-w-2xl">
                         <p class="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-400">
-                            Urban gardener and zero-waste enthusiast. I've been on a mission to reduce my environmental footprint since 2020. Lover of composting, native plants, and DIY upcycling. Join me in making the world a bit greener, one tip at a time! 🌱
+                            {{ $user->bio }}
                         </p>
                     </div>
+                    @endif
                     <div class="flex flex-wrap justify-center sm:justify-start gap-x-4 sm:gap-x-8 gap-y-2">
                        
                         <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
