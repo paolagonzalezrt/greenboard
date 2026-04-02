@@ -142,6 +142,10 @@
                                 <span class="font-medium">Administration</span>
                             </a>
                         @endif
+                        <a class="{{ request()->routeIs('profile') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('profile') }}" onclick="toggleMobileMenu()">
+                            <span class="material-symbols-outlined text-[22px]">person</span>
+                            <span class="font-medium">Mi Perfil</span>
+                        </a>
                     </nav>
                 </div>
 
@@ -187,14 +191,6 @@
                             <span class="font-medium">Cerrar Sesión</span>
                         </button>
                     </form>
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="p-4 border-t border-slate-200 dark:border-slate-700">
-                <div class="flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400">
-                    <span class="material-symbols-outlined text-primary text-xl">eco</span>
-                    <span class="text-sm font-bold">GreenBoard</span>
                 </div>
             </div>
         </div>
