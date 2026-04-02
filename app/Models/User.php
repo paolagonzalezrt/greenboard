@@ -52,6 +52,46 @@ class User extends Authenticatable
     }
 
     /**
+     * Obtener la URL del avatar del usuario
+     * Si tiene foto, retorna la ruta; si no, retorna null
+     */
+    public function getAvatarUrl()
+    {
+        if ($this->photo) {
+            return asset('storage/' . $this->photo);
+        }
+        return null;
+    }
+
+    /**
+     * Verificar si el usuario tiene foto de perfil
+     */
+    public function hasProfilePhoto()
+    {
+        return !is_null($this->photo) && !empty($this->photo);
+    }
+
+    /**
+     * Obtener el color de fondo basado en el ID del usuario
+     * Retorna una clase de Tailwind consistente
+     */
+    public function getAvatarBgColor()
+    {
+        $colors = [
+            'bg-blue-500',
+            'bg-green-500',
+            'bg-red-500',
+            'bg-purple-500',
+            'bg-pink-500',
+            'bg-yellow-500',
+            'bg-indigo-500',
+            'bg-teal-500',
+        ];
+        $colorIndex = $this->id % count($colors);
+        return $colors[$colorIndex];
+    }
+
+    /**
      * Relación con los tips publicados
      */
     public function tips()

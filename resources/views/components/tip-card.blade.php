@@ -1,4 +1,4 @@
-@props(['id' => null, 'userId' => null, 'category', 'user', 'title', 'description', 'likes', 'comments', 'image' => null, 'avatar', 'published_at' => null, 'isLiked' => false, 'isBookmarked' => false])
+@props(['id' => null, 'userId' => null, 'category', 'user', 'user_obj', 'title', 'description', 'likes', 'comments', 'image' => null, 'published_at' => null, 'isLiked' => false, 'isBookmarked' => false])
 
 @php
     $categoryColors = [
@@ -24,7 +24,7 @@
             <!-- Header with Category Badge (Right aligned) - Same as cards without image -->
             <div class="flex items-start justify-between mb-3 sm:mb-4">
                 <div class="flex items-start gap-2 flex-1 min-w-0 pr-2">
-                    <img alt="{{ $user }}" class="size-6 sm:size-7 rounded-full bg-slate-100 object-cover flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity" src="{{ $avatar }}" onclick="event.stopPropagation(); window.location.href='{{ $userId ? route('users.show', $userId) : '#' }}'"/>
+                    <x-profile-avatar :user="$user_obj" size="xs" class="cursor-pointer hover:opacity-80 transition-opacity" onclick="event.stopPropagation(); window.location.href='{{ $userId ? route('users.show', $userId) : '#' }}'"/>
                     <div class="flex flex-col min-w-0">
                         <span class="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 hover:!text-primary truncate cursor-pointer transition-colors" onclick="event.stopPropagation(); window.location.href='{{ $userId ? route('users.show', $userId) : '#' }}'">{{ $user }}</span>
                         @if($published_at)
@@ -92,7 +92,7 @@
             <!-- Header with Category Badge (Right aligned) -->
             <div class="flex items-start justify-between mb-3 sm:mb-4">
                 <div class="flex items-start gap-2 flex-1 min-w-0 pr-2">
-                    <img alt="{{ $user }}" class="size-6 sm:size-7 rounded-full bg-slate-100 object-cover flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity" src="{{ $avatar }}" onclick="event.stopPropagation(); window.location.href='{{ $userId ? route('users.show', $userId) : '#' }}'"/>
+                    <x-profile-avatar :user="$user_obj" size="xs" class="cursor-pointer hover:opacity-80 transition-opacity" onclick="event.stopPropagation(); window.location.href='{{ $userId ? route('users.show', $userId) : '#' }}'"/>
                     <div class="flex flex-col min-w-0">
                         <span class="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 hover:!text-primary truncate cursor-pointer transition-colors" onclick="event.stopPropagation(); window.location.href='{{ $userId ? route('users.show', $userId) : '#' }}'">{{ $user }}</span>
                         @if($published_at)

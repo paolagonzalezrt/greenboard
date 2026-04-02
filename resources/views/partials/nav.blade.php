@@ -63,8 +63,8 @@
 
             <div class="hidden lg:block relative">
                 <!-- Desktop Profile Button with Dropdown -->
-                <button onclick="toggleProfileMenu()" class="size-8 sm:size-9 rounded-full bg-primary/20 border-2 border-primary/20 flex items-center justify-center overflow-hidden hover:border-primary transition-all" title="{{ Auth::user()->name }}">
-                    <span class="material-symbols-outlined text-primary text-[20px] sm:text-[24px]">account_circle</span>
+                <button onclick="toggleProfileMenu()" class="rounded-full hover:opacity-80 transition-opacity" title="{{ Auth::user()->name }}">
+                    <x-profile-avatar :user="Auth::user()" size="md" />
                 </button>
 
                 <!-- Desktop Dropdown Menu -->
@@ -105,9 +105,7 @@
             <!-- Header with User Info -->
             <div class="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700">
                 <div class="flex items-center gap-3">
-                    <div class="size-10 rounded-full bg-primary/20 border-2 border-primary/30 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-primary text-[24px]">account_circle</span>
-                    </div>
+                    <x-profile-avatar :user="Auth::user()" size="sm" />
                     <div>
                         <p class="font-bold text-slate-800 dark:text-slate-100">{{ Auth::user()->name }}</p>
                         <p class="text-xs text-slate-500 dark:text-slate-400">{{ Auth::user()->email }}</p>

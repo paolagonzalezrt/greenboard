@@ -145,17 +145,17 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 items-stretch">
             @forelse($tips as $tip)
-                <x-tip-card 
+                <x-tip-card
                     :id="$tip['id']"
                     :userId="$tip['user_id']"
                     :category="$tip['category']"
                     :user="$tip['user']"
+                    :user_obj="$tip['user_obj']"
                     :title="$tip['title']"
                     :description="$tip['description']"
                     :likes="$tip['likes']"
                     :comments="$tip['comments']"
                     :image="$tip['image']"
-                    :avatar="$tip['avatar']"
                     :published_at="$tip['published_at']"
                     :isLiked="$tip['is_liked']"
                     :isBookmarked="$tip['is_bookmarked']"

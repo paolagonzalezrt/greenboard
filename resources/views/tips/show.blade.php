@@ -46,7 +46,7 @@
                 <div class="flex items-start justify-between mb-4">
                     <div class="flex items-center gap-3 flex-1 min-w-0">
                         <a href="{{ route('users.show', $tip->user->id) }}" class="flex items-center gap-3 flex-1 min-w-0">
-                            <img src="{{ $tip->user->photo ?? 'https://via.placeholder.com/50' }}" alt="{{ $tip->user->name }}" class="size-12 rounded-full object-cover flex-shrink-0 hover:opacity-80 transition-opacity">
+                            <x-profile-avatar :user="$tip->user" size="lg" class="hover:opacity-80 transition-opacity" onclick="event.stopPropagation()" />
                             <div class="flex flex-col min-w-0">
                                 <span class="text-base font-bold text-slate-900 dark:text-slate-100 hover:text-primary transition-colors">{{ $tip->user->name }}</span>
                                 <span class="text-sm text-slate-500 dark:text-slate-400">{{ $tip->created_at->diffForHumans() }}</span>
@@ -152,7 +152,7 @@
                 <form action="{{ route('comments.store', $tip) }}" method="POST" class="mb-8">
                     @csrf
                     <div class="flex gap-3">
-                        <img src="{{ Auth::user()->photo ?? 'https://via.placeholder.com/50' }}" alt="{{ Auth::user()->name }}" class="size-10 rounded-full object-cover flex-shrink-0">
+                        <x-profile-avatar :user="Auth::user()" size="sm" />
                         <div class="flex-1">
                             <textarea 
                                 name="content" 
@@ -183,7 +183,7 @@
                 @forelse($comments as $comment)
                     <div class="flex gap-3" id="comment-{{ $comment->id }}">
                         <!-- Avatar -->
-                        <img src="{{ $comment->user->photo ?? 'https://via.placeholder.com/50' }}" alt="{{ $comment->user->name }}" class="size-10 rounded-full object-cover flex-shrink-0">
+                        <x-profile-avatar :user="$comment->user" size="sm" />
                         
                         <!-- Comment Content -->
                         <div class="flex-1 min-w-0">
@@ -276,7 +276,7 @@
                                 <div class="mt-4 pl-4 border-l-2 border-slate-200 dark:border-slate-700 space-y-4">
                                     @foreach($comment->replies as $reply)
                                         <div class="flex gap-3">
-                                            <img src="{{ $reply->user->photo ?? 'https://via.placeholder.com/50' }}" alt="{{ $reply->user->name }}" class="size-8 rounded-full object-cover flex-shrink-0">
+                                            <x-profile-avatar :user="$reply->user" size="sm" />
                                             <div class="flex-1 min-w-0">
                                                 <div class="flex items-center gap-2 mb-1 flex-wrap">
                                                     <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">{{ $reply->user->name }}</span>

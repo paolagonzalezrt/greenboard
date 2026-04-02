@@ -35,12 +35,17 @@
                 <div class="mb-6">
                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Foto de Perfil</label>
                     <div class="flex items-center gap-6">
-                        <div class="size-24 rounded-full border-4 border-white dark:border-slate-800 bg-slate-200 shadow-lg overflow-hidden">
-                            <img id="photo-preview" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&size=400&background=13ec5b&color=102216&bold=true' }}"/>
+                        <div class="flex flex-col items-center">
+                            <div class="size-24 rounded-full shadow-lg overflow-hidden sm:border-4 sm:border-white sm:dark:border-slate-800">
+                                <img id="photo-preview" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover hidden" />
+                                <div id="avatar-preview">
+                                    <x-profile-avatar :user="Auth::user()" size="lg" />
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <input type="file" name="photo" id="photo" accept="image/*" class="hidden" onchange="previewPhoto(event)">
-                            <label for="photo" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-200 bg-white dark:bg-custom-dark-input text-slate-900 dark:text-slate-100 rounded-lg font-semibold text-sm cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors">
+                            <label for="photo" class="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-custom-dark-input text-slate-900 dark:text-slate-100 rounded-lg font-semibold text-sm cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-600">
                                 <span class="material-symbols-outlined text-lg">upload</span>
                                 Cambiar Foto
                             </label>
@@ -196,6 +201,8 @@
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
+                    document.getElementById('avatar-preview').style.display = 'none';
+                    document.getElementById('photo-preview').classList.remove('hidden');
                     document.getElementById('photo-preview').src = e.target.result;
                 };
                 reader.readAsDataURL(input.files[0]);

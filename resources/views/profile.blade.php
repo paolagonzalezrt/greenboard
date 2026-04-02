@@ -6,9 +6,9 @@
         <div class="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8">
             <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8">
                 <!-- Profile Image -->
-                <div class="flex-shrink-0">
-                    <div class="size-20 sm:size-24 md:size-32 rounded-full border-4 border-white dark:border-slate-800 bg-slate-200 shadow-lg overflow-hidden mx-auto sm:mx-0">
-                        <img alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=400&background=13ec5b&color=102216&bold=true"/>
+                <div class="flex-shrink-0 flex justify-center sm:justify-start">
+                    <div class="rounded-full shadow-lg overflow-hidden sm:border-4 sm:border-white sm:dark:border-slate-800">
+                        <x-profile-avatar :user="Auth::user()" size="profile" />
                     </div>
                 </div>
 
@@ -92,12 +92,12 @@
                         :userId="$tip['user_id']"
                         :category="$tip['category']"
                         :user="$tip['user']"
+                        :user_obj="$tip['user_obj']"
                         :title="$tip['title']"
                         :description="$tip['description']"
                         :likes="$tip['likes']"
                         :comments="$tip['comments']"
                         :image="$tip['image']"
-                        :avatar="$tip['avatar']"
                         :published_at="$tip['published_at']"
                         :isLiked="$tip['is_liked']"
                         :isBookmarked="$tip['is_bookmarked']"
