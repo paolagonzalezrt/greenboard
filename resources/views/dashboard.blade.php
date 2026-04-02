@@ -149,7 +149,7 @@
             </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 items-stretch">
-            @foreach($tips as $tip)
+            @forelse($tips as $tip)
                 <x-tip-card
                     :id="$tip['id']"
                     :userId="$tip['user_id']"
@@ -165,7 +165,19 @@
                     :isLiked="$tip['is_liked']"
                     :isBookmarked="$tip['is_bookmarked']"
                 />
-            @endforeach
+            @empty
+                <div class="col-span-full">
+                    <div class="flex flex-col items-center justify-center py-16 px-4">
+                        <span class="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-600 mb-4">search_off</span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-700 dark:text-slate-300 mb-2">No Tips Found</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-center max-w-md mb-6">We couldn't find any sustainable tips matching your search or filter. Try adjusting your filters or browse our categories.</p>
+                        <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 transition-all">
+                            <span class="material-symbols-outlined">clear_all</span>
+                            <span>Clear Filters</span>
+                        </a>
+                    </div>
+                </div>
+            @endforelse
         </div>
 
         <!-- Pagination -->
