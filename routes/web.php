@@ -116,13 +116,17 @@ Route::post('/register', function (Request $request) {
         'password' => 'required|string|min:8',
     ]);
 
-    User::create([
+    $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
     ]);
 
-    return redirect()->route('login')->with('success', 'Cuenta creada con éxito');
+    // Autenticar al usuario automáticamente
+    Auth::login($user);
+    $request->session()->regenerate();
+
+    return redirect()->route('dashboard')->with('success', 'Cuenta creada con éxito');
 });
 
 // LOGOUT (IMPORTANTE: Laravel recomienda que sea POST por seguridad)
