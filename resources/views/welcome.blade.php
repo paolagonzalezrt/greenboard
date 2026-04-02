@@ -116,22 +116,31 @@
             <h2 class="text-xl sm:text-2xl font-bold">Featured Sustainable Tips</h2>
 
             <!-- Sort Options -->
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-3">
                 <span class="text-sm text-sort-text-light dark:text-sort-border-dark sm:block">Sort by:</span>
-                <form action="{{ route('home') }}" method="GET" class="flex gap-0">
-                    @if($search ?? false)
-                        <input type="hidden" name="search" value="{{ $search }}">
-                    @endif
-                    @if($category ?? false)
-                        <input type="hidden" name="category" value="{{ $category }}">
-                    @endif
-                    <button type="submit" name="sort" value="desc" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full transition-all {{ ($sortBy ?? 'desc') === 'desc' ? 'bg-white dark:bg-custom-dark-button text-sort-text-light dark:text-white shadow-md dark:shadow-none' : 'bg-transparent text-sort-text-light dark:text-sort-border-dark hover:text-sort-text-light dark:hover:text-white' }}">
-                        Newest
+                <div class="relative">
+                    <button onclick="toggleSortDropdown()" class="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full bg-white dark:bg-custom-dark-button text-sort-text-light dark:text-white shadow-md dark:shadow-none hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                        
+                        <span>{{ ($sortBy ?? 'desc') === 'desc' ? 'Newest' : 'Oldest' }}</span>
+                        <span class="material-symbols-outlined text-lg">unfold_more</span>
                     </button>
-                    <button type="submit" name="sort" value="asc" class="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full transition-all {{ ($sortBy ?? 'desc') === 'asc' ? 'bg-white dark:bg-custom-dark-button text-sort-text-light dark:text-white shadow-md dark:shadow-none' : 'bg-transparent text-sort-text-light dark:text-sort-border-dark hover:text-sort-text-light dark:hover:text-white' }}">
-                        Oldest
-                    </button>
-                </form>
+                    <div id="sort-dropdown" class="hidden absolute right-0 mt-2 w-28 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl shadow-xl overflow-hidden z-50">
+                        <form action="{{ route('home') }}" method="GET" class="flex flex-col">
+                            @if($search ?? false)
+                                <input type="hidden" name="search" value="{{ $search }}">
+                            @endif
+                            @if($category ?? false)
+                                <input type="hidden" name="category" value="{{ $category }}">
+                            @endif
+                            <button type="submit" name="sort" value="desc" class="block px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors text-left {{ ($sortBy ?? 'desc') === 'desc' ? 'bg-primary/10 text-primary' : 'text-sort-text-light dark:text-slate-300' }}">
+                                Newest
+                            </button>
+                            <button type="submit" name="sort" value="asc" class="block px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors text-left {{ ($sortBy ?? 'desc') === 'asc' ? 'bg-primary/10 text-primary' : 'text-sort-text-light dark:text-slate-300' }}">
+                                Oldest
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 items-stretch">
@@ -171,4 +180,20 @@
             </div>
         </div>
     @endguest
+
+<script>
+function toggleSortDropdown() {
+    const dropdown = document.getElementById('sort-dropdown');
+    dropdown.classList.toggle('hidden');
+}
+
+window.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('sort-dropdown');
+    const button = event.target.closest('button[onclick*="toggleSortDropdown"]');
+    
+    if (!button && dropdown && !dropdown.classList.contains('hidden')) {
+        dropdown.classList.add('hidden');
+    }
+});
+</script>
 @endsection
