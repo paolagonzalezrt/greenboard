@@ -8,7 +8,8 @@
 @php $currentLang = app()->getLocale(); @endphp
 
 <div class="flex min-h-screen w-full flex-col lg:flex-row">
-    <div id="hero-section" class="flex lg:w-1/2 relative overflow-hidden bg-primary/10 h-screen lg:min-h-screen cursor-pointer lg:cursor-default group" onclick="showForm()">
+    <!-- Hero Section (solo en pantallas grandes) -->
+    <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary/10 h-screen lg:min-h-screen group">
         <div class="absolute inset-0 bg-cover bg-center z-0 transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-transparent to-transparent z-10"></div>
         <div class="relative z-20 flex flex-col justify-end p-10 lg:p-16 w-full h-full">
@@ -18,13 +19,10 @@
             </div>
             <h1 class="text-white text-4xl lg:text-5xl font-black leading-tight mb-4">{{ __('login.hero_title') }}</h1>
             <p class="text-slate-200 text-lg max-w-md mb-6 lg:mb-0">{{ __('login.hero_desc') }}</p>
-            <div class="lg:hidden flex items-center text-primary font-bold animate-bounce mt-4">
-                <span class="material-symbols-outlined mr-2">touch_app</span> {{ __('login.tap_login') }}
-            </div>
         </div>
     </div>
 
-    <div id="form-section" class="hidden lg:flex flex-1 flex-col justify-center items-center px-6 py-12 lg:px-20 bg-background-light dark:bg-background-dark fade-in relative">
+    <div id="form-section" class="flex flex-1 flex-col justify-center items-center px-6 py-12 lg:px-20 bg-background-light dark:bg-background-dark fade-in relative">
         
         <div class="w-full max-w-[440px] flex items-center justify-between mb-8 absolute top-8 px-6 lg:px-0 lg:static lg:mb-12">
             <a href="{{ url('/') }}" class="flex items-center gap-1.5 text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-primary transition-colors">
@@ -93,15 +91,6 @@
 </div>
 
 <script>
-
-function showForm() {
-    if (window.innerWidth < 1024) {
-        document.getElementById('hero-section').classList.add('hidden');
-        const form = document.getElementById('form-section');
-        form.classList.remove('hidden');
-        form.classList.add('flex');
-    }
-}
 
 function toggleDarkMode() {
     const html = document.documentElement;

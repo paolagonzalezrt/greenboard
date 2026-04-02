@@ -9,9 +9,9 @@
 
 <div class="flex min-h-screen w-full flex-col lg:flex-row">
 
-<!-- HERO SECTION -->
+<!-- HERO SECTION (solo en pantallas grandes) -->
 
-<div id="hero-section" class="flex lg:w-1/2 relative overflow-hidden bg-primary/10 h-screen lg:min-h-screen cursor-pointer lg:cursor-default group" onclick="showForm()">
+<div class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary/10 h-screen lg:min-h-screen group">
 
 <div class="absolute inset-0 bg-cover bg-center z-0 transition-transform duration-700 group-hover:scale-105"
 style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80');"></div>
@@ -33,18 +33,13 @@ style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4
 {{ __('register.hero_desc') }}
 </p>
 
-<div class="lg:hidden flex items-center text-primary font-bold animate-bounce mt-4">
-<span class="material-symbols-outlined mr-2">touch_app</span>
-{{ __('register.tap_start') }}
-</div>
-
 </div>
 </div>
 
 
 <!-- FORM SECTION -->
 
-<div id="form-section" class="hidden lg:flex flex-1 flex-col justify-center items-center px-6 py-12 lg:px-20 bg-background-light dark:bg-background-dark fade-in relative">
+<div id="form-section" class="flex flex-1 flex-col justify-center items-center px-6 py-12 lg:px-20 bg-background-light dark:bg-background-dark fade-in relative">
 
 <!-- TOP CONTROLS -->
 
@@ -235,15 +230,6 @@ class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border border
 
 
 <script>
-
-function showForm(){
-if(window.innerWidth<1024){
-document.getElementById('hero-section').classList.add('hidden');
-const form=document.getElementById('form-section');
-form.classList.remove('hidden');
-form.classList.add('flex');
-}
-}
 
 function toggleDarkMode(){
 
