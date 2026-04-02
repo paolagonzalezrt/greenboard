@@ -57,7 +57,7 @@ style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4
 <div class="relative">
 
 <button onclick="toggleLangDropdown()" class="flex items-center gap-1 text-xs font-black text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-2 rounded-full bg-slate-100 dark:bg-custom-dark-button flex items-center justify-center w-10 h-10">
-{{ strtoupper($currentLang) }}
+<span class="material-symbols-outlined text-xl">translate</span>
 </button>
 
 <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-24 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl shadow-xl overflow-hidden z-50">
@@ -264,7 +264,7 @@ html.classList.remove('dark');
 icon.innerText='dark_mode';
 }else{
 html.classList.add('dark');
-icon.innerText='lightbulb_2';
+icon.innerText='dark_mode';
 }
 
 }

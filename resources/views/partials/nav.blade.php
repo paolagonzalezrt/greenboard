@@ -237,10 +237,9 @@
     // Update mobile theme icon on page load
     document.addEventListener('DOMContentLoaded', function() {
         const mobileThemeIcon = document.getElementById('mobile-theme-icon');
-        const isDark = document.documentElement.classList.contains('dark');
 
         if (mobileThemeIcon) {
-            mobileThemeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+            mobileThemeIcon.textContent = 'dark_mode';
         }
     });
 </script>

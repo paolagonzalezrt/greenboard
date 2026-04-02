@@ -30,7 +30,7 @@ class ThemeManager {
     updateThemeIcon() {
         const themeIcon = document.querySelector('#theme-toggle .material-symbols-outlined');
         if (themeIcon) {
-            themeIcon.textContent = this.theme === 'dark' ? 'light_mode' : 'dark_mode';
+            themeIcon.textContent = 'dark_mode';
         }
     }
 
@@ -45,14 +45,10 @@ class ThemeManager {
         localStorage.setItem('language', this.language);
         this.applyLanguage();
         
-        // Visual feedback
+        // El icono siempre será 'translate'
         const langIcon = document.querySelector('#language-toggle .material-symbols-outlined');
         if (langIcon) {
-            const originalIcon = langIcon.textContent;
-            langIcon.textContent = 'check_circle';
-            setTimeout(() => {
-                langIcon.textContent = originalIcon;
-            }, 1000);
+            langIcon.textContent = 'translate';
         }
 
         console.log(`Language changed to: ${this.language === 'en' ? 'English' : 'Español'}`);

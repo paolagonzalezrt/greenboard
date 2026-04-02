@@ -84,8 +84,8 @@
                 html.classList.remove('light');
                 html.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
-                if (themeIcon) themeIcon.textContent = 'lightbulb_2';
-                if (mobileThemeIcon) mobileThemeIcon.textContent = 'lightbulb_2';
+                if (themeIcon) themeIcon.textContent = 'dark_mode';
+                if (mobileThemeIcon) mobileThemeIcon.textContent = 'dark_mode';
             }
         };
 
@@ -95,18 +95,11 @@
             const newLang = currentLang === 'en' ? 'es' : 'en';
             localStorage.setItem('language', newLang);
 
-            // Mostrar notificación visual (opcional)
+            // El icono siempre será 'translate'
             const langBtn = document.getElementById('language-toggle');
-            const originalText = langBtn?.querySelector('.material-symbols-outlined')?.textContent;
-
-            if (langBtn) {
-                const icon = langBtn.querySelector('.material-symbols-outlined');
-                if (icon) {
-                    icon.textContent = 'check_circle';
-                    setTimeout(() => {
-                        icon.textContent = 'language';
-                    }, 1000);
-                }
+            const icon = langBtn?.querySelector('.material-symbols-outlined');
+            if (icon) {
+                icon.textContent = 'translate';
             }
 
             // Puedes redirigir para cambiar el idioma del lado del servidor
@@ -131,10 +124,10 @@
             const mobileThemeIcon = document.getElementById('mobile-theme-icon');
 
             if (themeIcon) {
-                themeIcon.textContent = savedTheme === 'dark' ? 'lightbulb_2' : 'dark_mode';
+                themeIcon.textContent = 'dark_mode';
             }
             if (mobileThemeIcon) {
-                mobileThemeIcon.textContent = savedTheme === 'dark' ? 'lightbulb_2' : 'dark_mode';
+                mobileThemeIcon.textContent = 'dark_mode';
             }
 
             // Add event listeners to buttons
