@@ -9,6 +9,7 @@ class Report extends Model
     protected $fillable = [
         'user_id',
         'tip_id',
+        'comment_id',
         'reason',
         'description',
         'status',
@@ -33,5 +34,13 @@ class Report extends Model
     public function tip()
     {
         return $this->belongsTo(Tip::class);
+    }
+
+    /**
+     * Relación con el comentario reportado
+     */
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
     }
 }

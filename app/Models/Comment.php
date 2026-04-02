@@ -77,4 +77,12 @@ class Comment extends Model
     {
         return $this->belongsToMany(User::class, 'comment_likes')->withTimestamps();
     }
+
+    /**
+     * Relación con los reportes del comentario
+     */
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
 }

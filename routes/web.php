@@ -50,11 +50,13 @@ Route::delete('/tips/{tip}', [TipController::class, 'destroy'])->middleware('aut
 
 // REPORTS - Report Tips
 Route::post('/tips/{tip}/report', [\App\Http\Controllers\ReportController::class, 'store'])->middleware('auth')->name('tips.report');
+Route::post('/comments/{comment}/report', [\App\Http\Controllers\ReportController::class, 'storeCommentReport'])->middleware('auth')->name('comments.report');
 
 // COMMENTS
 Route::post('/tips/{tip}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->middleware('auth')->name('comments.store');
 Route::post('/comments/{comment}/reply', [\App\Http\Controllers\CommentController::class, 'reply'])->middleware('auth')->name('comments.reply');
 Route::post('/comments/{comment}/like', [\App\Http\Controllers\CommentController::class, 'like'])->middleware('auth')->name('comments.like');
+Route::delete('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'destroy'])->middleware('auth')->name('comments.destroy');
 
 // LIKES
 Route::post('/tips/{tip}/like', [\App\Http\Controllers\LikeController::class, 'toggle'])->middleware('auth')->name('tips.like');
@@ -141,6 +143,7 @@ Route::post('/logout', function (Request $request) {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/reported-tips', [AdminController::class, 'reportedTips'])->name('reported-tips');
     Route::delete('/tips/{tip}', [AdminController::class, 'deleteTip'])->name('tips.delete');
+    Route::delete('/comments/{comment}', [AdminController::class, 'deleteComment'])->name('comments.delete');
     Route::patch('/reports/{report}/status', [AdminController::class, 'updateReportStatus'])->name('reports.update-status');
 });
 

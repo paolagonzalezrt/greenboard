@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tip;
+use App\Models\Comment;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -10,14 +11,20 @@ use Illuminate\Support\Facades\Storage;
 class AdminController extends Controller
 {
     /**
-     * Mostrar todos los tips con reportes
+     * Mostrar todos los tips y comentarios con reportes
      */
     public function reportedTips()
     {
         // Obtener todos los tips que tienen al menos un reporte
-        $reportedTips = Tip::has('reports')
-            ->with(['user', 'reports.user'])
-            ->withCount('reports')
+        $reportedTips = Tip::whereHas('reports', function($q) {
+            $q->whereNull('comment_id');
+        })
+            ->with(['user', 'reports' => function($q) {
+                $q->whereNull('comment_id')->with('user');
+            }])
+            ->withCount(['reports' => function($q) {
+                $q->whereNull('comment_id');
+            }])
             ->orderBy('reports_count', 'desc')
             ->get()
             ->map(function ($tip) {
@@ -45,7 +52,37 @@ class AdminController extends Controller
                 ];
             });
 
-        return view('admin.reported-tips', compact('reportedTips'));
+        // Obtener todos los comentarios que tienen reportes
+        $reportedComments = Comment::whereHas('reports')
+            ->with(['user', 'tip', 'reports.user'])
+            ->withCount('reports')
+            ->orderBy('reports_count', 'desc')
+            ->get()
+            ->map(function ($comment) {
+                return [
+                    'id' => $comment->id,
+                    'content' => $comment->content,
+                    'author' => $comment->user->name,
+                    'author_email' => $comment->user->email,
+                    'tip_id' => $comment->tip->id,
+                    'tip_title' => $comment->tip->title,
+                    'created_at' => $comment->created_at->format('Y-m-d H:i:s'),
+                    'reports_count' => $comment->reports_count,
+                    'reports' => $comment->reports->map(function ($report) {
+                        return [
+                            'id' => $report->id,
+                            'reason' => $report->reason,
+                            'description' => $report->description,
+                            'status' => $report->status,
+                            'reporter' => $report->user->name,
+                            'reporter_email' => $report->user->email,
+                            'created_at' => $report->created_at->format('Y-m-d H:i:s'),
+                        ];
+                    })
+                ];
+            });
+
+        return view('admin.reported-tips', compact('reportedTips', 'reportedComments'));
     }
 
     /**
@@ -68,6 +105,23 @@ class AdminController extends Controller
 
         return redirect()->route('admin.reported-tips')
             ->with('success', 'Tip eliminado exitosamente.');
+    }
+
+    /**
+     * Eliminar un comentario reportado
+     */
+    public function deleteComment(Comment $comment)
+    {
+        // Verificar que el usuario sea administrador
+        if (!auth()->user()->is_admin) {
+            return redirect()->back()->with('error', 'No tienes permisos para realizar esta acción.');
+        }
+
+        // Eliminar el comentario (las respuestas e relaciones se eliminan en cascada)
+        $comment->delete();
+
+        return redirect()->route('admin.reported-tips')
+            ->with('success', 'Comentario eliminado exitosamente.');
     }
 
     /**

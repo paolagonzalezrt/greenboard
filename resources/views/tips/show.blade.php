@@ -212,6 +212,27 @@
                                         Reply
                                     </button>
                                 @endauth
+                                @auth
+                                    <div class="relative ml-auto">
+                                        <button onclick="toggleCommentMenu({{ $comment->id }})" class="text-xs text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors font-semibold">
+                                            <span class="material-symbols-outlined text-sm">more_vert</span>
+                                        </button>
+                                        <div id="comment-menu-{{ $comment->id }}" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-xl overflow-hidden z-10">
+                                            @if(Auth::id() === $comment->user_id || Auth::user()->is_admin)
+                                                <button onclick="deleteComment({{ $comment->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                                    <span class="material-symbols-outlined text-[14px] text-red-500">delete</span>
+                                                    <span>Delete</span>
+                                                </button>
+                                            @endif
+                                            @if(Auth::id() !== $comment->user_id)
+                                                <button onclick="openCommentReportModal({{ $comment->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                                    <span class="material-symbols-outlined text-[14px] text-yellow-500">flag</span>
+                                                    <span>Report</span>
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endauth
                             </div>
 
                             @auth
@@ -257,17 +278,40 @@
                                                 <p class="text-sm text-slate-700 dark:text-slate-300 mb-2 break-words">
                                                     {{ $reply->content }}
                                                 </p>
-                                                @auth
-                                                    <button onclick="toggleCommentLike({{ $reply->id }}, this)" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group cursor-pointer">
-                                                        <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($reply) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLikedComment($reply) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
-                                                        <span class="font-semibold comment-like-count">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : 'Like' }}</span>
-                                                    </button>
-                                                @else
-                                                    <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group">
-                                                        <span class="material-symbols-outlined text-sm">favorite</span>
-                                                        <span class="font-semibold">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : 'Like' }}</span>
-                                                    </a>
-                                                @endauth
+                                                <div class="flex items-center gap-4">
+                                                    @auth
+                                                        <button onclick="toggleCommentLike({{ $reply->id }}, this)" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group cursor-pointer">
+                                                            <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($reply) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLikedComment($reply) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
+                                                            <span class="font-semibold comment-like-count">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : 'Like' }}</span>
+                                                        </button>
+                                                    @else
+                                                        <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group">
+                                                            <span class="material-symbols-outlined text-sm">favorite</span>
+                                                            <span class="font-semibold">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : 'Like' }}</span>
+                                                        </a>
+                                                    @endauth
+                                                    @auth
+                                                        <div class="relative ml-auto">
+                                                            <button onclick="toggleCommentMenu({{ $reply->id }})" class="text-xs text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors font-semibold">
+                                                                <span class="material-symbols-outlined text-sm">more_vert</span>
+                                                            </button>
+                                                            <div id="comment-menu-{{ $reply->id }}" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-xl overflow-hidden z-10">
+                                                                @if(Auth::id() === $reply->user_id || Auth::user()->is_admin)
+                                                                    <button onclick="deleteComment({{ $reply->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                                                        <span class="material-symbols-outlined text-[14px] text-red-500">delete</span>
+                                                                        <span>Delete</span>
+                                                                    </button>
+                                                                @endif
+                                                                @if(Auth::id() !== $reply->user_id)
+                                                                    <button onclick="openCommentReportModal({{ $reply->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                                                        <span class="material-symbols-outlined text-[14px] text-yellow-500">flag</span>
+                                                                        <span>Report</span>
+                                                                    </button>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    @endauth
+                                                </div>
                                             </div>
                                         </div>
                                     @endforeach
@@ -291,6 +335,44 @@
                     </a>
                 </div>
             @endif
+
+            <!-- Report Comment Modal -->
+            <div id="report-comment-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                <div class="bg-white dark:bg-custom-dark-button rounded-2xl shadow-2xl max-w-md w-full">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4">Report Comment</h3>
+                        <form onsubmit="submitCommentReport(event)" class="space-y-4">
+                            <input type="hidden" id="report-comment-id" value="">
+                            
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Reason *</label>
+                                <select id="report-comment-reason" required class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none">
+                                    <option value="">Select a reason...</option>
+                                    <option value="spam">Spam</option>
+                                    <option value="inappropriate">Inappropriate</option>
+                                    <option value="misleading">Misleading</option>
+                                    <option value="harassment">Harassment</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Description (optional)</label>
+                                <textarea id="report-comment-description" rows="3" placeholder="Explain why you're reporting this comment..." class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none resize-none" maxlength="500"></textarea>
+                            </div>
+
+                            <div class="flex gap-3 justify-end mt-6">
+                                <button type="button" onclick="closeCommentReportModal()" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-all">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="px-4 py-2 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-all">
+                                    Report
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -303,6 +385,135 @@
             } else {
                 replyForm.classList.add('hidden');
             }
+        }
+
+        function toggleCommentMenu(commentId) {
+            const menu = document.getElementById(`comment-menu-${commentId}`);
+            menu.classList.toggle('hidden');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menus = document.querySelectorAll('[id^="comment-menu-"]');
+            menus.forEach(menu => {
+                if (!menu.contains(event.target) && !event.target.closest('button[onclick*="toggleCommentMenu"]')) {
+                    menu.classList.add('hidden');
+                }
+            });
+        });
+
+        function deleteComment(commentId) {
+            if (!confirm('¿Estás seguro de que quieres eliminar este comentario?')) {
+                return;
+            }
+
+            fetch(`/comments/${commentId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Find the comment container (could be parent or reply)
+                    const commentElement = document.getElementById(`comment-${commentId}`);
+                    if (commentElement) {
+                        // Animate removal
+                        commentElement.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                        commentElement.style.opacity = '0';
+                        commentElement.style.transform = 'scale(0.95)';
+
+                        setTimeout(() => {
+                            commentElement.remove();
+                        }, 300);
+                    }
+
+                    // Reload page immediately
+                    location.reload();
+                } else {
+                    // Show error notification
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
+                    errorMsg.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined">error</span>
+                            <span>Error al eliminar el comentario</span>
+                        </div>
+                    `;
+                    document.body.appendChild(errorMsg);
+
+                    // Remove notification after 3 seconds
+                    setTimeout(() => {
+                        errorMsg.style.transition = 'opacity 0.3s ease-out';
+                        errorMsg.style.opacity = '0';
+                        setTimeout(() => errorMsg.remove(), 300);
+                    }, 3000);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
+                errorMsg.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined">error</span>
+                        <span>Error al procesar la solicitud</span>
+                    </div>
+                `;
+                document.body.appendChild(errorMsg);
+
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    errorMsg.style.transition = 'opacity 0.3s ease-out';
+                    errorMsg.style.opacity = '0';
+                    setTimeout(() => errorMsg.remove(), 300);
+                }, 3000);
+            });
+        }
+
+        function openCommentReportModal(commentId) {
+            document.getElementById('report-comment-id').value = commentId;
+            document.getElementById('report-comment-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCommentReportModal() {
+            document.getElementById('report-comment-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function submitCommentReport(event) {
+            event.preventDefault();
+            const commentId = document.getElementById('report-comment-id').value;
+            const reason = document.getElementById('report-comment-reason').value;
+            const description = document.getElementById('report-comment-description').value;
+
+            fetch(`/comments/${commentId}/report`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    reason: reason,
+                    description: description
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Reporte enviado exitosamente. Lo revisaremos pronto.');
+                    closeCommentReportModal();
+                } else {
+                    alert('Error: ' + (data.message || 'No se pudo enviar el reporte'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al procesar el reporte. Por favor intenta de nuevo.');
+            });
         }
 
         // Toggle Follow/Unfollow

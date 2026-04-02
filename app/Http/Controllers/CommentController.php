@@ -73,4 +73,34 @@ class CommentController extends Controller
             'likes_count' => $comment->likes()->count(),
         ]);
     }
+
+    /**
+     * Eliminar un comentario o respuesta
+     */
+    public function destroy(Comment $comment)
+    {
+        // Verificar que el usuario es el propietario del comentario o es admin
+        if (Auth::id() !== $comment->user_id && !Auth::user()->is_admin) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        // Obtener el tip para poder redirigir después
+        $tip = $comment->tip;
+
+        // Si es un comentario padre con respuestas, eliminar también las respuestas
+        if ($comment->replies()->count() > 0) {
+            $comment->replies()->delete();
+        }
+
+        // Eliminar el comentario
+        $comment->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Comment deleted successfully',
+        ]);
+    }
 }
