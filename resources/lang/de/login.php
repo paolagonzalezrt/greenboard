@@ -13,4 +13,9 @@ return [
     'sign_up' => 'Registrieren',
     'tap_login' => 'Tippen, um sich anzumelden',
     'explore' => 'Entdecken',
+    'error_invalid_credentials' => 'Die eingegebenen Anmeldedaten sind ungültig.',
+    'error_email_not_registered' => 'Diese E-Mail ist in unserem System nicht registriert.',
+    'error_password_incorrect' => 'Das Passwort ist falsch.',
+    'error_email_required' => 'Die E-Mail-Adresse ist erforderlich.',
+    'error_password_required' => 'Das Passwort ist erforderlich.',
 ];

@@ -26,6 +26,14 @@ return [
 'have_account' => '¿Ya tienes cuenta?',
 'login' => 'Iniciar sesión',
 
-'explore' => 'Explorar'
+'explore' => 'Explorar',
+
+'error_email_exists' => 'Este correo ya está registrado. Intenta con otro o inicia sesión.',
+'error_password_min' => 'La contraseña debe tener al menos 8 caracteres.',
+'error_name_required' => 'El nombre es requerido.',
+'error_email_required' => 'El correo electrónico es requerido.',
+'error_email_invalid' => 'El correo electrónico debe ser válido.',
+'error_password_required' => 'La contraseña es requerida.',
+'error_password_mismatch' => 'Las contraseñas no coinciden.',
 
 ];

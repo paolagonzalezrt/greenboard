@@ -97,7 +97,6 @@ style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4
 
 </div>
 
-
 <form method="POST" action="{{ route('register') }}" class="space-y-5">
 
 @csrf
@@ -121,9 +120,11 @@ name="name"
 value="{{ old('name') }}"
 required
 placeholder="{{ __('register.name_placeholder') }}"
-class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
+class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border @error('name') border-red-500 dark:border-red-600 @else border-slate-200 dark:border-custom-dark-button @enderror rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
 
 </div>
+
+@include('components.field-error', ['fieldName' => 'name'])
 
 </div>
 
@@ -148,9 +149,11 @@ value="{{ old('email') }}"
 required
 type="email"
 placeholder="{{ __('register.email_placeholder') }}"
-class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
+class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border @error('email') border-red-500 dark:border-red-600 @else border-slate-200 dark:border-custom-dark-button @enderror rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
 
 </div>
+
+@include('components.field-error', ['fieldName' => 'email'])
 
 </div>
 
@@ -175,13 +178,15 @@ name="password"
 required
 type="password"
 placeholder="{{ __('register.password_placeholder') }}"
-class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
+class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border @error('password') border-red-500 dark:border-red-600 @else border-slate-200 dark:border-custom-dark-button @enderror rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
 
 <button type="button" onclick="togglePasswordVisibility('register-password')" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
     <span class="material-symbols-outlined text-xl" id="register-password-icon" style="font-variation-settings: 'wght' 200">visibility_off</span>
 </button>
 
 </div>
+
+@include('components.field-error', ['fieldName' => 'password'])
 
 </div>
 
@@ -206,13 +211,15 @@ name="password_confirmation"
 required
 type="password"
 placeholder="{{ __('register.confirm_password_placeholder') }}"
-class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
+class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border @error('password_confirmation') border-red-500 dark:border-red-600 @else border-slate-200 dark:border-custom-dark-button @enderror rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all">
 
 <button type="button" onclick="togglePasswordVisibility('register-password-confirm')" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
     <span class="material-symbols-outlined text-xl" id="register-password-confirm-icon" style="font-variation-settings: 'wght' 200">visibility_off</span>
 </button>
 
 </div>
+
+@include('components.field-error', ['fieldName' => 'password_confirmation'])
 
 </div>
 

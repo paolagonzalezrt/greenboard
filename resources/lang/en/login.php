@@ -12,4 +12,9 @@ return [
     'sign_up'       => 'Sign up',
     'tap_login'     => 'Tap to login',
     'explore'       => 'Explore',
+    'error_invalid_credentials' => 'The provided credentials are invalid.',
+    'error_email_not_registered' => 'This email is not registered in our system.',
+    'error_password_incorrect' => 'The password is incorrect.',
+    'error_email_required' => 'Email address is required.',
+    'error_password_required' => 'Password is required.',
 ];

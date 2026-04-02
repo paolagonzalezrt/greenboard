@@ -91,17 +91,31 @@ Route::post('/login', function (Request $request) {
     $credentials = $request->validate([
         'email' => ['required', 'email'],
         'password' => ['required'],
+    ], [
+        'email.required' => __('login.error_email_required'),
+        'email.email' => __('login.error_email_invalid'),
+        'password.required' => __('login.error_password_required'),
     ]);
 
+    // Verificar si el usuario existe
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user) {
+        return back()
+            ->withErrors(['email' => __('login.error_email_not_registered')])
+            ->onlyInput('email');
+    }
+
+    // Intentar autenticar
     if (Auth::attempt($credentials)) {
         $request->session()->regenerate();
-        // Redirige al dashboard después de iniciar sesión
         return redirect()->intended(route('dashboard')); 
     }
 
-    return back()->withErrors([
-        'email' => 'Las credenciales no coinciden.',
-    ])->onlyInput('email');
+    // Si llegamos aquí, el email existe pero la contraseña es incorrecta
+    return back()
+        ->withErrors(['password' => __('login.error_password_incorrect')])
+        ->onlyInput('email');
 });
 
 // REGISTRO
@@ -110,23 +124,41 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::post('/register', function (Request $request) {
-    $request->validate([
+    $validated = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|min:8',
+        'password_confirmation' => 'required|same:password',
+    ], [
+        'name.required' => __('register.error_name_required'),
+        'name.string' => 'El nombre debe ser texto',
+        'name.max' => 'El nombre no puede exceder 255 caracteres',
+        'email.required' => __('register.error_email_required'),
+        'email.email' => __('register.error_email_invalid'),
+        'email.unique' => __('register.error_email_exists'),
+        'password.required' => __('register.error_password_required'),
+        'password.min' => __('register.error_password_min'),
+        'password_confirmation.required' => __('register.error_password_required'),
+        'password_confirmation.same' => __('register.error_password_mismatch'),
     ]);
 
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-    ]);
+    try {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-    // Autenticar al usuario automáticamente
-    Auth::login($user);
-    $request->session()->regenerate();
+        // Autenticar al usuario automáticamente
+        Auth::login($user);
+        $request->session()->regenerate();
 
-    return redirect()->route('dashboard')->with('success', 'Cuenta creada con éxito');
+        return redirect()->route('dashboard')->with('success', 'Cuenta creada con éxito');
+    } catch (\Exception $e) {
+        return back()
+            ->withErrors(['error' => 'Ocurrió un error al crear la cuenta. Intenta nuevamente.'])
+            ->withInput();
+    }
 });
 
 // LOGOUT (IMPORTANTE: Laravel recomienda que sea POST por seguridad)

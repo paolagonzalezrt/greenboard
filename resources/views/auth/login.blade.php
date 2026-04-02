@@ -60,8 +60,9 @@
                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">{{ __('login.email') }}</label>
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">mail</span>
-                        <input name="email" required class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="john@example.com" type="email"/>
+                        <input name="email" value="{{ old('email') }}" required class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-custom-dark-input border @error('email') border-red-500 dark:border-red-600 @else border-slate-200 dark:border-custom-dark-button @enderror rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="john@example.com" type="email"/>
                     </div>
+                    @include('components.field-error', ['fieldName' => 'email'])
                 </div>
 
                 <div>
@@ -71,10 +72,12 @@
                     </div>
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock</span>
-                        <input id="login-password" name="password" required class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="••••••••" type="password"/>
+                        <input id="login-password" name="password" required class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border @error('password') border-red-500 dark:border-red-600 @else border-slate-200 dark:border-custom-dark-button @enderror rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="••••••••" type="password"/>
                         <button type="button" onclick="togglePasswordVisibility('login-password')" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
                             <span class="material-symbols-outlined text-xl" id="login-password-icon" style="font-variation-settings: 'wght' 200">visibility_off</span>
                         </button>
+                    </div>
+                    @include('components.field-error', ['fieldName' => 'password'])
                     </div>
                 </div>
 

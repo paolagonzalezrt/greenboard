@@ -26,6 +26,14 @@ return [
 'have_account' => 'Hast du bereits ein Konto?',
 'login' => 'Anmelden',
 
-'explore' => 'Entdecken'
+'explore' => 'Entdecken',
+
+'error_email_exists' => 'Diese E-Mail ist bereits registriert. Versuche eine andere oder melde dich an.',
+'error_password_min' => 'Das Passwort muss mindestens 8 Zeichen lang sein.',
+'error_name_required' => 'Der Name ist erforderlich.',
+'error_email_required' => 'Die E-Mail-Adresse ist erforderlich.',
+'error_email_invalid' => 'Die E-Mail-Adresse muss gültig sein.',
+'error_password_required' => 'Das Passwort ist erforderlich.',
+'error_password_mismatch' => 'Die Passwörter stimmen nicht überein.',
 
 ];

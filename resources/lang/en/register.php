@@ -26,6 +26,14 @@ return [
 'have_account' => 'Already have an account?',
 'login' => 'Log in',
 
-'explore' => 'Explore'
+'explore' => 'Explore',
+
+'error_email_exists' => 'This email is already registered. Try another one or log in.',
+'error_password_min' => 'Password must be at least 8 characters long.',
+'error_name_required' => 'Name is required.',
+'error_email_required' => 'Email address is required.',
+'error_email_invalid' => 'Email address must be valid.',
+'error_password_required' => 'Password is required.',
+'error_password_mismatch' => 'Passwords do not match.',
 
 ];
