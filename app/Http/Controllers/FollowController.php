@@ -57,14 +57,16 @@ class FollowController extends Controller
     public function followers(User $user)
     {
         $followers = $user->followers()
-            ->select('users.id', 'users.name', 'users.email', 'users.created_at')
+            ->select('users.id', 'users.name', 'users.email', 'users.photo', 'users.created_at')
             ->get()
             ->map(function ($follower) {
                 $currentUser = Auth::user();
                 return [
                     'id' => $follower->id,
                     'name' => $follower->name,
-                    'avatar' => $follower->photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($follower->name) . '&size=100&background=13ec5b&color=102216&bold=true',
+                    'avatar' => $follower->getAvatarUrl(),
+                    'has_photo' => $follower->hasProfilePhoto(),
+                    'avatar_color' => $follower->getAvatarBgColor(),
                     'is_following' => $currentUser ? $currentUser->isFollowing($follower->id) : false,
                 ];
             });
@@ -81,14 +83,16 @@ class FollowController extends Controller
     public function following(User $user)
     {
         $following = $user->following()
-            ->select('users.id', 'users.name', 'users.email', 'users.created_at')
+            ->select('users.id', 'users.name', 'users.email', 'users.photo', 'users.created_at')
             ->get()
             ->map(function ($followedUser) {
                 $currentUser = Auth::user();
                 return [
                     'id' => $followedUser->id,
                     'name' => $followedUser->name,
-                    'avatar' => $followedUser->photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($followedUser->name) . '&size=100&background=13ec5b&color=102216&bold=true',
+                    'avatar' => $followedUser->getAvatarUrl(),
+                    'has_photo' => $followedUser->hasProfilePhoto(),
+                    'avatar_color' => $followedUser->getAvatarBgColor(),
                     'is_following' => $currentUser ? $currentUser->isFollowing($followedUser->id) : false,
                 ];
             });

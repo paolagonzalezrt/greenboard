@@ -180,6 +180,12 @@
                         usersList.innerHTML = data.followers.map(user => {
                             const isCurrentUser = currentUserId === profileUserId;
                             const isSelf = user.id === currentUserId;
+                            const initial = user.name.charAt(0).toUpperCase();
+                            const hasPhoto = user.has_photo && user.avatar;
+                            const avatarHtml = hasPhoto
+                                ? `<img src="${user.avatar}" alt="${user.name}" class="size-10 rounded-full object-cover flex-shrink-0">`
+                                : `<div class="${user.avatar_color || 'bg-primary'} size-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white"><span class="text-sm">${initial}</span></div>`;
+
                             let actionButton = '';
 
                             if (!isSelf && currentUserId) {
@@ -213,7 +219,7 @@
                             return `
                                 <div class="flex items-center justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
                                     <div class="flex items-center gap-3 flex-1 min-w-0 cursor-pointer" onclick="window.location.href='/users/${user.id}'">
-                                        <img src="${user.avatar}" alt="${user.name}" class="size-10 rounded-full object-cover flex-shrink-0">
+                                        ${avatarHtml}
                                         <span class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">${user.name}</span>
                                     </div>
                                     ${actionButton}
@@ -252,6 +258,12 @@
                     } else {
                         usersList.innerHTML = data.following.map(user => {
                             const isSelf = user.id === currentUserId;
+                            const initial = user.name.charAt(0).toUpperCase();
+                            const hasPhoto = user.has_photo && user.avatar;
+                            const avatarHtml = hasPhoto
+                                ? `<img src="${user.avatar}" alt="${user.name}" class="size-10 rounded-full object-cover flex-shrink-0">`
+                                : `<div class="${user.avatar_color || 'bg-primary'} size-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white"><span class="text-sm">${initial}</span></div>`;
+
                             let actionButton = '';
 
                             if (!isSelf && currentUserId) {
@@ -277,7 +289,7 @@
                             return `
                                 <div class="flex items-center justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
                                     <div class="flex items-center gap-3 flex-1 min-w-0 cursor-pointer" onclick="window.location.href='/users/${user.id}'">
-                                        <img src="${user.avatar}" alt="${user.name}" class="size-10 rounded-full object-cover flex-shrink-0">
+                                        ${avatarHtml}
                                         <span class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">${user.name}</span>
                                     </div>
                                     ${actionButton}

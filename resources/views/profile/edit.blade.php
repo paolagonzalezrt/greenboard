@@ -36,11 +36,11 @@
                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Foto de Perfil</label>
                     <div class="flex items-center gap-6">
                         <div class="flex flex-col items-center">
-                            <div class="size-24 rounded-full shadow-lg overflow-hidden sm:border-4 sm:border-white sm:dark:border-slate-800">
-                                <img id="photo-preview" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover hidden" />
-                                <div id="avatar-preview">
-                                    <x-profile-avatar :user="Auth::user()" size="lg" />
-                                </div>
+                            <div id="photo-preview-container" class="hidden size-24 rounded-full shadow-lg overflow-hidden sm:border-4 sm:border-white sm:dark:border-slate-800">
+                                <img id="photo-preview" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" />
+                            </div>
+                            <div id="avatar-preview">
+                                <x-profile-avatar :user="Auth::user()" size="xl" />
                             </div>
                         </div>
                         <div>
@@ -202,7 +202,7 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('avatar-preview').style.display = 'none';
-                    document.getElementById('photo-preview').classList.remove('hidden');
+                    document.getElementById('photo-preview-container').classList.remove('hidden');
                     document.getElementById('photo-preview').src = e.target.result;
                 };
                 reader.readAsDataURL(input.files[0]);
