@@ -114,11 +114,11 @@
         @endif
     </div>
 
-    <!-- Modal for Followers/Following List -->
+   <!-- Modal for Followers/Following List -->
     <div id="users-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-[100] flex items-center justify-center p-4" onclick="closeModal(event)">
         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden flex flex-col" onclick="event.stopPropagation()">
             <!-- Modal Header -->
-            <div class="flex items-center justify-between p-4 sm:p-6 border-b border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-between px-8 pt-6 pb-2">
                 <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" id="modal-title">Followers</h3>
                 <button onclick="closeModal()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
                     <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">close</span>
@@ -126,7 +126,7 @@
             </div>
 
             <!-- Modal Body -->
-            <div class="flex-1 overflow-y-auto p-4 sm:p-6" id="users-list">
+            <div class="flex-1 overflow-y-auto p-4 pt-0 pb-5" id="users-list">
                 <!-- Users will be loaded here -->
             </div>
         </div>
@@ -221,7 +221,7 @@
                                 </div>
                                 <button 
                                     onclick="toggleFollowInModal(${user.id}, this)" 
-                                    class="px-3 py-1.5 text-xs font-bold rounded-lg transition-colors flex-shrink-0 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600">
+                                    class="px-3 py-1.5 text-xs font-bold rounded-full transition-colors flex-shrink-0 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600">
                                     Unfollow
                                 </button>
                             </div>

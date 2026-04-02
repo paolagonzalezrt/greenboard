@@ -29,11 +29,11 @@
                             <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">{{ $postsCount }} {{ $postsCount == 1 ? 'Post' : 'Posts' }}</span>
                         </div>
                         <button onclick="showFollowersList()" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">group</span>
+                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person</span>
                             <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="followers-count">{{ $user->followers()->count() }}</span> Followers</span>
                         </button>
                         <button onclick="showFollowingList()" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person_add</span>
+                            <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person</span>
                             <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="following-count">{{ $user->following()->count() }}</span> Following</span>
                         </button>
                     </div>
@@ -118,11 +118,11 @@
         @endif
     </div>
 
-    <!-- Modal for Followers/Following List -->
+     <!-- Modal for Followers/Following List -->
     <div id="users-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-[100] flex items-center justify-center p-4" onclick="closeModal(event)">
         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden flex flex-col" onclick="event.stopPropagation()">
             <!-- Modal Header -->
-            <div class="flex items-center justify-between p-4 sm:p-6 border-b border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-between px-8 pt-6 pb-2">
                 <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" id="modal-title">Followers</h3>
                 <button onclick="closeModal()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
                     <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">close</span>
@@ -130,7 +130,7 @@
             </div>
 
             <!-- Modal Body -->
-            <div class="flex-1 overflow-y-auto p-4 sm:p-6" id="users-list">
+            <div class="flex-1 overflow-y-auto p-4 pt-0 pb-5" id="users-list">
                 <!-- Users will be loaded here -->
             </div>
         </div>
@@ -185,7 +185,7 @@
                                     actionButton = `
                                         <button 
                                             onclick="removeFollower(${user.id})" 
-                                            class="px-3 py-1.5 text-xs font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors flex-shrink-0">
+                                            class="px-3 py-1.5 text-xs font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors flex-shrink-0">
                                             Remove
                                         </button>
                                     `;
@@ -193,7 +193,7 @@
                                     actionButton = `
                                         <button 
                                             onclick="toggleFollowInModal(${user.id}, this)" 
-                                            class="px-3 py-1.5 text-xs font-bold rounded-lg transition-colors flex-shrink-0 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600">
+                                            class="px-3 py-1.5 text-xs font-bold rounded-full transition-colors flex-shrink-0 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600">
                                             Unfollow
                                         </button>
                                     `;
@@ -201,7 +201,7 @@
                                     actionButton = `
                                         <button 
                                             onclick="toggleFollowInModal(${user.id}, this)" 
-                                            class="px-3 py-1.5 text-xs font-bold rounded-lg transition-colors flex-shrink-0 bg-primary text-background-dark hover:brightness-105">
+                                            class="px-3 py-1.5 text-xs font-bold rounded-full transition-colors flex-shrink-0 bg-primary text-background-dark hover:brightness-105">
                                             Follow
                                         </button>
                                     `;
@@ -257,7 +257,7 @@
                                     actionButton = `
                                         <button 
                                             onclick="toggleFollowInModal(${user.id}, this)" 
-                                            class="px-3 py-1.5 text-xs font-bold rounded-lg transition-colors flex-shrink-0 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600">
+                                            class="px-3 py-1.5 text-xs font-bold rounded-full transition-colors flex-shrink-0 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600">
                                             Unfollow
                                         </button>
                                     `;
@@ -265,7 +265,7 @@
                                     actionButton = `
                                         <button 
                                             onclick="toggleFollowInModal(${user.id}, this)" 
-                                            class="px-3 py-1.5 text-xs font-bold rounded-lg transition-colors flex-shrink-0 bg-primary text-background-dark hover:brightness-105">
+                                            class="px-3 py-1.5 text-xs font-bold rounded-full transition-colors flex-shrink-0 bg-primary text-background-dark hover:brightness-105">
                                             Follow
                                         </button>
                                     `;
