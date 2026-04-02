@@ -160,13 +160,15 @@
         </div>
     </section>
 
-    {{-- CTA Section --}}
-    <div class="w-full max-w-4xl mx-auto bg-white dark:bg-custom-dark-button p-8 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl shadow-2xl border border-primary/20 text-center relative overflow-hidden mb-12 sm:mb-16">
-        <div class="relative z-10">
-            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-6 sm:mb-8 tracking-tight px-2">Start Your Sustainable Journey Today</h3>
-            <a href="{{ route('register') }}" class="inline-block bg-primary text-background-dark px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-base sm:text-lg hover:brightness-105 hover:scale-105 hover:shadow-[0_0_30px_rgba(19,236,91,0.4)] shadow-lg shadow-primary/30 transition-all duration-300">
-                Join the Movement
-            </a>
+    {{-- CTA Section (Only for guests) --}}
+    @guest
+        <div class="w-full max-w-4xl mx-auto bg-white dark:bg-custom-dark-button p-8 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl shadow-2xl border border-primary/20 text-center relative overflow-hidden mb-12 sm:mb-16">
+            <div class="relative z-10">
+                <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-6 sm:mb-8 tracking-tight px-2">Start Your Sustainable Journey Today</h3>
+                <a href="{{ route('register') }}" class="inline-block bg-primary text-background-dark px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-base sm:text-lg hover:brightness-105 hover:scale-105 hover:shadow-[0_0_30px_rgba(19,236,91,0.4)] shadow-lg shadow-primary/30 transition-all duration-300">
+                    Join the Movement
+                </a>
+            </div>
         </div>
-    </div>
+    @endguest
 @endsection
