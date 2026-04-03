@@ -78,7 +78,6 @@
                         </button>
                     </div>
                     @include('components.field-error', ['fieldName' => 'password'])
-                    </div>
                 </div>
 
                 <button class="w-full bg-primary text-slate-900 font-extrabold text-base py-4 rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.95] mt-4" type="submit">
