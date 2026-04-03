@@ -57,7 +57,7 @@ class TipController extends Controller
                 ];
             });
 
-        return view('welcome', compact('tips', 'search', 'sortBy', 'category'));
+        return view('tips.index', compact('tips', 'search', 'sortBy', 'category'));
     }
 
     public function dashboard(Request $request)
@@ -107,7 +107,7 @@ class TipController extends Controller
                 ];
             });
 
-        return view('dashboard', compact('tips', 'search', 'sortBy', 'category'));
+        return view('tips.dashboard', compact('tips', 'search', 'sortBy', 'category'));
     }
 
     public function following()
@@ -119,7 +119,7 @@ class TipController extends Controller
 
         // Si no sigue a nadie, retornar array vacío
         if ($followingIds->isEmpty()) {
-            return view('following', ['tips' => []]);
+            return view('tips.following', ['tips' => []]);
         }
 
         // Obtener los tips de los usuarios que sigue
@@ -146,7 +146,7 @@ class TipController extends Controller
                 ];
             });
 
-        return view('following', compact('tips'));
+        return view('tips.following', compact('tips'));
     }
 
     public function saved()
@@ -177,7 +177,7 @@ class TipController extends Controller
                 ];
             });
 
-        return view('saved', compact('tips'));
+        return view('tips.saved', compact('tips'));
     }
 
     /**
@@ -300,7 +300,7 @@ class TipController extends Controller
                 });
         }
 
-        return view('profile', compact('tips', 'postsCount', 'tab'));
+        return view('profile.show', compact('tips', 'postsCount', 'tab'));
     }
 
     /**

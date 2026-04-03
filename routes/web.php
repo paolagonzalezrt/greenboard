@@ -19,12 +19,12 @@ Route::get('/', [TipController::class, 'index'])->name('home');
 
 // ABOUT US
 Route::get('/about-us', function () {
-    return view('about-us');
+    return view('pages.about');
 })->name('about-us');
 
 // PRIVACY POLICY
 Route::get('/privacy-policy', function () {
-    return view('privacy-policy');
+    return view('pages.privacy');
 })->name('privacy-policy');
 
 /*
