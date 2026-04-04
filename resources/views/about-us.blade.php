@@ -13,13 +13,13 @@
 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
 <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
 </span>
-                    Reimagining Campus Life
+                    {{ __('pages.hero_badge') }}
                 </div>
 <h1 class="text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter mb-8">
-                    The <span class="text-primary italic">Heartbeat</span> of Campus Ecology.
+                    {{ __('pages.hero_title_part1') }} <span class="text-primary italic">{{ __('pages.hero_title_part2') }}</span> {{ __('pages.hero_title_part3') }}.
                 </h1>
 <p class="text-xl text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
-                    GreenBoard isn't just a platform; it's a living ecosystem where university students unite to plant the seeds of a sustainable future.
+                    {{ __('pages.hero_description') }}
                 </p>
 </div>
 <div class="lg:col-span-5 relative">
@@ -29,8 +29,8 @@
 </div>
 <div class="absolute -bottom-6 -left-6 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl max-w-[200px] -rotate-6">
 <span class="material-symbols-outlined text-primary text-4xl mb-2">groups</span>
-<p class="text-xs font-bold uppercase text-slate-400">Community Driven</p>
-<p class="text-sm font-semibold text-slate-900 dark:text-white">Built by students, for the planet.</p>
+<p class="text-xs font-bold uppercase text-slate-400">{{ __('pages.community_driven') }}</p>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">{{ __('pages.built_by_students') }}</p>
 </div>
 </div>
 </div>
@@ -40,9 +40,9 @@
 <section class="py-24 bg-background-light dark:bg-background-dark relative overflow-hidden">
 <div class="max-w-7xl mx-auto px-6 relative z-10">
 <div class="text-center max-w-3xl mx-auto mb-20">
-<h2 class="text-sm font-bold text-primary uppercase tracking-[0.2em] mb-4">Our Mission</h2>
+<h2 class="text-sm font-bold text-primary uppercase tracking-[0.2em] mb-4">{{ __('pages.our_mission') }}</h2>
 <p class="text-4xl md:text-5xl font-extrabold leading-tight text-slate-900 dark:text-white">
-                Strengthening campus sustainability through <span class="text-primary italic">radical collaboration</span> and digital empowerment.
+                {{ __('pages.mission_main') }}
             </p>
 </div>
 <div class="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -51,9 +51,9 @@
 <div class="mb-8 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-colors duration-300">
 <span class="material-symbols-outlined text-3xl font-light">hub</span>
 </div>
-<h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Uniting Fragments</h3>
+<h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">{{ __('pages.uniting_fragments') }}</h3>
 <p class="text-lg leading-relaxed text-slate-600 dark:text-slate-400">
-                    We connect isolated eco-clubs and passionate individuals into one powerful, unified university network, turning local ripples into a global wave.
+                    {{ __('pages.uniting_description') }}
                 </p>
 <div class="mt-8 h-1 w-12 bg-primary rounded-full group-hover:w-24 transition-all duration-500"></div>
 </div>
@@ -62,9 +62,9 @@
 <div class="mb-8 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-colors duration-300">
 <span class="material-symbols-outlined text-3xl font-light">energy_savings_leaf</span>
 </div>
-<h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Action-Oriented</h3>
+<h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">{{ __('pages.action_oriented') }}</h3>
 <p class="text-lg leading-relaxed text-slate-600 dark:text-slate-400">
-                    From waste reduction to clean energy projects, we provide the digital infrastructure to track, manage, and scale high-impact green initiatives.
+                    {{ __('pages.action_description') }}
                 </p>
 <div class="mt-8 h-1 w-12 bg-primary rounded-full group-hover:w-24 transition-all duration-500"></div>
 </div>
@@ -76,17 +76,17 @@
 <div class="max-w-5xl mx-auto rounded-[3rem] p-12 lg:p-20 relative overflow-hidden flex flex-col items-center text-center border border-primary/20 bg-primary/5">
 <div class="relative z-10">
 <h2 class="text-4xl md:text-6xl font-black mb-6 leading-tight text-slate-900 dark:text-white">
-                Ready to leave your <br/><span class="text-primary/70">eco-legacy?</span>
+                {{ __('pages.ready_legacy') }}
 </h2>
 <p class="text-lg font-medium mb-10 max-w-xl mx-auto leading-relaxed text-slate-600 dark:text-slate-400">
-                Join thousands of students who are turning climate anxiety into climate action. Your campus needs your voice.
+                {{ __('pages.legacy_description') }}
             </p>
 <div class="flex flex-col sm:flex-row gap-4 justify-center">
 <button class="bg-primary text-background-dark px-10 py-4 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm">
-                    Create Your Profile
+                    {{ __('pages.create_profile') }}
                 </button>
 <button class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
-                    Explore Initiatives
+                    {{ __('pages.explore_initiatives') }}
                 </button>
 </div>
 </div>

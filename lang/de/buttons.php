@@ -29,5 +29,6 @@ return [
     'follow' => 'Folgen',
     'unfollow' => 'Entfolgen',
     'report' => 'Melden',
+    'send' => 'Senden',
     'load_more' => 'Mehr laden',
 ];

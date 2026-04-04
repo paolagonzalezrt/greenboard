@@ -9,7 +9,7 @@
                     </p>
                 @else
                     <p class="text-sm font-semibold text-red-700 dark:text-red-400 mb-2">
-                        Se encontraron los siguientes errores:
+                        {{ __('components.errors_found') }}
                     </p>
                     <ul class="list-disc list-inside space-y-1">
                         @foreach ($errors->all() as $error)

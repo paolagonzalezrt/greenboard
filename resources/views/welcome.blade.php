@@ -72,41 +72,25 @@
             @endif
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-            <x-category-card 
-                icon="home" 
-                title="Home" 
-                subtitle="Indoor sustainability"
-                color="blue"
-                :active="($category ?? '') === 'Home'"
-            />
-            <x-category-card 
-                icon="bolt" 
-                title="Energy" 
-                subtitle="Renewable efficiency"
-                color="amber"
-                :active="($category ?? '') === 'Energy'"
-            />
-            <x-category-card 
-                icon="shopping_bag" 
-                title="Consumption" 
-                subtitle="Zero waste shopping"
-                color="purple"
-                :active="($category ?? '') === 'Consumption'"
-            />
-            <x-category-card 
-                icon="directions_bike" 
-                title="Transport" 
-                subtitle="Eco-friendly travel"
-                color="emerald"
-                :active="($category ?? '') === 'Transport'"
-            />
-            <x-category-card 
-                icon="restaurant" 
-                title="Food" 
-                subtitle="Plant-based lifestyle"
-                color="orange"
-                :active="($category ?? '') === 'Food'"
-            />
+            @php
+                $categoryKeys = [
+                    ['key' => 'home', 'icon' => 'home', 'color' => 'blue'],
+                    ['key' => 'energy', 'icon' => 'bolt', 'color' => 'amber'],
+                    ['key' => 'consumption', 'icon' => 'shopping_bag', 'color' => 'purple'],
+                    ['key' => 'transport', 'icon' => 'directions_bike', 'color' => 'emerald'],
+                    ['key' => 'food', 'icon' => 'restaurant', 'color' => 'orange'],
+                ];
+            @endphp
+
+            @foreach($categoryKeys as $cat)
+                <x-category-card 
+                    icon="{{ $cat['icon'] }}" 
+                    title="{{ __('categories.' . $cat['key']) }}" 
+                    subtitle="{{ __('categories.' . $cat['key'] . '_description') }}"
+                    color="{{ $cat['color'] }}"
+                    :active="($category ?? '') === $cat['key']"
+                />
+            @endforeach
         </div>
     </section>
 

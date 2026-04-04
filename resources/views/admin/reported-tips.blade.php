@@ -7,9 +7,9 @@
         <!-- Header -->
         <div class="mb-8">
             <div class="flex items-center gap-3 mb-2">
-                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Panel de Administración</h1>
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">{{ __('admin.admin_title') }}</h1>
             </div>
-            <p class="text-slate-600 dark:text-slate-400 text-lg">Gestión de reportes de la comunidad</p>
+            <p class="text-slate-600 dark:text-slate-400 text-lg">{{ __('admin.admin_subtitle') }}</p>
         </div>
 
         <!-- Success Message -->
@@ -33,13 +33,13 @@
             <button onclick="switchTab('tips')" id="tabs-tips" class="px-6 py-3 font-bold text-slate-600 dark:text-slate-400 border-b-2 border-transparent hover:text-primary hover:border-primary transition-colors active-tab">
                 <span class="flex items-center gap-2">
                     <span class="material-symbols-outlined">article</span>
-                    Posts Reportados
+                    {{ __('admin.reported_tips_tab') }}
                 </span>
             </button>
             <button onclick="switchTab('comments')" id="tabs-comments" class="px-6 py-3 font-bold text-slate-600 dark:text-slate-400 border-b-2 border-transparent hover:text-primary hover:border-primary transition-colors">
                 <span class="flex items-center gap-2">
                     <span class="material-symbols-outlined">chat_bubble</span>
-                    Comentarios Reportados
+                    {{ __('admin.reported_comments_tab') }}
                 </span>
             </button>
         </div>
@@ -51,7 +51,7 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">Posts Reportados</p>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">{{ __('admin.reported_count') }}</p>
                             <p class="text-3xl font-extrabold text-primary">{{ $reportedTips->count() }}</p>
                         </div>
                         <span class="material-symbols-outlined text-5xl text-red-500 opacity-20">report</span>
@@ -61,7 +61,7 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">Reportes Pendientes</p>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">{{ __('admin.pending_count') }}</p>
                             <p class="text-3xl font-extrabold text-orange-500">
                                 {{ $reportedTips->sum(function($tip) { 
                                     return $tip['reports']->where('status', 'pending')->count(); 
@@ -75,7 +75,7 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">Total Reportes</p>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">{{ __('admin.total_reports') }}</p>
                             <p class="text-3xl font-extrabold text-blue-500">
                                 {{ $reportedTips->sum('reports_count') }}
                             </p>
@@ -89,8 +89,8 @@
             @if($reportedTips->isEmpty())
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-12 text-center border-2 border-slate-200 dark:border-slate-700">
                     <span class="material-symbols-outlined text-6xl text-slate-400 mb-4 block">check_circle</span>
-                    <h3 class="text-xl font-bold text-slate-600 dark:text-slate-400 mb-2">¡Todo limpio!</h3>
-                    <p class="text-slate-500 dark:text-slate-500">No hay posts reportados en este momento.</p>
+                    <h3 class="text-xl font-bold text-slate-600 dark:text-slate-400 mb-2">{{ __('admin.all_clean') }}</h3>
+                    <p class="text-slate-500 dark:text-slate-500">{{ __('admin.no_reported_tips') }}</p>
                 </div>
             @else
                 <div class="space-y-6">
@@ -124,7 +124,7 @@
                             <div class="p-6 bg-slate-50 dark:bg-slate-900/50">
                                 <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
                                     <span class="material-symbols-outlined text-red-500">report</span>
-                                    Reportes Recibidos
+                                    {{ __('admin.reports_received') }}
                                 </h4>
                                 <div class="space-y-3">
                                     @foreach($tip['reports'] as $report)
@@ -143,9 +143,9 @@
                                                             {{ ucfirst($report['status']) }}
                                                         </span>
                                                     </div>
-                                                    <p class="text-slate-700 dark:text-slate-300 mb-2">{{ $report['description'] ?? 'Sin descripción adicional' }}</p>
+                                                    <p class="text-slate-700 dark:text-slate-300 mb-2">{{ $report['description'] ?? __('admin.no_description') }}</p>
                                                     <div class="text-xs text-slate-500">
-                                                        <span class="font-semibold">Reportado por:</span> {{ $report['reporter'] }} ({{ $report['reporter_email'] }})
+                                                        <span class="font-semibold">{{ __('admin.reported_by_label') }}</span> {{ $report['reporter'] }} ({{ $report['reporter_email'] }})
                                                         <span class="mx-2">•</span>
                                                         <span>{{ $report['created_at'] }}</span>
                                                     </div>
@@ -156,13 +156,13 @@
                                                     @csrf
                                                     @method('PATCH')
                                                     <select name="status" class="text-xs px-2 py-1 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none">
-                                                        <option value="pending" {{ $report['status'] === 'pending' ? 'selected' : '' }}>Pendiente</option>
-                                                        <option value="reviewed" {{ $report['status'] === 'reviewed' ? 'selected' : '' }}>Revisado</option>
-                                                        <option value="resolved" {{ $report['status'] === 'resolved' ? 'selected' : '' }}>Resuelto</option>
-                                                        <option value="dismissed" {{ $report['status'] === 'dismissed' ? 'selected' : '' }}>Descartado</option>
+                                                        <option value="pending" {{ $report['status'] === 'pending' ? 'selected' : '' }}>{{ __('admin.status_pending') }}</option>
+                                                        <option value="reviewed" {{ $report['status'] === 'reviewed' ? 'selected' : '' }}>{{ __('admin.status_reviewed') }}</option>
+                                                        <option value="resolved" {{ $report['status'] === 'resolved' ? 'selected' : '' }}>{{ __('admin.status_resolved') }}</option>
+                                                        <option value="dismissed" {{ $report['status'] === 'dismissed' ? 'selected' : '' }}>{{ __('admin.status_dismissed') }}</option>
                                                     </select>
                                                     <button type="submit" class="px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded-lg hover:bg-blue-600 transition-colors">
-                                                        Actualizar
+                                                        {{ __('admin.update') }}
                                                     </button>
                                                 </form>
                                             </div>
@@ -176,15 +176,15 @@
                                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
                                     <a href="{{ route('tips.show', $tip['id']) }}" target="_blank" class="w-full sm:w-auto px-6 py-3 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 transition-colors flex items-center justify-center gap-2">
                                         <span class="material-symbols-outlined">open_in_new</span>
-                                        Ver Post Completo
+                                        {{ __('admin.view_full_post') ?? 'Ver Post Completo' }}
                                     </a>
                                     
-                                    <form action="{{ route('admin.tips.delete', $tip['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este post? Esta acción no se puede deshacer.');">
+                                    <form action="{{ route('admin.tips.delete', $tip['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('{{ __('admin.confirm_delete_post') ?? '¿Estás seguro?' }}');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="w-full px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors flex items-center justify-center gap-2">
                                             <span class="material-symbols-outlined">delete</span>
-                                            Eliminar Post
+                                            {{ __('admin.delete_post') }}
                                         </button>
                                     </form>
                                 </div>
@@ -202,7 +202,7 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">Comentarios Reportados</p>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">{{ __('admin.reported_comments') }}</p>
                             <p class="text-3xl font-extrabold text-primary">{{ $reportedComments->count() }}</p>
                         </div>
                         <span class="material-symbols-outlined text-5xl text-red-500 opacity-20">report</span>
@@ -212,7 +212,7 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">Reportes Pendientes</p>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">{{ __('admin.pending_reports') }}</p>
                             <p class="text-3xl font-extrabold text-orange-500">
                                 {{ $reportedComments->sum(function($comment) { 
                                     return $comment['reports']->where('status', 'pending')->count(); 
@@ -240,8 +240,8 @@
             @if($reportedComments->isEmpty())
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-12 text-center border-2 border-slate-200 dark:border-slate-700">
                     <span class="material-symbols-outlined text-6xl text-slate-400 mb-4 block">check_circle</span>
-                    <h3 class="text-xl font-bold text-slate-600 dark:text-slate-400 mb-2">¡Todo limpio!</h3>
-                    <p class="text-slate-500 dark:text-slate-500">No hay comentarios reportados en este momento.</p>
+                    <h3 class="text-xl font-bold text-slate-600 dark:text-slate-400 mb-2">{{ __('admin.all_clean') }}</h3>
+                    <p class="text-slate-500 dark:text-slate-500">{{ __('admin.no_reported_comments') }}</p>
                 </div>
             @else
                 <div class="space-y-6">
@@ -274,7 +274,7 @@
                             <div class="p-6 bg-slate-50 dark:bg-slate-900/50">
                                 <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
                                     <span class="material-symbols-outlined text-red-500">report</span>
-                                    Reportes Recibidos
+                                    {{ __('admin.reports_received') }}
                                 </h4>
                                 <div class="space-y-3">
                                     @foreach($comment['reports'] as $report)
@@ -293,9 +293,9 @@
                                                             {{ ucfirst($report['status']) }}
                                                         </span>
                                                     </div>
-                                                    <p class="text-slate-700 dark:text-slate-300 mb-2">{{ $report['description'] ?? 'Sin descripción adicional' }}</p>
+                                                    <p class="text-slate-700 dark:text-slate-300 mb-2">{{ $report['description'] ?? __('admin.no_description') }}</p>
                                                     <div class="text-xs text-slate-500">
-                                                        <span class="font-semibold">Reportado por:</span> {{ $report['reporter'] }} ({{ $report['reporter_email'] }})
+                                                        <span class="font-semibold">{{ __('admin.reported_by_label') }}</span> {{ $report['reporter'] }} ({{ $report['reporter_email'] }})
                                                         <span class="mx-2">•</span>
                                                         <span>{{ $report['created_at'] }}</span>
                                                     </div>
@@ -306,13 +306,13 @@
                                                     @csrf
                                                     @method('PATCH')
                                                     <select name="status" class="text-xs px-2 py-1 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none">
-                                                        <option value="pending" {{ $report['status'] === 'pending' ? 'selected' : '' }}>Pendiente</option>
-                                                        <option value="reviewed" {{ $report['status'] === 'reviewed' ? 'selected' : '' }}>Revisado</option>
-                                                        <option value="resolved" {{ $report['status'] === 'resolved' ? 'selected' : '' }}>Resuelto</option>
-                                                        <option value="dismissed" {{ $report['status'] === 'dismissed' ? 'selected' : '' }}>Descartado</option>
+                                                        <option value="pending" {{ $report['status'] === 'pending' ? 'selected' : '' }}>{{ __('admin.status_pending') }}</option>
+                                                        <option value="reviewed" {{ $report['status'] === 'reviewed' ? 'selected' : '' }}>{{ __('admin.status_reviewed') }}</option>
+                                                        <option value="resolved" {{ $report['status'] === 'resolved' ? 'selected' : '' }}>{{ __('admin.status_resolved') }}</option>
+                                                        <option value="dismissed" {{ $report['status'] === 'dismissed' ? 'selected' : '' }}>{{ __('admin.status_dismissed') }}</option>
                                                     </select>
                                                     <button type="submit" class="px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded-lg hover:bg-blue-600 transition-colors">
-                                                        Actualizar
+                                                        {{ __('admin.update') }}
                                                     </button>
                                                 </form>
                                             </div>
@@ -326,15 +326,15 @@
                                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
                                     <a href="{{ route('tips.show', $comment['tip_id']) }}#comment-{{ $comment['id'] }}" target="_blank" class="w-full sm:w-auto px-6 py-3 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 transition-colors flex items-center justify-center gap-2">
                                         <span class="material-symbols-outlined">open_in_new</span>
-                                        Ver Comentario
+                                        {{ __('admin.view_comment') ?? 'View Comment' }}
                                     </a>
                                     
-                                    <form action="{{ route('admin.comments.delete', $comment['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este comentario? Esta acción no se puede deshacer.');">
+                                    <form action="{{ route('admin.comments.delete', $comment['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('{{ __('admin.confirm_delete_comment') ?? '¿Estás seguro de que deseas eliminar este comentario? Esta acción no se puede deshacer.' }}');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="w-full px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors flex items-center justify-center gap-2">
                                             <span class="material-symbols-outlined">delete</span>
-                                            Eliminar Comentario
+                                            {{ __('admin.delete_comment') ?? 'Delete Comment' }}
                                         </button>
                                     </form>
                                 </div>

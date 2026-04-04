@@ -28,15 +28,15 @@
                        
                         <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                             <span class="material-symbols-outlined text-primary text-lg sm:text-xl">article</span>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">{{ $postsCount }} {{ $postsCount == 1 ? 'Post' : 'Posts' }}</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">{{ $postsCount }} {{ $postsCount == 1 ? __('users.post') : __('users.posts') }}</span>
                         </div>
                         <button onclick="showFollowersList()" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
                             <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person</span>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="followers-count">{{ Auth::user()->followers()->count() }}</span> Followers</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="followers-count">{{ Auth::user()->followers()->count() }}</span> {{ __('users.followers') }}</span>
                         </button>
                         <button onclick="showFollowingList()" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
                             <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person</span>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="following-count">{{ Auth::user()->following()->count() }}</span> Following</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="following-count">{{ Auth::user()->following()->count() }}</span> {{ __('users.following') }}</span>
                         </button>
                     </div>
                 </div>
@@ -46,12 +46,12 @@
             <div class="flex gap-2 sm:gap-3 flex-shrink-0 items-start justify-center sm:justify-start">
                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 rounded-full bg-primary px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-background-dark shadow-md transition-all hover:brightness-105">
                     <span class="material-symbols-outlined text-base sm:text-lg">edit</span>
-                    <span class="hidden sm:inline">Edit Profile</span>
-                    <span class="sm:hidden">Edit</span>
+                    <span class="hidden sm:inline">{{ __('users.edit_profile') }}</span>
+                    <span class="sm:hidden">{{ __('buttons.edit') ?? 'Edit' }}</span>
                 </a>
                 <button onclick="shareProfile({{ Auth::id() }}, '{{ addslashes(Auth::user()->name) }}')" class="flex items-center gap-2 rounded-full bg-white dark:bg-slate-800 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold shadow-md transition-all border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700">
                     <span class="material-symbols-outlined text-base sm:text-lg">share</span>
-                    <span>Share</span>
+                    <span>{{ __('users.share') }}</span>
                 </button>
             </div>
         </div>
@@ -60,8 +60,8 @@
     <!-- Tabs Navigation -->
     <div class="mb-6 sm:mb-8 w-full">
         <div class="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar">
-            <a href="{{ route('profile', ['tab' => 'my-tips']) }}" class="border-b-2 {{ $tab === 'my-tips' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300' }} px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap">My Tips</a>
-            <a href="{{ route('profile', ['tab' => 'saved']) }}" class="border-b-2 {{ $tab === 'saved' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300' }} px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap">Saved</a>
+            <a href="{{ route('profile', ['tab' => 'my-tips']) }}" class="border-b-2 {{ $tab === 'my-tips' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300' }} px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap">{{ __('content.no_posts_yet') ?? 'My Tips' }}</a>
+            <a href="{{ route('profile', ['tab' => 'saved']) }}" class="border-b-2 {{ $tab === 'saved' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300' }} px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap">{{ __('content.saved_title') }}</a>
         </div>
     </div>
 
@@ -72,9 +72,9 @@
                 <span class="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-600 mb-4">{{ $tab === 'saved' ? 'bookmark' : 'article' }}</span>
                 <p class="text-slate-500 dark:text-slate-400 text-lg">
                     @if($tab === 'saved')
-                        You haven't saved any tips yet.
+                        {{ __('content.no_saved') }}
                     @else
-                        You haven't published any tips yet.
+                        {{ __('content.no_posts_yet') }}
                     @endif
                 </p>
                 @if($tab !== 'saved')

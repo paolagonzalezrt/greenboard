@@ -121,6 +121,14 @@
             event.stopPropagation();
         }
 
+        function openReportModal(id, type = 'post') {
+            document.getElementById('report-tip-id').value = id;
+            document.getElementById('report-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            // Store the type for later use in submitReport
+            document.getElementById('report-modal').dataset.reportType = type;
+        }
+
         function reportPost(cardId) {
             // Close the menu
             const menu = document.getElementById('menu-' + cardId);
@@ -144,12 +152,8 @@
 
             const tipId = tipIdMatch[1];
 
-            // Set the tip ID in the modal
-            document.getElementById('report-tip-id').value = tipId;
-
-            // Show the report modal
-            document.getElementById('report-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            // Use the new simple function
+            openReportModal(tipId);
         }
 
         function deletePost(tipId) {
@@ -407,153 +411,53 @@
     </script>
 
     <!-- Report Modal -->
-    <div id="report-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4" onclick="closeReportModal(event)">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-red-500 text-3xl">report</span>
-                    <h3 class="text-xl sm:text-2xl font-bold">Reportar Tip</h3>
-                </div>
-                <button onclick="closeReportModal()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors">
-                    <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">close</span>
-                </button>
-            </div>
-
-            <!-- Description -->
-            <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">
-                Ayúdanos a mantener la comunidad segura. Selecciona la razón del reporte y proporciona detalles adicionales.
-            </p>
-
-            <!-- Form -->
-            <form id="report-form" onsubmit="submitReport(event)">
-                <input type="hidden" id="report-tip-id" name="tip_id">
-
-                <!-- Reason Selection -->
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">
-                        Razón del reporte <span class="text-red-500">*</span>
-                    </label>
-                    <div class="space-y-2">
-                        <label class="flex items-start gap-3 p-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary cursor-pointer transition-colors">
-                            <input type="radio" name="reason" value="spam" required class="mt-1 text-primary focus:ring-primary">
-                            <div>
-                                <span class="font-semibold text-slate-800 dark:text-slate-200">Spam</span>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Contenido repetitivo o promocional</p>
-                            </div>
-                        </label>
-
-                        <label class="flex items-start gap-3 p-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary cursor-pointer transition-colors">
-                            <input type="radio" name="reason" value="inappropriate" required class="mt-1 text-primary focus:ring-primary">
-                            <div>
-                                <span class="font-semibold text-slate-800 dark:text-slate-200">Contenido inapropiado</span>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Contenido ofensivo o inapropiado</p>
-                            </div>
-                        </label>
-
-                        <label class="flex items-start gap-3 p-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary cursor-pointer transition-colors">
-                            <input type="radio" name="reason" value="misleading" required class="mt-1 text-primary focus:ring-primary">
-                            <div>
-                                <span class="font-semibold text-slate-800 dark:text-slate-200">Información falsa</span>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Información incorrecta o engañosa</p>
-                            </div>
-                        </label>
-
-                        <label class="flex items-start gap-3 p-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary cursor-pointer transition-colors">
-                            <input type="radio" name="reason" value="harassment" required class="mt-1 text-primary focus:ring-primary">
-                            <div>
-                                <span class="font-semibold text-slate-800 dark:text-slate-200">Acoso</span>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Acoso o intimidación</p>
-                            </div>
-                        </label>
-
-                        <label class="flex items-start gap-3 p-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary cursor-pointer transition-colors">
-                            <input type="radio" name="reason" value="other" required class="mt-1 text-primary focus:ring-primary">
-                            <div>
-                                <span class="font-semibold text-slate-800 dark:text-slate-200">Otro</span>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Otra razón no listada</p>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Description -->
-                <div class="mb-6">
-                    <label for="report-description" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                        Descripción adicional (opcional)
-                    </label>
-                    <textarea 
-                        id="report-description" 
-                        name="description" 
-                        rows="4" 
-                        maxlength="500"
-                        class="w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 resize-none"
-                        placeholder="Proporciona más detalles sobre el reporte..."
-                    ></textarea>
-                    <div class="flex justify-end mt-1">
-                        <span class="text-xs text-slate-500 dark:text-slate-400" id="char-count">0/500</span>
-                    </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <button 
-                        type="button" 
-                        onclick="closeReportModal()" 
-                        class="flex-1 px-6 py-3 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-                    >
-                        Cancelar
-                    </button>
-                    <button 
-                        type="submit" 
-                        class="flex-1 px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
-                        id="submit-report-btn"
-                    >
-                        <span class="material-symbols-outlined">send</span>
-                        <span>Enviar Reporte</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- Report Modal Component -->
+    <x-report-modal
+        type="post"
+        modalId="report-modal"
+        title="{{ __('tips.report_title') }}"
+        description="{{ __('tips.report_description') }}"
+        submitFunction="submitReport"
+        idFieldName="report-tip-id"
+    />
 
     <script>
-        // Character counter for description
-        const reportDescription = document.getElementById('report-description');
-        const charCount = document.getElementById('char-count');
-
-        if (reportDescription && charCount) {
-            reportDescription.addEventListener('input', function() {
-                const count = this.value.length;
-                charCount.textContent = `${count}/500`;
-            });
-        }
 
         // Close report modal
-        function closeReportModal(event) {
+        function closeReportModal(event, modalId = 'report-modal') {
             // If event is provided and clicked target is not the backdrop, don't close
             if (event && event.target !== event.currentTarget) {
                 return;
             }
 
-            const modal = document.getElementById('report-modal');
+            const modal = document.getElementById(modalId);
             modal.classList.add('hidden');
             document.body.style.overflow = ''; // Restore scrolling
 
-            // Reset form
-            document.getElementById('report-form').reset();
-            if (charCount) {
-                charCount.textContent = '0/500';
+            // Reset form - find it within the modal
+            const form = modal.querySelector('form');
+            if (form) {
+                form.reset();
+                // Reset character count
+                const charCounts = modal.querySelectorAll('[id^="char-count-"]');
+                charCounts.forEach(el => el.textContent = '0/500');
             }
         }
 
         // Submit report
-        function submitReport(event) {
+        function submitReport(event, type = 'post') {
             event.preventDefault();
 
-            const tipId = document.getElementById('report-tip-id').value;
-            const reason = document.querySelector('input[name="reason"]:checked')?.value;
-            const description = document.getElementById('report-description').value;
+            // Get the form that was submitted
+            const form = event.target;
+            const modal = form.closest('[id^="report-modal"]');
+            
+            // Use type from dataset if available (passed via openReportModal)
+            const reportType = modal?.dataset?.reportType || type;
+            
+            const tipId = form.querySelector('[id$="-id"]').value || form.querySelector('input[type="hidden"]').value;
+            const reason = form.querySelector('input[name="reason"]:checked')?.value;
+            const description = form.querySelector('textarea[name="description"]')?.value || '';
 
             if (!reason) {
                 showNotification('Por favor selecciona una razón para el reporte', 'error');
@@ -561,13 +465,15 @@
             }
 
             // Disable submit button
-            const submitBtn = document.getElementById('submit-report-btn');
+            const submitBtn = form.querySelector('button[type="submit"]');
             const originalContent = submitBtn.innerHTML;
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span><span>Enviando...</span>';
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> <span>Enviando...</span>';
 
-            // Send report to backend
-            fetch(`/tips/${tipId}/report`, {
+            // Send report to backend - use appropriate endpoint based on type
+            const endpoint = reportType === 'comment' ? `/comments/${tipId}/report` : `/tips/${tipId}/report`;
+
+            fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -581,7 +487,9 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    closeReportModal();
+                    // Find and close the modal
+                    const modal = form.closest('[id^="report-modal"]');
+                    closeReportModal(null, modal.id);
                     showNotification(data.message || 'Reporte enviado exitosamente', 'success');
                 } else {
                     showNotification(data.message || 'Error al enviar el reporte', 'error');
@@ -663,18 +571,26 @@
 
         // Share Profile Function
         function shareProfile(userId, userName) {
-            const url = `${window.location.origin}/users/${userId}`;
-            const text = `¡Mira el perfil de ${userName} en GreenBoard!`;
+            const currentLocale = @json(app()->getLocale());
+            const url = `${window.location.origin}/${currentLocale}/users/${userId}`;
+            
+            // Get translations from data attributes or use defaults
+            const titleTemplate = @json(__('users.share_profile_title'));
+            const textTemplate = @json(__('users.share_profile_text'));
+            const successMsg = @json(__('users.share_success'));
+            
+            const title = titleTemplate.replace(':name', userName);
+            const text = textTemplate.replace(':name', userName);
 
             // Check if Web Share API is supported
             if (navigator.share) {
                 navigator.share({
-                    title: `Perfil de ${userName}`,
+                    title: title,
                     text: text,
                     url: url
                 })
                 .then(() => {
-                    showNotification('¡Perfil compartido exitosamente!', 'success');
+                    showNotification(successMsg, 'success');
                 })
                 .catch((error) => {
                     // User cancelled or error occurred
@@ -692,10 +608,11 @@
 
         // Copy to Clipboard Function
         function copyToClipboard(text) {
+            const copySuccessMsg = @json(__('users.copy_link_success'));
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text)
                     .then(() => {
-                        showNotification('¡Enlace copiado al portapapeles!', 'success');
+                        showNotification(copySuccessMsg, 'success');
                     })
                     .catch(err => {
                         console.error('Error copying to clipboard:', err);

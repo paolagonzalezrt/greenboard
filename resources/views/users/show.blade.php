@@ -28,15 +28,15 @@
                        
                         <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                             <span class="material-symbols-outlined text-primary text-lg sm:text-xl">article</span>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">{{ $postsCount }} {{ $postsCount == 1 ? 'Post' : 'Posts' }}</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">{{ $postsCount }} {{ $postsCount == 1 ? __('users.post') : __('users.posts') }}</span>
                         </div>
                         <button onclick="showFollowersList()" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
                             <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person</span>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="followers-count">{{ $user->followers()->count() }}</span> Followers</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="followers-count">{{ $user->followers()->count() }}</span> {{ __('users.followers') }}</span>
                         </button>
                         <button onclick="showFollowingList()" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
                             <span class="material-symbols-outlined text-primary text-lg sm:text-xl">person</span>
-                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="following-count">{{ $user->following()->count() }}</span> Following</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="following-count">{{ $user->following()->count() }}</span> {{ __('users.following') }}</span>
                         </button>
                     </div>
                 </div>
@@ -52,12 +52,12 @@
                             class="follow-btn flex items-center gap-2 rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold shadow-md transition-all 
                             {{ Auth::user()->isFollowing($user->id) ? 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' : 'bg-primary text-background-dark hover:brightness-105' }}">
                             <span class="material-symbols-outlined text-base sm:text-lg">{{ Auth::user()->isFollowing($user->id) ? 'person_check' : 'person_add' }}</span>
-                            <span class="follow-text">{{ Auth::user()->isFollowing($user->id) ? 'Following' : 'Follow' }}</span>
+                            <span class="follow-text">{{ Auth::user()->isFollowing($user->id) ? __('users.unfollow') : __('users.follow') }}</span>
                         </button>
                     @endif
                     <button onclick="shareProfile({{ $user->id }}, '{{ addslashes($user->name) }}')" class="flex items-center gap-2 rounded-full bg-white dark:bg-slate-800 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold shadow-md transition-all border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700">
                         <span class="material-symbols-outlined text-base sm:text-lg">share</span>
-                        <span>Share</span>
+                        <span>{{ __('users.share') ?? 'Share' }}</span>
                     </button>
                 </div>
             @endauth
@@ -67,14 +67,14 @@
     <!-- Tabs Navigation -->
     <div class="mb-6 sm:mb-8 w-full">
         <div class="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar">
-            <a href="{{ route('users.show', ['user' => $user->id, 'tab' => 'posts']) }}" class="border-b-2 {{ $tab === 'posts' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300' }} px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap">Posts</a>
-            <a href="{{ route('users.show', ['user' => $user->id, 'tab' => 'saved']) }}" class="border-b-2 {{ $tab === 'saved' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300' }} px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap">Saved</a>
+            <a href="{{ route('users.show', ['user' => $user->id, 'tab' => 'posts']) }}" class="border-b-2 {{ $tab === 'posts' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300' }} px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap">{{ __('users.posts_tab') }}</a>
+            <a href="{{ route('users.show', ['user' => $user->id, 'tab' => 'saved']) }}" class="border-b-2 {{ $tab === 'saved' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300' }} px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap">{{ __('users.saved_tab') }}</a>
         </div>
     </div>
 
     <!-- Posts Section Title -->
     <div class="mb-6 sm:mb-8 w-full">
-        <h2 class="text-xl sm:text-2xl font-bold">{{ $tab === 'saved' ? 'Saved Posts' : 'Posts' }}</h2>
+        <h2 class="text-xl sm:text-2xl font-bold">{{ $tab === 'saved' ? __('users.saved_posts') : __('users.posts_title') }}</h2>
     </div>
 
     <!-- Posts Grid -->
@@ -84,9 +84,9 @@
                 <span class="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-600 mb-4">{{ $tab === 'saved' ? 'bookmark' : 'article' }}</span>
                 <p class="text-slate-500 dark:text-slate-400 text-lg">
                     @if($tab === 'saved')
-                        No saved tips to display.
+                        {{ __('users.no_saved') }}
                     @else
-                        This user hasn't published any tips yet.
+                        {{ __('users.no_posts') }}
                     @endif
                 </p>
             </div>
@@ -125,7 +125,7 @@
         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden flex flex-col" onclick="event.stopPropagation()">
             <!-- Modal Header -->
             <div class="flex items-center justify-between px-8 pt-6 pb-2">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" id="modal-title">Followers</h3>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" id="modal-title">{{ __('users.followers') }}</h3>
                 <button onclick="closeModal()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
                     <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">close</span>
                 </button>

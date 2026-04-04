@@ -1,0 +1,31 @@
+<?php
+
+return [
+    // User Profile
+    'profile' => 'Profile',
+    'post' => 'Post',
+    'posts' => 'Posts',
+    'posts_tab' => 'Posts',
+    'posts_title' => 'Posts',
+    'saved_tab' => 'Saved',
+    'saved_posts' => 'Saved Posts',
+    'followers' => 'Followers',
+    'following' => 'Following',
+    'bio' => 'Biography',
+    'no_bio' => 'No biography',
+    'join_date' => 'Joined',
+    'follow' => 'Follow',
+    'unfollow' => 'Unfollow',
+    'share' => 'Share',
+    'share_profile_title' => 'Profile of :name',
+    'share_profile_text' => 'Check out :name\'s profile on GreenBoard!',
+    'share_success' => 'Profile shared successfully!',
+    'copy_link_success' => 'Link copied to clipboard!',
+    'edit_profile' => 'Edit Profile',
+    'no_posts' => 'This user has not published any tips yet',
+    'no_saved' => 'No saved tips to display',
+    'no_followers' => 'No followers yet',
+    'no_followers_yet' => 'No followers yet',
+    'view_profile' => 'View Profile',
+    'view_all_posts' => 'View All Posts',
+];

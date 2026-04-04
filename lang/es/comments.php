@@ -1,0 +1,26 @@
+<?php
+
+return [
+    // Botones de comentarios
+    'reply' => 'Responder',
+    'delete' => 'Eliminar',
+    'report' => 'Reportar',
+    'edit' => 'Editar',
+    'like' => 'Me gusta',
+    'unlike' => 'Ya no me gusta',
+    'cancel' => 'Cancelar',
+    'reply_placeholder' => 'Escribe una respuesta...',
+    'load_more' => 'Cargar más',
+    'no_comments' => 'Sin comentarios aún',
+    'no_comments_yet' => 'No hay comentarios aún. ¡Sé el primero en comentar!',
+    'author_label' => 'Autor:',
+    'published_label' => 'Publicado:',
+    'add_comment' => 'Añadir comentario...',
+    'comment_deleted' => 'Comentario eliminado',
+    'confirm_delete' => '¿Seguro que quieres eliminar este comentario?',
+    'report_reason' => 'Razón del reporte',
+    'reason_spam' => 'Spam',
+    'reason_inappropriate' => 'Contenido inapropiado',
+    'reason_offensive' => 'Ofensivo',
+    'report_submitted' => 'Reporte enviado exitosamente',
+];
