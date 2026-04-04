@@ -9,17 +9,17 @@
     @auth
         <nav class="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center">
             <a class="{{ request()->routeIs('dashboard') ? 'text-primary font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium' }} text-sm hover:text-primary transition-colors" href="{{ route('dashboard') }}">
-                Explore
+                {{ __('nav.explore') }}
             </a>
             <a class="{{ request()->routeIs('following') ? 'text-primary font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium' }} text-sm hover:text-primary transition-colors" href="{{ route('following') }}">
-                Following
+                {{ __('nav.following') }}
             </a>
             <a class="{{ request()->routeIs('saved') ? 'text-primary font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium' }} text-sm hover:text-primary transition-colors" href="{{ route('saved') }}">
-                Saved
+                {{ __('nav.saved') }}
             </a>
             @if(Auth::user()->is_admin)
                 <a class="{{ request()->routeIs('admin.*') ? 'text-primary font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium' }} text-sm hover:text-primary transition-colors flex items-center gap-1" href="{{ route('admin.reported-tips') }}">
-                    Administration
+                    {{ __('nav.administration') }}
                 </a>
             @endif
         </nav>
@@ -30,21 +30,19 @@
         @guest
             <!-- Guest Buttons (All Screens) -->
             <div class="flex items-center gap-1 sm:gap-2">
-                <button id="theme-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode">
+                <button id="theme-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode" onclick="window.ThemeManager.toggle()">
                     <span class="material-symbols-outlined text-xl" data-theme-icon>dark_mode</span>
                 </button>
 
-                <button id="language-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Change language">
-                    <span class="material-symbols-outlined text-xl">translate</span>
-                </button>
+                @include('partials.language-modal')
             </div>
 
             <a href="{{ route('login') }}" class="px-3 py-1.5 sm:px-5 sm:py-2 rounded-full font-bold text-xs sm:text-sm border-2 border-slate-300 dark:border-slate-700 hover:border-primary hover:text-primary transition-all">
-                <span class="hidden sm:inline">Log In</span>
+                <span class="hidden sm:inline">{{ __('nav.login') }}</span>
                 <span class="sm:hidden material-symbols-outlined text-[18px]">login</span>
             </a>
             <a href="{{ route('register') }}" class="bg-primary text-background-dark px-3 py-1.5 sm:px-6 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm hover:brightness-105 transition-all shadow-lg shadow-primary/30">
-                <span class="hidden sm:inline">Sign Up</span>
+                <span class="hidden sm:inline">{{ __('nav.register') }}</span>
                 <span class="sm:hidden material-symbols-outlined text-[18px]">person_add</span>
             </a>
         @else
@@ -52,13 +50,11 @@
 
             <!-- Desktop: Theme, Language & Profile Dropdown -->
             <div class="hidden lg:flex items-center gap-1 sm:gap-2">
-                <button id="theme-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode">
+                <button id="theme-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode" onclick="window.ThemeManager.toggle()">
                     <span class="material-symbols-outlined text-xl" data-theme-icon>dark_mode</span>
                 </button>
 
-                <button id="language-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Change language">
-                    <span class="material-symbols-outlined text-xl">translate</span>
-                </button>
+                @include('partials.language-modal')
             </div>
 
             <div class="hidden lg:block relative">
@@ -71,19 +67,19 @@
                 <div id="profile-menu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl overflow-hidden z-50">
                     <a href="{{ route('profile') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
                         <span class="material-symbols-outlined text-[20px]">person</span>
-                        <span>Mi Perfil</span>
+                        <span>{{ __('nav.profile') }}</span>
                     </a>
                     @if(Auth::user()->is_admin)
                         <a href="{{ route('admin.reported-tips') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
                             <span class="material-symbols-outlined text-[20px]">shield_person</span>
-                            <span>Administration</span>
+                            <span>{{ __('nav.administration') }}</span>
                         </a>
                     @endif
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-left">
                             <span class="material-symbols-outlined text-[20px]">logout</span>
-                            <span>Cerrar Sesión</span>
+                            <span>{{ __('nav.logout') }}</span>
                         </button>
                     </form>
                 </div>
@@ -120,29 +116,29 @@
             <div class="flex-1 overflow-y-auto">
                 <!-- Navigation Section -->
                 <div class="p-4">
-                    <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-2">Navegación</p>
+                    <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-2">{{ __('nav.navigation') }}</p>
                     <nav class="flex flex-col gap-1">
                         <a class="{{ request()->routeIs('dashboard') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('dashboard') }}" onclick="toggleMobileMenu()">
                             <span class="material-symbols-outlined text-[22px]">explore</span>
-                            <span class="font-medium">Explore</span>
+                            <span class="font-medium">{{ __('nav.explore') }}</span>
                         </a>
                         <a class="{{ request()->routeIs('following') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('following') }}" onclick="toggleMobileMenu()">
                             <span class="material-symbols-outlined text-[22px]">favorite</span>
-                            <span class="font-medium">Following</span>
+                            <span class="font-medium">{{ __('nav.following') }}</span>
                         </a>
                         <a class="{{ request()->routeIs('saved') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('saved') }}" onclick="toggleMobileMenu()">
                             <span class="material-symbols-outlined text-[22px]">bookmark</span>
-                            <span class="font-medium">Saved</span>
+                            <span class="font-medium">{{ __('nav.saved') }}</span>
                         </a>
                         @if(Auth::user()->is_admin)
                             <a class="{{ request()->routeIs('admin.*') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('admin.reported-tips') }}" onclick="toggleMobileMenu()">
                                 <span class="material-symbols-outlined text-[22px]">shield_person</span>
-                                <span class="font-medium">Administration</span>
+                                <span class="font-medium">{{ __('nav.administration') }}</span>
                             </a>
                         @endif
                         <a class="{{ request()->routeIs('profile') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('profile') }}" onclick="toggleMobileMenu()">
                             <span class="material-symbols-outlined text-[22px]">person</span>
-                            <span class="font-medium">Mi Perfil</span>
+                            <span class="font-medium">{{ __('nav.profile') }}</span>
                         </a>
                     </nav>
                 </div>
@@ -152,13 +148,13 @@
 
                 <!-- Settings Section -->
                 <div class="p-4">
-                    <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-2">Configuración</p>
+                    <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-2">{{ __('nav.settings') }}</p>
                     <div class="flex flex-col gap-1">
                         <!-- Theme Toggle -->
                         <button onclick="window.ThemeManager.toggle(); event.stopPropagation();" class="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
                             <div class="flex items-center gap-3">
                                 <span class="material-symbols-outlined text-[22px]" data-theme-icon>dark_mode</span>
-                                <span class="font-medium">Modo Oscuro</span>
+                                <span class="font-medium">{{ __('nav.dark_mode') }}</span>
                             </div>
                             <div class="w-12 h-6 bg-slate-300 dark:bg-primary rounded-full relative transition-colors">
                                 <div class="absolute top-1 left-1 dark:left-6 w-4 h-4 bg-white rounded-full shadow-md transition-all"></div>
@@ -166,13 +162,26 @@
                         </button>
 
                         <!-- Language Toggle -->
-                        <button onclick="languageToggle(); event.stopPropagation();" class="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-[22px]">translate</span>
-                                <span class="font-medium">Idioma</span>
+                        <div class="relative px-4 py-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                        <span class="material-symbols-outlined text-[22px]">translate</span>
+                                        <span class="font-medium">{{ __('nav.language') }}</span>
+                                    </div>
+                                <button onclick="toggleMobileLanguageDropdown(event)" class="text-xs font-bold text-slate-500 dark:text-slate-400">{{ strtoupper($currentLocale) }}</button>
                             </div>
-                            <span class="text-xs font-bold text-slate-500 dark:text-slate-400">ES</span>
-                        </button>
+                            <div id="mobile-lang-dropdown" class="hidden absolute left-4 right-4 top-full mt-2 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl shadow-xl overflow-hidden z-50">
+                                @foreach($availableLocales as $code => $locale)
+                                    <a 
+                                        href="{{ route('locale.switch', $code) }}" 
+                                        class="block px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors {{ $currentLocale === $code ? 'bg-primary/10 text-primary' : '' }}"
+                                        onclick="closeMobileLanguageDropdown()"
+                                    >
+                                        {{ strtoupper($code) }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -181,12 +190,12 @@
 
                 <!-- Account Section -->
                 <div class="p-4">
-                    <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-2">Cuenta</p>
+                    <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-2">{{ __('nav.account') }}</p>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-red-600 dark:text-red-400 text-left">
                             <span class="material-symbols-outlined text-[22px]">logout</span>
-                            <span class="font-medium">Cerrar Sesión</span>
+                            <span class="font-medium">{{ __('nav.logout') }}</span>
                         </button>
                     </form>
                 </div>
@@ -201,6 +210,35 @@
         const menu = document.getElementById('profile-menu');
         menu.classList.toggle('hidden');
     }
+
+    // Toggle Mobile Language Dropdown
+    function toggleMobileLanguageDropdown(event) {
+        event.stopPropagation();
+        const dropdown = document.getElementById('mobile-lang-dropdown');
+        if (dropdown) {
+            dropdown.classList.toggle('hidden');
+        }
+    }
+
+    // Close Mobile Language Dropdown
+    function closeMobileLanguageDropdown() {
+        const dropdown = document.getElementById('mobile-lang-dropdown');
+        if (dropdown) {
+            dropdown.classList.add('hidden');
+        }
+    }
+
+    // Close language dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('mobile-lang-dropdown');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (dropdown && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+            if (!event.target.closest('#mobile-lang-dropdown') && !event.target.closest('button[onclick*="toggleMobileLanguageDropdown"]')) {
+                dropdown.classList.add('hidden');
+            }
+        }
+    });
 
     // Close profile menu when clicking outside
     document.addEventListener('click', function(event) {

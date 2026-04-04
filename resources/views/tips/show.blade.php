@@ -9,12 +9,12 @@
             @auth
                 <a href="{{route('dashboard')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                     <span class="material-symbols-outlined">arrow_back</span>
-                    <span class="font-semibold">Back</span>
+                    <span class="font-semibold">{{ __('buttons.back') }}</span>
                 </a>
             @else
                 <a href="{{route('home')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                     <span class="material-symbols-outlined">arrow_back</span>
-                    <span class="font-semibold">Back</span>
+                    <span class="font-semibold">{{ __('buttons.back') }}</span>
                 </a>
             @endauth
         </div>
@@ -60,7 +60,7 @@
                                     class="follow-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all flex-shrink-0
                                     {{ Auth::user()->isFollowing($tip->user_id) ? 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' : 'bg-primary text-background-dark hover:brightness-105' }}">
                                     <span class="material-symbols-outlined text-base">{{ Auth::user()->isFollowing($tip->user_id) ? 'person_check' : 'person_add' }}</span>
-                                    <span class="follow-text">{{ Auth::user()->isFollowing($tip->user_id) ? 'Following' : 'Follow' }}</span>
+                                    <span class="follow-text">{{ Auth::user()->isFollowing($tip->user_id) ? __('buttons.unfollow') : __('buttons.follow') }}</span>
                                 </button>
                             @endif
                         @endauth
@@ -73,18 +73,18 @@
                                     @if(Auth::id() === $tip->user_id)
                                         <button onclick="deletePost({{ $tip->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                             <span class="material-symbols-outlined text-[16px] text-red-500">delete</span>
-                                            <span>Eliminar</span>
+                                            <span>{{ __('buttons.delete') }}</span>
                                         </button>
                                     @else
                                         <button onclick="reportPost('show-tip')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                             <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
-                                            <span>Reportar</span>
+                                            <span>{{ __('buttons.report') }}</span>
                                         </button>
                                     @endif
                                 @else
                                     <button onclick="reportPost('show-tip')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                         <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
-                                        <span>Reportar</span>
+                                        <span>{{ __('buttons.report') }}</span>
                                     </button>
                                 @endauth
                             </div>
@@ -144,7 +144,7 @@
         <!-- Comments Section -->
         <div class="p-6 sm:p-8">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-                Comments ({{ $tip->comments()->count() }})
+                {{ __('content.comments_count') }} ({{ $tip->comments()->count() }})
             </h2>
 
             @auth
@@ -157,13 +157,13 @@
                             <textarea 
                                 name="content" 
                                 rows="3" 
-                                placeholder="Add a comment..."
+                                placeholder="{{ __('content.add_comment') }}"
                                 class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-button border border-slate-200 dark:border-slate-700 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none"
                                 required
                             ></textarea>
                             <div class="flex justify-end mt-2">
                                 <button type="submit" class="px-6 py-2 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 transition-all text-sm">
-                                    Post Comment
+                                    {{ __('content.post_comment') }}
                                 </button>
                             </div>
                         </div>
@@ -173,7 +173,7 @@
                 <!-- Login prompt -->
                 <div class="mb-8 p-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-center">
                     <p class="text-slate-600 dark:text-slate-400">
-                        <a href="{{ route('login') }}" class="text-primary font-bold hover:underline">Log in</a> to leave a comment
+                        <a href="{{ route('login') }}" class="text-primary font-bold hover:underline">{{ __('nav.login') }}</a> {{ __('content.login_to_comment') }}
                     </p>
                 </div>
             @endauth

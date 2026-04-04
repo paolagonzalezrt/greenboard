@@ -185,13 +185,20 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 /*
 |--------------------------------------------------------------------------
-| IDIOMA
+| IDIOMA / LOCALIZATION
 |--------------------------------------------------------------------------
 */
 
-Route::get('/lang/{locale}', function ($locale) {
-    if (in_array($locale, ['en', 'es', 'de'])) {
-        session(['locale' => $locale]);
-    }
-    return redirect()->back();
-});
+use App\Http\Controllers\LocaleController;
+
+// Cambiar idioma (GET - para links)
+Route::get('/locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
+
+// Cambiar idioma (POST - para AJAX)
+Route::post('/locale/switch', [LocaleController::class, 'switchAjax'])->name('locale.switch.ajax');
+
+// Obtener idiomas disponibles (API)
+Route::get('/api/locales', [LocaleController::class, 'getAvailableLocales'])->name('locale.available');
+
+// Compatibilidad con ruta anterior
+Route::get('/lang/{locale}', [LocaleController::class, 'switch']);

@@ -64,6 +64,9 @@
 
             @include('partials.footer')
         </div>
+
+        {{-- Modal de selector de idioma --}}
+        @include('partials.language-modal')
     @else
         @yield('content')
     @endif
@@ -72,39 +75,31 @@
     @include('partials.theme-functions')
 
     <script>
-        // Language Toggle
-        const languageToggle = () => {
-            const currentLang = localStorage.getItem('language') || 'en';
-            const newLang = currentLang === 'en' ? 'es' : 'en';
-            localStorage.setItem('language', newLang);
-
-            // El icono siempre será 'translate'
-            const langBtn = document.getElementById('language-toggle');
-            const icon = langBtn?.querySelector('.material-symbols-outlined');
-            if (icon) {
-                icon.textContent = 'translate';
+        // Theme Toggle Function
+        window.ThemeManager = {
+            toggle: function() {
+                const html = document.documentElement;
+                html.classList.toggle('dark');
+                localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
             }
-
-            // Puedes redirigir para cambiar el idioma del lado del servidor
-            // window.location.href = `${window.location.pathname}?lang=${newLang}`;
-
-            console.log('Language changed to:', newLang === 'en' ? 'English' : 'Español');
         };
 
-        // Initialize language on page load
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('language') || 'en';
+            const savedTheme = localStorage.getItem('theme') || 'light';
             const html = document.documentElement;
 
-            // Add event listeners to buttons
-            const themeBtn = document.getElementById('theme-toggle');
-            const langBtn = document.getElementById('language-toggle');
+            if (savedTheme === 'dark') {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
 
-            if (themeBtn) themeBtn.addEventListener('click', () => window.ThemeManager.toggle());
-            if (langBtn) langBtn.addEventListener('click', languageToggle);
-
-            // Update HTML lang attribute
-            html.setAttribute('lang', savedLang);
+            // Update icon
+            const themeIcon = document.querySelector('[data-theme-icon]');
+            if (themeIcon) {
+                themeIcon.textContent = html.classList.contains('dark') ? 'light_mode' : 'dark_mode';
+            }
         });
 
         // Card Menu Functions

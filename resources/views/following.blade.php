@@ -5,20 +5,20 @@
 @section('content')
     <!-- Hero Section -->
     <div class="text-center mb-8 sm:mb-10 lg:mb-12 w-full">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Following</h1>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">{{ __('content.following_title') }}</h1>
         <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
-            Stay updated with posts from people and topics you follow
+            {{ __('content.following_desc') }}
         </p>
 
         <!-- Followers/Following Stats -->
         <div class="flex justify-center gap-6 mt-6">
             <button onclick="showFollowersList()" class="flex flex-col items-center hover:opacity-80 transition-opacity">
                 <span class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="followers-count">{{ Auth::user()->followers()->count() }}</span>
-                <span class="text-sm text-slate-600 dark:text-slate-400">Followers</span>
+                <span class="text-sm text-slate-600 dark:text-slate-400">{{ __('content.followers_label') }}</span>
             </button>
             <button onclick="showFollowingList()" class="flex flex-col items-center hover:opacity-80 transition-opacity">
                 <span class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="following-count">{{ Auth::user()->following()->count() }}</span>
-                <span class="text-sm text-slate-600 dark:text-slate-400">Following</span>
+                <span class="text-sm text-slate-600 dark:text-slate-400">{{ __('content.following_label') }}</span>
             </button>
         </div>
     </div>
@@ -47,10 +47,10 @@
             @empty
                 <div class="col-span-full text-center py-16">
                     <span class="material-symbols-outlined text-slate-300 dark:text-slate-700 text-6xl mb-4 block">group</span>
-                    <h3 class="text-xl font-bold text-slate-600 dark:text-slate-400 mb-2">No posts yet</h3>
-                    <p class="text-slate-500 dark:text-slate-500">Start following people to see their posts here</p>
+                    <h3 class="text-xl font-bold text-slate-600 dark:text-slate-400 mb-2">{{ __('content.no_posts_yet') }}</h3>
+                    <p class="text-slate-500 dark:text-slate-500">{{ __('content.start_following') }}</p>
                     <a href="{{ route('dashboard') }}" class="inline-block mt-6 px-6 py-3 bg-primary text-background-dark font-bold rounded-xl hover:brightness-105 transition-all">
-                        Explore Posts
+                        {{ __('content.explore_posts') }}
                     </a>
                 </div>
             @endforelse
@@ -67,7 +67,7 @@
     <!-- Floating Action Button (FAB) -->
     <a href="{{ route('tips.create') }}" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 h-12 sm:h-14 px-4 sm:px-6 bg-primary text-background-dark font-bold rounded-full shadow-2xl shadow-primary/40 hover:scale-110 active:scale-95 transition-all flex items-center justify-center gap-2 z-50">
         <span class="material-symbols-outlined text-xl sm:text-2xl">add</span>
-        <span class="hidden sm:inline text-sm sm:text-base">Create Post</span>
+        <span class="hidden sm:inline text-sm sm:text-base">{{ __('content.create_post') }}</span>
     </a>
 
     <!-- Modal for Followers/Following List -->

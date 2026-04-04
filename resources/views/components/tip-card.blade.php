@@ -43,18 +43,18 @@
                                 @if(Auth::id() === $userId)
                                     <button onclick="event.stopPropagation(); deletePost({{ $id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                         <span class="material-symbols-outlined text-[16px] text-red-500">delete</span>
-                                        <span>Eliminar</span>
+                                        <span>{{ __('buttons.delete') }}</span>
                                     </button>
                                 @else
                                     <button onclick="event.stopPropagation(); reportPost('{{ $uniqueId }}')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                         <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
-                                        <span>Reportar</span>
+                                        <span>{{ __('buttons.report') }}</span>
                                     </button>
                                 @endif
                             @else
                                 <button onclick="event.stopPropagation(); reportPost('{{ $uniqueId }}')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                     <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
-                                    <span>Reportar</span>
+                                    <span>{{ __('buttons.report') }}</span>
                                 </button>
                             @endauth
                         </div>
@@ -111,18 +111,18 @@
                                 @if(Auth::id() === $userId)
                                     <button onclick="event.stopPropagation(); deletePost({{ $id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                         <span class="material-symbols-outlined text-[16px] text-red-500">delete</span>
-                                        <span>Eliminar</span>
+                                        <span>{{ __('buttons.delete') }}</span>
                                     </button>
                                 @else
                                     <button onclick="event.stopPropagation(); reportPost('{{ $uniqueId }}')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                         <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
-                                        <span>Reportar</span>
+                                        <span>{{ __('buttons.report') }}</span>
                                     </button>
                                 @endif
                             @else
                                 <button onclick="event.stopPropagation(); reportPost('{{ $uniqueId }}')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                     <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
-                                    <span>Reportar</span>
+                                    <span>{{ __('buttons.report') }}</span>
                                 </button>
                             @endauth
                         </div>
