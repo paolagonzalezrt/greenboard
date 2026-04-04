@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html class="light" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'GreenBoard - Explore Community Tips')</title>
+
+    {{-- Anti-flash: aplicar tema antes del primer render --}}
+    @include('partials.theme-script')
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -65,30 +68,10 @@
         @yield('content')
     @endif
 
+    {{-- Funciones globales de tema --}}
+    @include('partials.theme-functions')
+
     <script>
-        // Theme Toggle (Dark Mode)
-        const themeToggle = () => {
-            const html = document.documentElement;
-            const isDark = html.classList.contains('dark');
-            const themeBtn = document.getElementById('theme-toggle');
-            const themeIcon = themeBtn?.querySelector('.material-symbols-outlined');
-            const mobileThemeIcon = document.getElementById('mobile-theme-icon');
-
-            if (isDark) {
-                html.classList.remove('dark');
-                html.classList.add('light');
-                localStorage.setItem('theme', 'light');
-                if (themeIcon) themeIcon.textContent = 'dark_mode';
-                if (mobileThemeIcon) mobileThemeIcon.textContent = 'dark_mode';
-            } else {
-                html.classList.remove('light');
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-                if (themeIcon) themeIcon.textContent = 'dark_mode';
-                if (mobileThemeIcon) mobileThemeIcon.textContent = 'dark_mode';
-            }
-        };
-
         // Language Toggle
         const languageToggle = () => {
             const currentLang = localStorage.getItem('language') || 'en';
@@ -108,32 +91,16 @@
             console.log('Language changed to:', newLang === 'en' ? 'English' : 'Español');
         };
 
-        // Initialize theme on page load
+        // Initialize language on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
             const savedLang = localStorage.getItem('language') || 'en';
             const html = document.documentElement;
 
-            // Apply saved theme
-            html.classList.remove('light', 'dark');
-            html.classList.add(savedTheme);
-
-            // Update theme icons (desktop and mobile)
-            const themeBtn = document.getElementById('theme-toggle');
-            const themeIcon = themeBtn?.querySelector('.material-symbols-outlined');
-            const mobileThemeIcon = document.getElementById('mobile-theme-icon');
-
-            if (themeIcon) {
-                themeIcon.textContent = 'dark_mode';
-            }
-            if (mobileThemeIcon) {
-                mobileThemeIcon.textContent = 'dark_mode';
-            }
-
             // Add event listeners to buttons
+            const themeBtn = document.getElementById('theme-toggle');
             const langBtn = document.getElementById('language-toggle');
 
-            if (themeBtn) themeBtn.addEventListener('click', themeToggle);
+            if (themeBtn) themeBtn.addEventListener('click', () => window.ThemeManager.toggle());
             if (langBtn) langBtn.addEventListener('click', languageToggle);
 
             // Update HTML lang attribute

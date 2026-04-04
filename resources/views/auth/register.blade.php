@@ -75,7 +75,7 @@ style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4
 <!-- DARK MODE -->
 
 <button onclick="toggleDarkMode()" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center">
-<span class="material-symbols-outlined text-xl" id="dark-icon">dark_mode</span>
+<span class="material-symbols-outlined text-xl" data-theme-icon>dark_mode</span>
 </button>
 
 </div>
@@ -251,7 +251,7 @@ class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border @erro
 function togglePasswordVisibility(fieldId) {
     const input = document.getElementById(fieldId);
     const icon = document.getElementById(fieldId + '-icon');
-    
+
     if (input.type === 'password') {
         input.type = 'text';
         icon.innerText = 'visibility';
@@ -259,21 +259,6 @@ function togglePasswordVisibility(fieldId) {
         input.type = 'password';
         icon.innerText = 'visibility_off';
     }
-}
-
-function toggleDarkMode(){
-
-const html=document.documentElement;
-const icon=document.getElementById('dark-icon');
-
-if(html.classList.contains('dark')){
-html.classList.remove('dark');
-icon.innerText='dark_mode';
-}else{
-html.classList.add('dark');
-icon.innerText='dark_mode';
-}
-
 }
 
 function toggleLangDropdown(){

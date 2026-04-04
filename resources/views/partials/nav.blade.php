@@ -31,7 +31,7 @@
             <!-- Guest Buttons (All Screens) -->
             <div class="flex items-center gap-1 sm:gap-2">
                 <button id="theme-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode">
-                    <span class="material-symbols-outlined text-xl">dark_mode</span>
+                    <span class="material-symbols-outlined text-xl" data-theme-icon>dark_mode</span>
                 </button>
 
                 <button id="language-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Change language">
@@ -53,7 +53,7 @@
             <!-- Desktop: Theme, Language & Profile Dropdown -->
             <div class="hidden lg:flex items-center gap-1 sm:gap-2">
                 <button id="theme-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode">
-                    <span class="material-symbols-outlined text-xl">dark_mode</span>
+                    <span class="material-symbols-outlined text-xl" data-theme-icon>dark_mode</span>
                 </button>
 
                 <button id="language-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Change language">
@@ -155,9 +155,9 @@
                     <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-2">Configuración</p>
                     <div class="flex flex-col gap-1">
                         <!-- Theme Toggle -->
-                        <button onclick="themeToggle(); event.stopPropagation();" class="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
+                        <button onclick="window.ThemeManager.toggle(); event.stopPropagation();" class="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
                             <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-[22px]" id="mobile-theme-icon">dark_mode</span>
+                                <span class="material-symbols-outlined text-[22px]" data-theme-icon>dark_mode</span>
                                 <span class="font-medium">Modo Oscuro</span>
                             </div>
                             <div class="w-12 h-6 bg-slate-300 dark:bg-primary rounded-full relative transition-colors">
