@@ -64,9 +64,6 @@
 
             @include('partials.footer')
         </div>
-
-        {{-- Modal de selector de idioma --}}
-        @include('partials.language-modal')
     @else
         @yield('content')
     @endif

@@ -162,22 +162,24 @@
                         </button>
 
                         <!-- Language Toggle -->
-                        <div class="relative px-4 py-3">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                        <span class="material-symbols-outlined text-[22px]">translate</span>
-                                        <span class="font-medium">{{ __('nav.language') }}</span>
-                                    </div>
-                                <button onclick="toggleMobileLanguageDropdown(event)" class="text-xs font-bold text-slate-500 dark:text-slate-400">{{ strtoupper($currentLocale) }}</button>
+                        <button onclick="toggleMobileLanguageDropdown(event)" class="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[22px]">translate</span>
+                                <span class="font-medium">{{ __('nav.language') }}</span>
                             </div>
-                            <div id="mobile-lang-dropdown" class="hidden absolute left-4 right-4 top-full mt-2 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl shadow-xl overflow-hidden z-50">
+                            <span class="text-xs font-bold text-slate-500 dark:text-slate-400">{{ strtoupper($currentLocale) }}</span>
+                        </button>
+
+                        <!-- Language Dropdown -->
+                        <div id="mobile-lang-dropdown" class="hidden bg-slate-50 dark:bg-slate-800/50 rounded-lg overflow-hidden mx-2 mb-2">
+                            <div class="flex flex-col">
                                 @foreach($availableLocales as $code => $locale)
                                     <a 
                                         href="{{ route('locale.switch', $code) }}" 
-                                        class="block px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors {{ $currentLocale === $code ? 'bg-primary/10 text-primary' : '' }}"
+                                        class="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors {{ $currentLocale === $code ? 'bg-primary/10 text-primary font-bold' : '' }}"
                                         onclick="closeMobileLanguageDropdown()"
                                     >
-                                        {{ strtoupper($code) }}
+                                        {{ strtoupper($code) }} - {{ $locale['name'] ?? strtoupper($code) }}
                                     </a>
                                 @endforeach
                             </div>
