@@ -26,4 +26,9 @@ return [
     'report_already_reported' => 'Ya has reportado este comentario anteriormente.',
     'report_own_comment' => 'No puedes reportar tu propio comentario.',
     'report_login_required' => 'Debes iniciar sesión para reportar un comentario.',
+    'confirm_delete_title' => 'Eliminar Comentario',
+    'confirm_delete_message' => 'Esta acción no se puede deshacer.',
+    'confirm_delete_button' => 'Eliminar',
+    'reply_posted_success' => '¡Respuesta publicada con éxito!',
+    'comment_posted_success' => '¡Comentario publicado con éxito!',
 ];

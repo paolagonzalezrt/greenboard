@@ -23,4 +23,9 @@ return [
     'reason_inappropriate' => 'Unangemessener Inhalt',
     'reason_offensive' => 'Beleidigend',
     'report_submitted' => 'Meldung erfolgreich eingereicht',
+    'confirm_delete_title' => 'Kommentar Löschen',
+    'confirm_delete_message' => 'Diese Aktion kann nicht rückgängig gemacht werden.',
+    'confirm_delete_button' => 'Löschen',
+    'reply_posted_success' => 'Antwort erfolgreich veröffentlicht!',
+    'comment_posted_success' => 'Kommentar erfolgreich veröffentlicht!',
 ];

@@ -24,7 +24,7 @@ class CommentController extends Controller
             'content' => $validated['content'],
         ]);
 
-        return redirect()->route('tips.show', $tip)->with('success', 'Comment posted successfully!');
+        return redirect()->route('tips.show', $tip)->with('success', __('comments.comment_posted_success'));
     }
 
     /**
@@ -43,7 +43,7 @@ class CommentController extends Controller
             'content' => $validated['content'],
         ]);
 
-        return redirect()->route('tips.show', $comment->tip)->with('success', 'Reply posted successfully!');
+        return redirect()->route('tips.show', $comment->tip)->with('success', __('comments.reply_posted_success'));
     }
 
     /**
