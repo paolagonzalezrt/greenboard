@@ -106,10 +106,13 @@
 
         function openReportModal(id, type = 'post') {
             document.getElementById('report-tip-id').value = id;
-            document.getElementById('report-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+            const modal = document.getElementById('report-modal');
+            modal.classList.remove('hidden');
+            // Use scrollbarGutter to prevent layout shift
+            document.documentElement.style.overflow = 'hidden';
+            document.documentElement.style.scrollbarGutter = 'stable';
             // Store the type for later use in submitReport
-            document.getElementById('report-modal').dataset.reportType = type;
+            modal.dataset.reportType = type;
         }
 
         function reportPost(cardId) {
@@ -367,7 +370,8 @@
 
             const modal = document.getElementById(modalId);
             modal.classList.add('hidden');
-            document.body.style.overflow = ''; // Restore scrolling
+            document.documentElement.style.overflow = 'auto';
+            document.documentElement.style.scrollbarGutter = 'auto';
 
             // Reset form - find it within the modal
             const form = modal.querySelector('form');
