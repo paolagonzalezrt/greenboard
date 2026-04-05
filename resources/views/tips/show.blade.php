@@ -3,24 +3,25 @@
 @section('title', $tip->title . ' - GreenBoard')
 
 @section('content')
-    <div class="max-w-4xl mx-auto">
-        <!-- Back Button -->
-        <div class="mb-6">
-            @auth
-                <a href="{{route('dashboard')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined">arrow_back</span>
-                    <span class="font-semibold">{{ __('buttons.back') }}</span>
-                </a>
-            @else
-                <a href="{{route('home')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined">arrow_back</span>
-                    <span class="font-semibold">{{ __('buttons.back') }}</span>
-                </a>
-            @endauth
-        </div>
+    <div class="w-full px-2 sm:px-4 md:px-6">
+        <div class="mx-auto max-w-md">
+            <!-- Back Button -->
+            <div class="mb-6">
+                @auth
+                    <a href="{{route('dashboard')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        <span class="font-semibold">{{ __('buttons.back') }}</span>
+                    </a>
+                @else
+                    <a href="{{route('home')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        <span class="font-semibold">{{ __('buttons.back') }}</span>
+                    </a>
+                @endauth
+            </div>
 
-        <!-- Post Content -->
-        <article class="bg-white dark:bg-custom-dark-button rounded-2xl border border-slate-200 dark:border-transparent shadow-lg overflow-hidden mb-8">
+            <!-- Post Content -->
+            <article class="bg-white dark:bg-custom-dark-button rounded-2xl border border-slate-200 dark:border-transparent shadow-lg overflow-hidden mb-8">
             @php
                 $categoryColors = [
                     'Consumption' => ['bg' => 'bg-purple-100/90', 'text' => 'text-purple-600'],
@@ -46,10 +47,10 @@
                 <div class="flex items-start justify-between mb-4">
                     <div class="flex items-center gap-3 flex-1 min-w-0">
                         <a href="{{ route('users.show', $tip->user->id) }}" class="flex items-center gap-3 flex-1 min-w-0">
-                            <x-profile-avatar :user="$tip->user" size="lg" class="hover:opacity-80 transition-opacity" onclick="event.stopPropagation()" />
+                            <x-profile-avatar :user="$tip->user" size="xs" class="hover:opacity-80 transition-opacity" onclick="event.stopPropagation()" />
                             <div class="flex flex-col min-w-0">
-                                <span class="text-base font-bold text-slate-900 dark:text-slate-100 hover:text-primary transition-colors">{{ $tip->user->name }}</span>
-                                <span class="text-sm text-slate-500 dark:text-slate-400">{{ $tip->created_at->diffForHumans() }}</span>
+                                <span class="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 hover:text-primary transition-colors">{{ $tip->user->name }}</span>
+                                <span class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">{{ $tip->created_at->diffForHumans() }}</span>
                             </div>
                         </a>
                         @auth
@@ -59,14 +60,14 @@
                                     onclick="toggleFollow({{ $tip->user_id }})" 
                                     class="follow-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all flex-shrink-0
                                     {{ Auth::user()->isFollowing($tip->user_id) ? 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' : 'bg-primary text-background-dark hover:brightness-105' }}">
-                                    <span class="material-symbols-outlined text-base">{{ Auth::user()->isFollowing($tip->user_id) ? 'person_check' : 'person_add' }}</span>
-                                    <span class="follow-text">{{ Auth::user()->isFollowing($tip->user_id) ? __('buttons.unfollow') : __('buttons.follow') }}</span>
+                                    <span class="material-symbols-outlined text-[18px]">{{ Auth::user()->isFollowing($tip->user_id) ? 'person_check' : 'person_add' }}</span>
+                                    <span class="follow-text hidden sm:inline">{{ Auth::user()->isFollowing($tip->user_id) ? __('buttons.unfollow') : __('buttons.follow') }}</span>
                                 </button>
                             @endif
                         @endauth
                         <div class="relative">
-                            <button onclick="toggleCardMenu('show-tip')" class="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
-                                <span class="material-symbols-outlined text-xl">more_vert</span>
+                            <button onclick="toggleCardMenu('show-tip')" class="px-1 py-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">more_vert</span>
                             </button>
                             <div id="menu-show-tip" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-xl overflow-hidden z-10">
                                 @auth
@@ -95,45 +96,45 @@
                 </div>
 
                 <!-- Title -->
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 mb-4">
+                <h1 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-slate-100 mb-4">
                     {{ $tip->title }}
                 </h1>
 
                 <!-- Description -->
-                <div class="text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                <div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                     {{ $tip->description }}
                 </div>
 
                 <!-- Interactions -->
                 <div class="flex items-center justify-between pt-4">
-                    <div class="flex items-center gap-4 sm:gap-6">
+                    <div class="flex items-center gap-3 sm:gap-4">
                         @auth
-                            <button onclick="toggleLike({{ $tip->id }}, this)" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors group cursor-pointer">
-                                <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform {{ Auth::user()->hasLiked($tip) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLiked($tip) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
-                                <span class="text-sm font-semibold like-count">{{ $tip->likes()->count() }}</span>
+                            <button onclick="toggleLike({{ $tip->id }}, this)" class="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors group cursor-pointer">
+                                <span class="material-symbols-outlined text-[18px] sm:text-[20px] group-hover:scale-110 transition-transform {{ Auth::user()->hasLiked($tip) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLiked($tip) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
+                                <span class="text-[11px] sm:text-xs font-semibold like-count">{{ $tip->likes()->count() }}</span>
                             </button>
                         @else
-                            <a href="{{ route('login') }}" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors group">
-                                <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">favorite</span>
-                                <span class="text-sm font-semibold">{{ $tip->likes()->count() }}</span>
+                            <a href="{{ route('login') }}" class="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors group">
+                                <span class="material-symbols-outlined text-[18px] sm:text-[20px] group-hover:scale-110 transition-transform">favorite</span>
+                                <span class="text-[11px] sm:text-xs font-semibold">{{ $tip->likes()->count() }}</span>
                             </a>
                         @endauth
-                        <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                            <span class="material-symbols-outlined text-xl">chat_bubble</span>
-                            <span class="text-sm font-semibold">{{ $tip->comments()->count() }}</span>
+                        <div class="flex items-center gap-1 text-slate-600 dark:text-slate-400">
+                            <span class="material-symbols-outlined text-[18px] sm:text-[20px]">chat_bubble</span>
+                            <span class="text-[11px] sm:text-xs font-semibold">{{ $tip->comments()->count() }}</span>
                         </div>
                     </div>
                     <div class="flex items-center gap-3 sm:gap-4">
                         <button onclick="shareTip({{ $tip->id }}, '{{ addslashes($tip->title) }}')" class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-1">
-                            <span class="material-symbols-outlined text-xl">share</span>
+                            <span class="material-symbols-outlined text-[18px] sm:text-[20px]">share</span>
                         </button>
                         @auth
                             <button class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-1 bookmark-btn" onclick="toggleBookmark({{ $tip->id }}, this)" data-tip-id="{{ $tip->id }}">
-                                <span class="material-symbols-outlined text-xl {{ Auth::user()->hasBookmarked($tip) ? 'filled text-primary' : '' }}" style="{{ Auth::user()->hasBookmarked($tip) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">bookmark</span>
+                                <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ Auth::user()->hasBookmarked($tip) ? 'filled text-primary' : '' }}" style="{{ Auth::user()->hasBookmarked($tip) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">bookmark</span>
                             </button>
                         @else
                             <a href="{{ route('login') }}" class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-1">
-                                <span class="material-symbols-outlined text-xl">bookmark</span>
+                                <span class="material-symbols-outlined text-[18px] sm:text-[20px]">bookmark</span>
                             </a>
                         @endauth
                     </div>
@@ -142,7 +143,7 @@
         </article>
 
         <!-- Comments Section -->
-        <div class="p-6 sm:p-8">
+        <div class="p-4 sm:p-6 md:p-8 overflow-x-hidden">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
                 {{ __('content.comments_count') }} ({{ $tip->comments()->count() }})
             </h2>
@@ -151,9 +152,9 @@
                 <!-- Add Comment Form -->
                 <form action="{{ route('comments.store', $tip) }}" method="POST" class="mb-8">
                     @csrf
-                    <div class="flex gap-3">
-                        <x-profile-avatar :user="Auth::user()" size="sm" />
-                        <div class="flex-1">
+                    <div class="flex gap-3 flex-row">
+                        <x-profile-avatar :user="Auth::user()" size="sm" class="flex-shrink-0" />
+                        <div class="flex-1 min-w-0">
                             <textarea 
                                 name="content" 
                                 rows="3" 
@@ -162,7 +163,9 @@
                                 required
                             ></textarea>
                             <div class="flex justify-end mt-2">
-                                <button type="submit" class="px-6 py-2 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 transition-all text-sm">
+
+
+                                <button type="submit" class="px-6 py-2 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 transition-all text-xs">
                                     {{ __('content.post_comment') }}
                                 </button>
                             </div>
@@ -194,7 +197,7 @@
                             </div>
 
                             <!-- Comment Text -->
-                            <p class="text-sm text-slate-700 dark:text-slate-300 mb-2 break-words">
+                            <p class="text-sm text-slate-700 dark:text-slate-300 mb-2 break-words w-full min-w-0">
                                 {{ $comment->content }}
                             </p>
 
@@ -245,26 +248,20 @@
                             @auth
                                 <!-- Reply Form (Hidden by default) -->
                                 <div id="reply-form-{{ $comment->id }}" class="hidden mt-3">
-                                    <form action="{{ route('comments.reply', $comment) }}" method="POST" class="flex gap-2">
+                                    <form action="{{ route('comments.reply', $comment) }}" method="POST" class="flex flex-col gap-2">
                                         @csrf
                                         <input type="hidden" name="parent_id" value="{{ $comment->id }}">
                                         <textarea 
                                             name="content" 
-                                            rows="2" 
+                                            rows="3" 
                                             placeholder="{{ __('comments.reply_placeholder') }}"
-                                            class="flex-1 px-3 py-2 bg-slate-50 dark:bg-custom-dark-button border border-slate-200 dark:border-slate-700 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none"
+
+                                            class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-button border border-slate-200 dark:border-slate-700 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none"
                                             required
                                         ></textarea>
-                                        <div class="flex flex-col gap-2">
-                                            <button type="submit" class="px-4 py-1 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 transition-all text-xs">
+                                        <div class="flex justify-end">
+                                            <button type="submit" class="px-6 py-2 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 transition-all text-xs">
                                                 {{ __('comments.reply') }}
-                                            </button>
-                                            <button 
-                                                type="button" 
-                                                onclick="toggleReplyForm({{ $comment->id }})"
-                                                class="px-4 py-1 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-full hover:bg-slate-300 dark:hover:bg-slate-600 transition-all text-xs"
-                                            >
-                                                {{ __('comments.cancel') }}
                                             </button>
                                         </div>
                                     </form>
@@ -282,7 +279,7 @@
                                                     <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">{{ $reply->user->name }}</span>
                                                     <span class="text-xs text-slate-500 dark:text-slate-400">{{ $reply->created_at->diffForHumans() }}</span>
                                                 </div>
-                                                <p class="text-sm text-slate-700 dark:text-slate-300 mb-2 break-words">
+                                                <p class="text-sm text-slate-700 dark:text-slate-300 mb-2 break-words w-full min-w-0">
                                                     {{ $reply->content }}
                                                 </p>
                                                 <div class="flex items-center gap-4">
@@ -342,8 +339,7 @@
                     </a>
                 </div>
             @endif
-
-
+        </div>
         </div>
     </div>
 

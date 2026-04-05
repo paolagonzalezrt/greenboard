@@ -75,7 +75,7 @@ return [
     'view_all' => 'Ver todo',
     'join_title' => 'Comienza Tu Viaje Sostenible Hoy',
     'join_button' => 'Únete al Movimiento',
-    'post_comment' => 'Publicar Comentario',
+    'post_comment' => 'Publicar comentario',
     'add_comment' => 'Agregar un comentario...',
     'login_to_comment' => 'para dejar un comentario',
     'comments_count' => 'Comentarios',
