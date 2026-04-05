@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
-    <script id="tailwind-config">
+    <!-- <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -33,7 +33,32 @@
                 },
             },
         }
-    </script>
+    </script> -->
+
+    <script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#13ec5b",
+                    "background-light": "#f6f6f6",
+                    "background-dark": "#212121",
+                    "custom-dark-bg": "#2d2d2d", // Fondo del modal
+                    "custom-dark-input": "#1c1c1c", // Fondo de inputs
+                    "custom-dark-button": "#3d3d3d", // Hover de botones
+                    "custom-gray-border": "#444444", // Bordes modo oscuro
+                    "sort-border-dark": "#a6a6a6",
+                    "sort-bg-light": "#d6d6d6",
+                    "sort-text-light": "#585858",
+                },
+                fontFamily: { "display": ["Plus Jakarta Sans"] },
+                borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+
     <style type="text/tailwindcss">
         .leaf-pattern { @apply absolute z-0 opacity-10 pointer-events-none; }
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
