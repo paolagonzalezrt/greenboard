@@ -82,13 +82,15 @@
                 {{ __('pages.legacy_description') }}
             </p>
 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-<button class="bg-primary text-background-dark px-10 py-4 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm">
-                    {{ __('pages.create_profile') }}
-                </button>
-<button class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+                @guest
+                    <a href="{{ route('register') }}" class="bg-primary text-background-dark px-10 py-4 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm text-center">
+                        {{ __('pages.create_profile') }}
+                    </a>
+                @endguest
+                <a href="{{ route('dashboard') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
                     {{ __('pages.explore_initiatives') }}
-                </button>
-</div>
+                </a>
+            </div>
 </div>
 </div>
 </section>
