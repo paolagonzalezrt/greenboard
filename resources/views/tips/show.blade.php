@@ -76,13 +76,13 @@
                                             <span>{{ __('buttons.delete') }}</span>
                                         </button>
                                     @else
-                                        <button onclick="reportPost('show-tip')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                        <button onclick="openReportModal({{ $tip->id }}, 'post')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                             <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
                                             <span>{{ __('buttons.report') }}</span>
                                         </button>
                                     @endif
                                 @else
-                                    <button onclick="reportPost('show-tip')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                    <button onclick="openReportModal({{ $tip->id }}, 'post')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
                                         <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
                                         <span>{{ __('buttons.report') }}</span>
                                     </button>
