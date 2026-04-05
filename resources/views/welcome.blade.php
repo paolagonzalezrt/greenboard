@@ -160,6 +160,9 @@
 
         <!-- Pagination -->
         <div class="mt-8 sm:mt-10 lg:mt-12">
+            @if($tips->count() > 0)
+                <x-pagination-per-page />
+            @endif
             {{ $tips->links() }}
         </div>
     </section>

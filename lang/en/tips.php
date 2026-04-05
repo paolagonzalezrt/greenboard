@@ -44,4 +44,5 @@ return [
     'report_own_tip' => 'You cannot report your own tip.',
     'report_login_required' => 'You must be logged in to report a tip.',
     'share_success' => 'Tip shared successfully!',
+    'back' => 'Back',
 ];

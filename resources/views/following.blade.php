@@ -59,6 +59,7 @@
         <!-- Pagination -->
         @if(count($tips) > 0)
             <div class="mt-8 sm:mt-10 lg:mt-12">
+                <x-pagination-per-page />
                 {{ $tips->links() }}
             </div>
         @endif

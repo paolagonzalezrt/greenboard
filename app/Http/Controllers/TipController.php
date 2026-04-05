@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PaginationHelper;
 use App\Models\Tip;
 use App\Models\User;
 use App\Services\Translation\TranslationService;
@@ -76,8 +77,9 @@ class TipController extends Controller
         // Aplicar ordenamiento por fecha
         $query->orderBy('created_at', $sortBy === 'asc' ? 'asc' : 'desc');
 
-        $tips = $query->paginate(20)
-            ->appends(['search' => $search, 'sort' => $sortBy, 'category' => $category])
+        $perPage = PaginationHelper::getPerPage($request);
+        $tips = $query->paginate($perPage)
+            ->appends(['search' => $search, 'sort' => $sortBy, 'category' => $category, 'per_page' => $perPage])
             ->through(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
@@ -126,8 +128,9 @@ class TipController extends Controller
         // Aplicar ordenamiento por fecha
         $query->orderBy('created_at', $sortBy === 'asc' ? 'asc' : 'desc');
 
-        $tips = $query->paginate(20)
-            ->appends(['search' => $search, 'sort' => $sortBy, 'category' => $category])
+        $perPage = PaginationHelper::getPerPage($request);
+        $tips = $query->paginate($perPage)
+            ->appends(['search' => $search, 'sort' => $sortBy, 'category' => $category, 'per_page' => $perPage])
             ->through(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
@@ -149,7 +152,7 @@ class TipController extends Controller
         return view('dashboard', compact('tips', 'search', 'sortBy', 'category'));
     }
 
-    public function following()
+    public function following(Request $request)
     {
         $user = Auth::user();
 
@@ -162,11 +165,13 @@ class TipController extends Controller
         }
 
         // Obtener los tips de los usuarios que sigue
+        $perPage = PaginationHelper::getPerPage($request);
         $tips = Tip::with(['user', 'likes', 'comments'])
             ->withCount(['likes', 'comments'])
             ->whereIn('user_id', $followingIds)
             ->orderBy('created_at', 'desc')
-            ->paginate(20)
+            ->paginate($perPage)
+            ->appends(['per_page' => $perPage])
             ->through(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
@@ -188,16 +193,18 @@ class TipController extends Controller
         return view('following', compact('tips'));
     }
 
-    public function saved()
+    public function saved(Request $request)
     {
         $user = Auth::user();
 
         // Obtener los tips guardados por el usuario
+        $perPage = PaginationHelper::getPerPage($request);
         $tips = $user->bookmarkedTips()
             ->with(['user', 'likes', 'comments'])
             ->withCount(['likes', 'comments'])
             ->orderBy('bookmarks.created_at', 'desc')
-            ->paginate(20)
+            ->paginate($perPage)
+            ->appends(['per_page' => $perPage])
             ->through(function ($tip) use ($user) {
                 return [
                     'id' => $tip->id,
@@ -269,11 +276,13 @@ class TipController extends Controller
         $tip->load(['user', 'likes', 'comments']);
 
         // Obtener los comentarios principales (sin parent_id) con sus respuestas
+        $commentsPerPage = PaginationHelper::getPerPage(request(), 10);
         $comments = $tip->comments()
             ->whereNull('parent_id')
             ->with(['user', 'replies.user'])
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate($commentsPerPage)
+            ->appends(['per_page' => $commentsPerPage]);
 
         $tip->title = $this->translateTipContent($tip->title);
         $tip->description = $this->translateTipContent($tip->description);
@@ -288,6 +297,7 @@ class TipController extends Controller
     {
         $user = Auth::user();
         $tab = $request->query('tab', 'my-tips'); // Default to 'my-tips'
+        $perPage = PaginationHelper::getPerPage($request);
 
         // Conteo de posts del usuario
         $postsCount = $user->tips()->count();
@@ -298,7 +308,8 @@ class TipController extends Controller
                 ->with(['user', 'likes', 'comments'])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('bookmarks.created_at', 'desc')
-                ->paginate(20)
+                ->paginate($perPage)
+                ->appends(['tab' => $tab, 'per_page' => $perPage])
                 ->through(function ($tip) use ($user) {
                     return [
                         'id' => $tip->id,
@@ -322,7 +333,8 @@ class TipController extends Controller
                 ->with(['user', 'likes', 'comments'])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('created_at', 'desc')
-                ->paginate(20)
+                ->paginate($perPage)
+                ->appends(['tab' => $tab, 'per_page' => $perPage])
                 ->through(function ($tip) use ($user) {
                     return [
                         'id' => $tip->id,
@@ -352,6 +364,7 @@ class TipController extends Controller
     {
         $currentUser = Auth::user();
         $tab = $request->query('tab', 'posts'); // Default to 'posts'
+        $perPage = PaginationHelper::getPerPage($request);
 
         // Conteo de posts del usuario
         $postsCount = $user->tips()->count();
@@ -365,7 +378,8 @@ class TipController extends Controller
                 ->with(['user', 'likes', 'comments'])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('bookmarks.created_at', 'desc')
-                ->paginate(20)
+                ->paginate($perPage)
+                ->appends(['tab' => $tab, 'per_page' => $perPage])
                 ->through(function ($tip) use ($currentUser) {
                     return [
                         'id' => $tip->id,
@@ -389,7 +403,8 @@ class TipController extends Controller
                 ->with(['user', 'likes', 'comments'])
                 ->withCount(['likes', 'comments'])
                 ->orderBy('created_at', 'desc')
-                ->paginate(20)
+                ->paginate($perPage)
+                ->appends(['tab' => $tab, 'per_page' => $perPage])
                 ->through(function ($tip) use ($currentUser) {
                     return [
                         'id' => $tip->id,

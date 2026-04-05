@@ -44,4 +44,5 @@ return [
     'report_own_tip' => 'No puedes reportar tu propio tip.',
     'report_login_required' => 'Debes iniciar sesión para reportar un tip.',
     'share_success' => '¡Tip compartido exitosamente!',
+    'back' => 'Volver',
 ];

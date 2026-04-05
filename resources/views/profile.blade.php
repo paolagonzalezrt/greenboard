@@ -109,6 +109,7 @@
         <!-- Pagination -->
         @if(!$tips->isEmpty())
             <div class="mt-8 sm:mt-10 lg:mt-12">
+                <x-pagination-per-page />
                 {{ $tips->appends(['tab' => $tab])->links() }}
             </div>
         @endif
