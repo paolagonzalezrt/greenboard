@@ -18,8 +18,8 @@
         onclick="event.stopPropagation()"
     >
         <!-- Header with Icon -->
-        <div class="flex flex-col items-center mb-6">
-            <span class="material-symbols-outlined {{ $isDangerous ? 'text-red-500' : 'text-primary' }} text-4xl mb-4">
+        <div class="flex flex-col items-center my-2">
+            <span class="material-symbols-outlined {{ $isDangerous ? 'text-red-500' : 'text-primary' }} text-4xl mb-2">
                 {{ $isDangerous ? 'delete_outline' : 'help_outline' }}
             </span>
             <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 text-center">
@@ -28,12 +28,12 @@
         </div>
 
         <!-- Message -->
-        <p class="text-sm text-slate-600 dark:text-slate-400 mb-8 leading-relaxed text-center">
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed text-center">
             {{ $message }}
         </p>
 
         <!-- Buttons -->
-        <div class="flex gap-3 justify-center">
+        <div class="mb-2 flex gap-2 justify-center">
             <button 
                 type="button"
                 data-close-modal="true"

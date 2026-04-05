@@ -11,7 +11,7 @@
     <div class="bg-white dark:bg-custom-dark-bg rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md mx-4 p-5 sm:p-6 max-h-[90vh] overflow-y-auto transform transition-all flex flex-col" onclick="event.stopPropagation()">
         
         <div class="flex flex-col items-center my-2">
-            <span class="material-symbols-outlined text-red-500 text-4xl my-2">report</span>
+            <span class="material-symbols-outlined text-red-500 text-4xl mb-2">report</span>
             <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 text-center">{{ $title }}</h3>
         </div>
 
@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div class="mb-6">
+            <div class="mb-4">
                 <label for="report-description-{{ $type }}" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                     {{ __('tips.additional_description') }}
                 </label>
@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <div class="flex gap-2 justify-center">
+            <div class="pb-2 flex gap-2 justify-center">
                 <button 
                     type="button"
                     onclick="closeReportModal(null, '{{ $modalId }}')" 
