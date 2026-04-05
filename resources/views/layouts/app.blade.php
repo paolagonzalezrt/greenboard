@@ -88,33 +88,6 @@
     </script>
 
     <script>
-        // Theme Toggle Function
-        window.ThemeManager = {
-            toggle: function() {
-                const html = document.documentElement;
-                html.classList.toggle('dark');
-                localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-            }
-        };
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            const html = document.documentElement;
-
-            if (savedTheme === 'dark') {
-                html.classList.add('dark');
-            } else {
-                html.classList.remove('dark');
-            }
-
-            // Update icon
-            const themeIcon = document.querySelector('[data-theme-icon]');
-            if (themeIcon) {
-                themeIcon.textContent = html.classList.contains('dark') ? 'light_mode' : 'dark_mode';
-            }
-        });
-
         // Card Menu Functions
         function toggleCardMenu(cardId) {
             const menu = document.getElementById('menu-' + cardId);
