@@ -51,4 +51,7 @@ return [
     'reason_other' => 'Otro',
     'confirm_delete' => '¿Estás seguro que deseas eliminar este tip?',
     'delete_success' => 'Tip eliminado exitosamente',
+    'tip_deleted_success' => 'Tip eliminado exitosamente.',
+    'comment_deleted_success' => 'Comentario eliminado exitosamente.',
+    'report_status_updated' => 'Estado del reporte actualizado.',
 ];

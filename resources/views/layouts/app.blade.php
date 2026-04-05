@@ -74,6 +74,19 @@
     {{-- Funciones globales de tema --}}
     @include('partials.theme-functions')
 
+    {{-- Use the JS showNotification helper for session flashes so placement/animation match other notifications --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(session('success'))
+                showNotification(@json(session('success')), 'success');
+            @endif
+
+            @if(session('error'))
+                showNotification(@json(session('error')), 'error');
+            @endif
+        });
+    </script>
+
     <script>
         // Theme Toggle Function
         window.ThemeManager = {
@@ -162,7 +175,7 @@
             allMenus.forEach(menu => menu.classList.add('hidden'));
 
             // Ask for confirmation
-            if (!confirm('¿Estás seguro de que quieres eliminar este post? Esta acción no se puede deshacer.')) {
+            if (!confirm(@json(__('tips.confirm_delete_post')))) {
                 return;
             }
 
@@ -180,10 +193,7 @@
                     // If we're on the post detail page, redirect to dashboard
                     if (window.location.pathname.includes(`/tips/${tipId}`)) {
                         // Show success message briefly before redirect
-                        const successMsg = document.createElement('div');
-                        successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
-                        successMsg.textContent = 'Post eliminado exitosamente';
-                        document.body.appendChild(successMsg);
+                        showNotification(@json(__('messages.success.post_deleted')), 'success');
 
                         setTimeout(() => {
                             window.location.href = '{{ route('dashboard') }}';
@@ -216,61 +226,16 @@
                     });
 
                     // Show success notification
-                    const successMsg = document.createElement('div');
-                    successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
-                    successMsg.innerHTML = `
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined">check_circle</span>
-                            <span>Post eliminado exitosamente</span>
-                        </div>
-                    `;
-                    document.body.appendChild(successMsg);
-
-                    // Remove notification after 3 seconds
-                    setTimeout(() => {
-                        successMsg.style.transition = 'opacity 0.3s ease-out';
-                        successMsg.style.opacity = '0';
-                        setTimeout(() => successMsg.remove(), 300);
-                    }, 3000);
+                    showNotification(@json(__('messages.success.post_deleted')), 'success');
 
                 } else {
                     // Show error notification
-                    const errorMsg = document.createElement('div');
-                    errorMsg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
-                    errorMsg.innerHTML = `
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined">error</span>
-                            <span>${data.message || 'Error al eliminar el post'}</span>
-                        </div>
-                    `;
-                    document.body.appendChild(errorMsg);
-
-                    setTimeout(() => {
-                        errorMsg.style.transition = 'opacity 0.3s ease-out';
-                        errorMsg.style.opacity = '0';
-                        setTimeout(() => errorMsg.remove(), 300);
-                    }, 3000);
+                    showNotification(data.message || @json(__('messages.error.delete_post')), 'error');
                 }
             })
-            .catch(error => {
+                .catch(error => {
                 console.error('Error:', error);
-
-                // Show error notification
-                const errorMsg = document.createElement('div');
-                errorMsg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
-                errorMsg.innerHTML = `
-                    <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined">error</span>
-                        <span>Error al eliminar el post. Por favor intenta de nuevo.</span>
-                    </div>
-                `;
-                document.body.appendChild(errorMsg);
-
-                setTimeout(() => {
-                    errorMsg.style.transition = 'opacity 0.3s ease-out';
-                    errorMsg.style.opacity = '0';
-                    setTimeout(() => errorMsg.remove(), 300);
-                }, 3000);
+                showNotification(@json(__('messages.error.delete_post')), 'error');
             });
         }
 
@@ -306,9 +271,9 @@
                         likeCount.textContent = data.likes_count;
                     }
                 })
-                .catch(error => {
+                    .catch(error => {
                     console.error('Error:', error);
-                    alert('Error al procesar el like. Por favor intenta de nuevo.');
+                    showNotification(@json(__('messages.error.like')), 'error');
                 });
             @else
                 // Redirect to login if not authenticated
@@ -391,7 +356,7 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Error al procesar el bookmark. Por favor intenta de nuevo.');
+                    showNotification(@json(__('messages.error.bookmark')), 'error');
                 });
             @else
                 // Redirect to login if not authenticated
@@ -460,7 +425,7 @@
             const description = form.querySelector('textarea[name="description"]')?.value || '';
 
             if (!reason) {
-                showNotification('Por favor selecciona una razón para el reporte', 'error');
+                showNotification(@json(__('tips.report_select_reason')), 'error');
                 return;
             }
 
@@ -468,7 +433,7 @@
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalContent = submitBtn.innerHTML;
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> <span>Enviando...</span>';
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> <span>' + @json(__('messages.info.processing')) + '</span>';
 
             // Send report to backend - use appropriate endpoint based on type
             const endpoint = reportType === 'comment' ? `/comments/${tipId}/report` : `/tips/${tipId}/report`;
@@ -490,14 +455,14 @@
                     // Find and close the modal
                     const modal = form.closest('[id^="report-modal"]');
                     closeReportModal(null, modal.id);
-                    showNotification(data.message || 'Reporte enviado exitosamente', 'success');
+                    showNotification(data.message || @json(__('tips.report_sent_success')), 'success');
                 } else {
-                    showNotification(data.message || 'Error al enviar el reporte', 'error');
+                    showNotification(data.message || @json(__('messages.error.send_report')), 'error');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                showNotification('Error al enviar el reporte. Por favor intenta de nuevo.', 'error');
+                showNotification(@json(__('messages.error.send_report')), 'error');
             })
             .finally(() => {
                 // Re-enable submit button
@@ -508,16 +473,25 @@
 
         // Show notification
         function showNotification(message, type = 'success') {
-            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+            const bgColor = type === 'success' 
+                ? 'bg-green-100 dark:bg-green-900/30' 
+                : 'bg-red-100 dark:bg-red-900/30';
+            
+            const borderColor = type === 'success' 
+                ? 'border-green-500' 
+                : 'border-red-500';
+            
+            const textColor = type === 'success' 
+                ? 'text-green-700 dark:text-green-400' 
+                : 'text-red-700 dark:text-red-400';
+            
             const icon = type === 'success' ? 'check_circle' : 'error';
 
             const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-4 rounded-xl shadow-2xl z-[110] font-semibold max-w-md animate-slide-in`;
+            notification.className = `fixed top-4 right-4 p-4 border rounded-xl flex items-center gap-3 ${bgColor} ${borderColor} ${textColor} shadow-lg z-[110] max-w-md animate-slide-in`;
             notification.innerHTML = `
-                <div class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-2xl">${icon}</span>
-                    <span>${message}</span>
-                </div>
+                <span class="material-symbols-outlined">${icon}</span>
+                <span class="font-semibold">${message}</span>
             `;
             document.body.appendChild(notification);
 
@@ -553,7 +527,7 @@
                     url: url
                 })
                 .then(() => {
-                    showNotification('¡Tip compartido exitosamente!', 'success');
+                    showNotification(@json(__('tips.share_success')), 'success');
                 })
                 .catch((error) => {
                     // User cancelled or error occurred
@@ -637,13 +611,13 @@
             try {
                 const successful = document.execCommand('copy');
                 if (successful) {
-                    showNotification('¡Enlace copiado al portapapeles!', 'success');
+                    showNotification(@json(__('users.copy_link_success')), 'success');
                 } else {
-                    showNotification('No se pudo copiar el enlace', 'error');
+                    showNotification(@json(__('messages.error.copy')), 'error');
                 }
             } catch (err) {
                 console.error('Fallback: Could not copy text: ', err);
-                showNotification('No se pudo copiar el enlace', 'error');
+                showNotification(@json(__('messages.error.copy')), 'error');
             }
 
             document.body.removeChild(textArea);

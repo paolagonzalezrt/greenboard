@@ -19,7 +19,7 @@ class ReportController extends Controller
         if (!Auth::check()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Debes iniciar sesión para reportar un tip.'
+                'message' => __('tips.report_login_required')
             ], 401);
         }
 
@@ -27,7 +27,7 @@ class ReportController extends Controller
         if ($tip->user_id === Auth::id()) {
             return response()->json([
                 'success' => false,
-                'message' => 'No puedes reportar tu propio tip.'
+                'message' => __('tips.report_own_tip')
             ], 403);
         }
 
@@ -40,7 +40,7 @@ class ReportController extends Controller
         if ($existingReport) {
             return response()->json([
                 'success' => false,
-                'message' => 'Ya has reportado este tip anteriormente.'
+                'message' => __('tips.report_already_reported')
             ], 409);
         }
 
@@ -61,7 +61,7 @@ class ReportController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Reporte enviado exitosamente. Lo revisaremos pronto.',
+            'message' => __('tips.report_sent_success'),
             'report' => $report
         ], 201);
     }
@@ -75,7 +75,7 @@ class ReportController extends Controller
         if (!Auth::check()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Debes iniciar sesión para reportar un comentario.'
+                'message' => __('comments.report_login_required')
             ], 401);
         }
 
@@ -83,7 +83,7 @@ class ReportController extends Controller
         if ($comment->user_id === Auth::id()) {
             return response()->json([
                 'success' => false,
-                'message' => 'No puedes reportar tu propio comentario.'
+                'message' => __('comments.report_own_comment')
             ], 403);
         }
 
@@ -95,7 +95,7 @@ class ReportController extends Controller
         if ($existingReport) {
             return response()->json([
                 'success' => false,
-                'message' => 'Ya has reportado este comentario anteriormente.'
+                'message' => __('comments.report_already_reported')
             ], 409);
         }
 
@@ -117,7 +117,7 @@ class ReportController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Reporte enviado exitosamente. Lo revisaremos pronto.',
+            'message' => __('tips.report_sent_success'),
             'report' => $report
         ], 201);
     }

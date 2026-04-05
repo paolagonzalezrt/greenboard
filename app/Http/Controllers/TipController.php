@@ -256,8 +256,8 @@ class TipController extends Controller
             'image' => $imagePath,
         ]);
 
-        // Redirigir con mensaje de éxito
-        return redirect()->route('dashboard')->with('success', 'Post created successfully!');
+        // Redirigir con mensaje de éxito (usará el notificador flotante en la esquina superior derecha)
+        return redirect()->route('dashboard')->with('success', __('messages.success.created'));
     }
 
     /**

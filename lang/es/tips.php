@@ -38,4 +38,10 @@ return [
     'description_max' => 'La descripción no puede exceder 1000 caracteres',
     'image_size' => 'La imagen no puede exceder 5MB',
     'image_format' => 'El formato de imagen debe ser JPG, PNG o WebP',
+    'report_select_reason' => 'Por favor selecciona una razón para el reporte',
+    'report_sent_success' => 'Reporte enviado exitosamente. Lo revisaremos pronto.',
+    'report_already_reported' => 'Ya has reportado este tip anteriormente.',
+    'report_own_tip' => 'No puedes reportar tu propio tip.',
+    'report_login_required' => 'Debes iniciar sesión para reportar un tip.',
+    'share_success' => '¡Tip compartido exitosamente!',
 ];

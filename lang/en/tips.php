@@ -38,4 +38,10 @@ return [
     'description_max' => 'Description cannot exceed 1000 characters',
     'image_size' => 'Image cannot exceed 5MB',
     'image_format' => 'Image format must be JPG, PNG or WebP',
+    'report_select_reason' => 'Please select a reason for the report',
+    'report_sent_success' => 'Report sent successfully. We will review it soon.',
+    'report_already_reported' => 'You have already reported this tip.',
+    'report_own_tip' => 'You cannot report your own tip.',
+    'report_login_required' => 'You must be logged in to report a tip.',
+    'share_success' => 'Tip shared successfully!',
 ];

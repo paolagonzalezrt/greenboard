@@ -1,13 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Success Message -->
-    @if(session('success'))
-        <div class="mb-6 p-4 bg-green-100 dark:bg-green-900/30 border border-green-500 text-green-700 dark:text-green-400 rounded-xl flex items-center gap-3">
-            <span class="material-symbols-outlined">check_circle</span>
-            <span class="font-semibold">{{ session('success') }}</span>
-        </div>
-    @endif
+
 
     <!-- Hero Search Section -->
     <div class="text-center mb-8 sm:mb-10 lg:mb-12 w-full">

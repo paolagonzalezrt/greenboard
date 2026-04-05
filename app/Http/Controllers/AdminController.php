@@ -92,7 +92,7 @@ class AdminController extends Controller
     {
         // Verificar que el usuario sea administrador
         if (!auth()->user()->is_admin) {
-            return redirect()->back()->with('error', 'No tienes permisos para realizar esta acción.');
+            return redirect()->back()->with('error', __('messages.error.no_permission'));
         }
 
         // Eliminar la imagen si existe
@@ -104,7 +104,7 @@ class AdminController extends Controller
         $tip->delete();
 
         return redirect()->route('admin.reported-tips')
-            ->with('success', 'Tip eliminado exitosamente.');
+            ->with('success', __('admin.tip_deleted_success'));
     }
 
     /**
@@ -114,14 +114,14 @@ class AdminController extends Controller
     {
         // Verificar que el usuario sea administrador
         if (!auth()->user()->is_admin) {
-            return redirect()->back()->with('error', 'No tienes permisos para realizar esta acción.');
+            return redirect()->back()->with('error', __('messages.error.no_permission'));
         }
 
         // Eliminar el comentario (las respuestas e relaciones se eliminan en cascada)
         $comment->delete();
 
         return redirect()->route('admin.reported-tips')
-            ->with('success', 'Comentario eliminado exitosamente.');
+            ->with('success', __('admin.comment_deleted_success'));
     }
 
     /**
@@ -131,7 +131,7 @@ class AdminController extends Controller
     {
         // Verificar que el usuario sea administrador
         if (!auth()->user()->is_admin) {
-            return redirect()->back()->with('error', 'No tienes permisos para realizar esta acción.');
+            return redirect()->back()->with('error', __('messages.error.no_permission'));
         }
 
         $request->validate([
@@ -141,7 +141,7 @@ class AdminController extends Controller
         $report->status = $request->status;
         $report->save();
 
-        return redirect()->back()->with('success', 'Estado del reporte actualizado.');
+        return redirect()->back()->with('success', __('admin.report_status_updated'));
     }
 }
 

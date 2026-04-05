@@ -51,4 +51,7 @@ return [
     'reason_other' => 'Sonstiges',
     'confirm_delete' => 'Sind Sie sicher, dass Sie diesen Tipp löschen möchten?',
     'delete_success' => 'Tipp erfolgreich gelöscht',
+    'tip_deleted_success' => 'Beitrag erfolgreich gelöscht.',
+    'comment_deleted_success' => 'Kommentar erfolgreich gelöscht.',
+    'report_status_updated' => 'Berichtstatus aktualisiert.',
 ];

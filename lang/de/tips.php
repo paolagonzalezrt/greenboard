@@ -38,4 +38,11 @@ return [
     'description_max' => 'Beschreibung darf 1000 Zeichen nicht überschreiten',
     'image_size' => 'Bild darf 5MB nicht überschreiten',
     'image_format' => 'Bildformat muss JPG, PNG oder WebP sein',
+    'report_select_reason' => 'Bitte wählen Sie einen Grund für die Meldung',
+    'report_sent_success' => 'Meldung erfolgreich gesendet. Wir werden sie bald überprüfen.',
+    'report_already_reported' => 'Sie haben diesen Tipp bereits gemeldet.',
+    'report_own_tip' => 'Sie können Ihren eigenen Tipp nicht melden.',
+    'report_login_required' => 'Sie müssen angemeldet sein, um einen Tipp zu melden.',
+    'share_success' => 'Tipp erfolgreich geteilt!',
+    'back' => 'Zurück',
 ];

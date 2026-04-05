@@ -10,15 +10,7 @@
             <p class="mt-2 text-slate-600 dark:text-slate-400">{{ __('profile.edit_subtitle') }}</p>
         </div>
 
-        <!-- Success Messages -->
-        @if(session('success'))
-            <div class="mb-6 p-4 rounded-lg bg-primary/10 border border-primary/30 text-slate-900 dark:text-slate-100">
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary">check_circle</span>
-                    <span>{{ session('success') }}</span>
-                </div>
-            </div>
-        @endif
+        {{-- Success message removed to avoid duplication with the global floating notifier in the layout --}}
 
         <!-- Update Profile Information -->
         <div class="bg-white dark:bg-custom-dark-button rounded-2xl shadow-lg p-6 sm:p-8 mb-6">

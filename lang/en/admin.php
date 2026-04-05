@@ -51,4 +51,7 @@ return [
     'reason_other' => 'Other',
     'confirm_delete' => 'Are you sure you want to delete this tip?',
     'delete_success' => 'Tip deleted successfully',
+    'tip_deleted_success' => 'Tip deleted successfully.',
+    'comment_deleted_success' => 'Comment deleted successfully.',
+    'report_status_updated' => 'Report status updated.',
 ];

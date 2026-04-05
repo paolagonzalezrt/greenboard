@@ -12,20 +12,16 @@
             <p class="text-slate-600 dark:text-slate-400 text-lg">{{ __('admin.admin_subtitle') }}</p>
         </div>
 
-        <!-- Success Message -->
-        @if(session('success'))
-            <div class="mb-6 p-4 bg-green-100 dark:bg-green-900/30 border border-green-500 text-green-700 dark:text-green-400 rounded-xl flex items-center gap-3 animate-fade-in">
-                <span class="material-symbols-outlined">check_circle</span>
-                <span class="font-semibold">{{ session('success') }}</span>
-            </div>
-        @endif
+        {{-- Success message removed to avoid duplication with the global floating notifier --}}
 
         <!-- Error Message -->
         @if(session('error'))
-            <div class="mb-6 p-4 bg-red-100 dark:bg-red-900/30 border border-red-500 text-red-700 dark:text-red-400 rounded-xl flex items-center gap-3 animate-fade-in">
-                <span class="material-symbols-outlined">error</span>
-                <span class="font-semibold">{{ session('error') }}</span>
-            </div>
+            <x-alert-notification 
+                message="{{ session('error') }}"
+                type="error"
+                icon="error"
+                class="mb-6 animate-fade-in"
+            />
         @endif
 
         <!-- Tabs -->

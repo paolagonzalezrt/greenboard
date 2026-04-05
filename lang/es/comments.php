@@ -23,4 +23,7 @@ return [
     'reason_inappropriate' => 'Contenido inapropiado',
     'reason_offensive' => 'Ofensivo',
     'report_submitted' => 'Reporte enviado exitosamente',
+    'report_already_reported' => 'Ya has reportado este comentario anteriormente.',
+    'report_own_comment' => 'No puedes reportar tu propio comentario.',
+    'report_login_required' => 'Debes iniciar sesión para reportar un comentario.',
 ];

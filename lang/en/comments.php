@@ -22,5 +22,8 @@ return [
     'reason_spam' => 'Spam',
     'reason_inappropriate' => 'Inappropriate Content',
     'reason_offensive' => 'Offensive',
-    'report_submitted' => 'Report submitted successfully',
+    'report_submitted' => 'Report sent successfully',
+    'report_already_reported' => 'You have already reported this comment.',
+    'report_own_comment' => 'You cannot report your own comment.',
+    'report_login_required' => 'You must be logged in to report a comment.',
 ];
