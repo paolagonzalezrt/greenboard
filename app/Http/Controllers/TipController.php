@@ -96,7 +96,8 @@ class TipController extends Controller
                     'is_liked' => $user ? $tip->likes()->where('user_id', $user->id)->exists() : false,
                     'is_bookmarked' => $user ? $tip->bookmarks()->where('user_id', $user->id)->exists() : false,
                 ];
-            });
+            })
+            ->onEachSide(2);
 
         return view('welcome', compact('tips', 'search', 'sortBy', 'category'));
     }
@@ -147,7 +148,8 @@ class TipController extends Controller
                     'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
                     'is_bookmarked' => $tip->bookmarks()->where('user_id', $user->id)->exists(),
                 ];
-            });
+            })
+            ->onEachSide(2);
 
         return view('dashboard', compact('tips', 'search', 'sortBy', 'category'));
     }
@@ -188,7 +190,8 @@ class TipController extends Controller
                     'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
                     'is_bookmarked' => $tip->bookmarks()->where('user_id', $user->id)->exists(),
                 ];
-            });
+            })
+            ->onEachSide(2);
 
         return view('following', compact('tips'));
     }
@@ -221,7 +224,8 @@ class TipController extends Controller
                     'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
                     'is_bookmarked' => true, // Always true in saved page
                 ];
-            });
+            })
+            ->onEachSide(2);
 
         return view('saved', compact('tips'));
     }
@@ -282,7 +286,8 @@ class TipController extends Controller
             ->with(['user', 'replies.user'])
             ->orderBy('created_at', 'desc')
             ->paginate($commentsPerPage)
-            ->appends(['per_page' => $commentsPerPage]);
+            ->appends(['per_page' => $commentsPerPage])
+            ->onEachSide(2);
 
         $tip->title = $this->translateTipContent($tip->title);
         $tip->description = $this->translateTipContent($tip->description);
@@ -326,7 +331,8 @@ class TipController extends Controller
                         'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
                         'is_bookmarked' => true,
                     ];
-                });
+                })
+                ->onEachSide(2);
         } else {
             // Obtener los tips publicados por el usuario
             $tips = $user->tips()
@@ -351,7 +357,8 @@ class TipController extends Controller
                         'is_liked' => $tip->likes()->where('user_id', $user->id)->exists(),
                         'is_bookmarked' => $tip->bookmarks()->where('user_id', $user->id)->exists(),
                     ];
-                });
+                })
+                ->onEachSide(2);
         }
 
         return view('profile', compact('tips', 'postsCount', 'tab'));
@@ -396,7 +403,8 @@ class TipController extends Controller
                         'is_liked' => $currentUser ? $tip->likes()->where('user_id', $currentUser->id)->exists() : false,
                         'is_bookmarked' => true,
                     ];
-                });
+                })
+                ->onEachSide(2);
         } else {
             // Obtener los tips publicados por el usuario
             $tips = $user->tips()
@@ -421,7 +429,8 @@ class TipController extends Controller
                         'is_liked' => $currentUser ? $tip->likes()->where('user_id', $currentUser->id)->exists() : false,
                         'is_bookmarked' => $currentUser ? $tip->bookmarks()->where('user_id', $currentUser->id)->exists() : false,
                     ];
-                });
+                })
+                ->onEachSide(2);
         }
 
         return view('users.show', compact('user', 'tips', 'postsCount', 'tab', 'isFollowing'));
