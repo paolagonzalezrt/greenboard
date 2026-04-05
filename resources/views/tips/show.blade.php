@@ -5,23 +5,21 @@
 @section('content')
     <div class="w-full px-2 sm:px-4 md:px-6">
         <div class="mx-auto max-w-md">
-            <!-- Back Button -->
             <div class="mb-6">
                 @auth
-                    <a href="{{route('dashboard')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                    <a href="{{route('dashboard')}}" class="inline-flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
                         <span class="material-symbols-outlined">arrow_back</span>
                         <span class="font-semibold">{{ __('buttons.back') }}</span>
                     </a>
                 @else
-                    <a href="{{route('home')}}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                    <a href="{{route('home')}}" class="inline-flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
                         <span class="material-symbols-outlined">arrow_back</span>
                         <span class="font-semibold">{{ __('buttons.back') }}</span>
                     </a>
                 @endauth
             </div>
 
-            <!-- Post Content -->
-            <article class="bg-white dark:bg-custom-dark-button rounded-2xl border border-slate-200 dark:border-transparent shadow-lg overflow-hidden mb-8">
+            <article class="bg-white dark:bg-custom-dark-bg rounded-2xl border border-gray-200 dark:border-custom-gray-border shadow-lg overflow-hidden mb-8">
             @php
                 $categoryColors = [
                     'Consumption' => ['bg' => 'bg-purple-100/90', 'text' => 'text-purple-600'],
@@ -44,23 +42,20 @@
                 }
             @endphp
 
-            <!-- Image (if exists) -->
             @if($tip->image)
                 <div class="relative aspect-[16/9] w-full">
                     <img src="{{ $tip->image }}" alt="{{ $tip->title }}" class="w-full h-full object-cover">
                 </div>
             @endif
 
-            <!-- Content -->
             <div class="p-6 sm:p-8">
-                <!-- Header -->
                 <div class="flex items-start justify-between mb-4">
                     <div class="flex items-center gap-3 flex-1 min-w-0">
                         <a href="{{ route('users.show', $tip->user->id) }}" class="flex items-center gap-3 flex-1 min-w-0">
                             <x-profile-avatar :user="$tip->user" size="xs" class="hover:opacity-80 transition-opacity" onclick="event.stopPropagation()" />
                             <div class="flex flex-col min-w-0">
-                                <span class="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 hover:text-primary transition-colors">{{ $tip->user->name }}</span>
-                                <span class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">{{ $tip->created_at->diffForHumans() }}</span>
+                                <span class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 hover:text-primary transition-colors">{{ $tip->user->name }}</span>
+                                <span class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">{{ $tip->created_at->diffForHumans() }}</span>
                             </div>
                         </a>
                     </div>
@@ -71,31 +66,31 @@
                                     id="follow-btn-{{ $tip->user_id }}" 
                                     onclick="toggleFollow({{ $tip->user_id }})" 
                                     class="follow-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all
-                                    {{ Auth::user()->isFollowing($tip->user_id) ? 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' : 'bg-primary text-background-dark hover:brightness-105' }}">
+                                    {{ Auth::user()->isFollowing($tip->user_id) ? 'bg-gray-200 dark:bg-custom-dark-input text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-custom-dark-button' : 'bg-primary text-background-dark hover:brightness-105' }}">
                                     <span class="material-symbols-outlined text-[18px]">{{ Auth::user()->isFollowing($tip->user_id) ? 'person_check' : 'person_add' }}</span>
                                     <span class="follow-text hidden sm:inline">{{ Auth::user()->isFollowing($tip->user_id) ? __('buttons.unfollow') : __('buttons.follow') }}</span>
                                 </button>
                             @endif
                         @endauth
                         <div class="relative">
-                            <button onclick="toggleCardMenu('show-tip')" class="px-1 py-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+                            <button onclick="toggleCardMenu('show-tip')" class="px-1 py-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
                                 <span class="material-symbols-outlined text-[18px]">more_vert</span>
                             </button>
-                            <div id="menu-show-tip" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-xl overflow-hidden z-10">
+                            <div id="menu-show-tip" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-custom-dark-bg border border-gray-200 dark:border-custom-gray-border rounded-lg shadow-xl overflow-hidden z-10">
                                 @auth
                                     @if(Auth::id() === $tip->user_id)
-                                        <button onclick="deletePost({{ $tip->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                        <button onclick="deletePost({{ $tip->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-colors text-left">
                                             <span class="material-symbols-outlined text-[16px] text-red-500">delete</span>
                                             <span>{{ __('buttons.delete') }}</span>
                                         </button>
                                     @else
-                                        <button onclick="openReportModal({{ $tip->id }}, 'post')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                        <button onclick="openReportModal({{ $tip->id }}, 'post')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-colors text-left">
                                             <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
                                             <span>{{ __('buttons.report') }}</span>
                                         </button>
                                     @endif
                                 @else
-                                    <button onclick="openReportModal({{ $tip->id }}, 'post')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                    <button onclick="openReportModal({{ $tip->id }}, 'post')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-colors text-left">
                                         <span class="material-symbols-outlined text-[16px] text-red-500">flag</span>
                                         <span>{{ __('buttons.report') }}</span>
                                     </button>
@@ -105,45 +100,42 @@
                     </div>
                 </div>
 
-                <!-- Title -->
-                <h1 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-slate-100 mb-4">
+                <h1 class="text-base sm:text-lg font-extrabold text-gray-900 dark:text-gray-100 mb-4">
                     {{ $tip->title }}
                 </h1>
 
-                <!-- Description -->
-                <div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                <div class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
                     {{ $tip->description }}
                 </div>
 
-                <!-- Interactions -->
                 <div class="flex items-center justify-between pt-4">
                     <div class="flex items-center gap-3 sm:gap-4">
                         @auth
-                            <button onclick="toggleLike({{ $tip->id }}, this)" class="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors group cursor-pointer">
+                            <button onclick="toggleLike({{ $tip->id }}, this)" class="flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors group cursor-pointer">
                                 <span class="material-symbols-outlined text-[18px] sm:text-[20px] group-hover:scale-110 transition-transform {{ Auth::user()->hasLiked($tip) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLiked($tip) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
                                 <span class="text-[11px] sm:text-xs font-semibold like-count">{{ $tip->likes()->count() }}</span>
                             </button>
                         @else
-                            <a href="{{ route('login') }}" class="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors group">
+                            <a href="{{ route('login') }}" class="flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors group">
                                 <span class="material-symbols-outlined text-[18px] sm:text-[20px] group-hover:scale-110 transition-transform">favorite</span>
                                 <span class="text-[11px] sm:text-xs font-semibold">{{ $tip->likes()->count() }}</span>
                             </a>
                         @endauth
-                        <div class="flex items-center gap-1 text-slate-600 dark:text-slate-400">
+                        <div class="flex items-center gap-1 text-gray-600 dark:text-gray-400">
                             <span class="material-symbols-outlined text-[18px] sm:text-[20px]">chat_bubble</span>
                             <span class="text-[11px] sm:text-xs font-semibold">{{ $tip->comments()->count() }}</span>
                         </div>
                     </div>
                     <div class="flex items-center gap-3 sm:gap-4">
-                        <button onclick="shareTip({{ $tip->id }}, '{{ addslashes($tip->title) }}')" class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-1">
+                        <button onclick="shareTip({{ $tip->id }}, '{{ addslashes($tip->title) }}')" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors p-1">
                             <span class="material-symbols-outlined text-[18px] sm:text-[20px]">share</span>
                         </button>
                         @auth
-                            <button class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-1 bookmark-btn" onclick="toggleBookmark({{ $tip->id }}, this)" data-tip-id="{{ $tip->id }}">
+                            <button class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors p-1 bookmark-btn" onclick="toggleBookmark({{ $tip->id }}, this)" data-tip-id="{{ $tip->id }}">
                                 <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ Auth::user()->hasBookmarked($tip) ? 'filled text-primary' : '' }}" style="{{ Auth::user()->hasBookmarked($tip) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">bookmark</span>
                             </button>
                         @else
-                            <a href="{{ route('login') }}" class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-1">
+                            <a href="{{ route('login') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors p-1">
                                 <span class="material-symbols-outlined text-[18px] sm:text-[20px]">bookmark</span>
                             </a>
                         @endauth
@@ -152,14 +144,12 @@
             </div>
         </article>
 
-        <!-- Comments Section -->
         <div class="p-4 sm:p-6 md:p-8 overflow-visible">
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                 {{ $tip->comments()->count() }} {{ formatCommentCount($tip->comments()->count(), app()->getLocale()) }}
             </h2>
 
             @auth
-                <!-- Add Comment Form -->
                 <form action="{{ route('comments.store', $tip) }}" method="POST" class="mb-8">
                     @csrf
                     <div class="flex gap-3 flex-row">
@@ -169,12 +159,10 @@
                                 name="content" 
                                 rows="3" 
                                 placeholder="{{ __('content.add_comment') }}"
-                                class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-button border border-slate-200 dark:border-slate-700 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none"
+                                class="w-full px-4 py-3 bg-gray-50 dark:bg-custom-dark-input border border-gray-200 dark:border-custom-gray-border rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none text-gray-900 dark:text-gray-100"
                                 required
                             ></textarea>
                             <div class="flex justify-end mt-2">
-
-
                                 <button type="submit" class="px-6 py-2 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 transition-all text-xs">
                                     {{ __('content.post_comment') }}
                                 </button>
@@ -183,43 +171,36 @@
                     </div>
                 </form>
             @else
-                <!-- Login prompt -->
-                <div class="mb-8 p-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-center">
-                    <p class="text-slate-600 dark:text-slate-400">
+                <div class="mb-8 p-4 bg-gray-50 dark:bg-custom-dark-bg border border-gray-200 dark:border-custom-gray-border rounded-xl text-center">
+                    <p class="text-gray-600 dark:text-gray-400">
                         <a href="{{ route('login') }}" class="text-primary font-bold hover:underline">{{ __('nav.login') }}</a> {{ __('content.login_to_comment') }}
                     </p>
                 </div>
             @endauth
 
-            <!-- Comments List -->
             <div class="space-y-6">
                 @forelse($comments as $comment)
                     <div class="flex gap-3" id="comment-{{ $comment->id }}">
-                        <!-- Avatar -->
                         <x-profile-avatar :user="$comment->user" size="sm" />
                         
-                        <!-- Comment Content -->
                         <div class="flex-1 min-w-0">
-                            <!-- Header -->
                             <div class="flex items-center gap-2 mb-1 flex-wrap">
-                                <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">{{ $comment->user->name }}</span>
-                                <span class="text-xs text-slate-500 dark:text-slate-400">{{ $comment->created_at->diffForHumans() }}</span>
+                                <span class="font-bold text-gray-900 dark:text-gray-100 text-sm">{{ $comment->user->name }}</span>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">{{ $comment->created_at->diffForHumans() }}</span>
                             </div>
 
-                            <!-- Comment Text -->
-                            <p class="text-sm text-slate-700 dark:text-slate-300 mb-2 break-words w-full min-w-0">
+                            <p class="text-sm text-gray-700 dark:text-gray-300 mb-2 break-words w-full min-w-0">
                                 {{ $comment->content }}
                             </p>
 
-                            <!-- Actions -->
                             <div class="flex items-center gap-4">
                                 @auth
-                                    <button onclick="toggleCommentLike({{ $comment->id }}, this)" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group cursor-pointer">
+                                    <button onclick="toggleCommentLike({{ $comment->id }}, this)" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group cursor-pointer">
                                         <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($comment) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLikedComment($comment) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
                                         <span class="font-semibold comment-like-count">{{ $comment->likes()->count() > 0 ? $comment->likes()->count() : __('comments.like') }}</span>
                                     </button>
                                 @else
-                                    <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group">
+                                    <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group">
                                         <span class="material-symbols-outlined text-sm">favorite</span>
                                         <span class="font-semibold">{{ $comment->likes()->count() > 0 ? $comment->likes()->count() : __('comments.like') }}</span>
                                     </a>
@@ -227,25 +208,25 @@
                                 @auth
                                     <button 
                                         onclick="toggleReplyForm({{ $comment->id }})"
-                                        class="text-xs text-slate-500 hover:text-primary transition-colors font-semibold"
+                                        class="text-xs text-gray-500 hover:text-primary transition-colors font-semibold"
                                     >
                                         {{ __('comments.reply') }}
                                     </button>
                                 @endauth
                                 @auth
                                     <div class="relative ml-auto">
-                                        <button onclick="toggleCommentMenu({{ $comment->id }})" class="text-xs text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors font-semibold">
+                                        <button onclick="toggleCommentMenu({{ $comment->id }})" class="text-xs text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors font-semibold">
                                             <span class="material-symbols-outlined text-sm">more_vert</span>
                                         </button>
-                                        <div id="comment-menu-{{ $comment->id }}" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-xl overflow-hidden z-10">
+                                        <div id="comment-menu-{{ $comment->id }}" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-custom-dark-bg border border-gray-200 dark:border-custom-gray-border rounded-lg shadow-xl overflow-hidden z-10">
                                             @if(Auth::id() === $comment->user_id || Auth::user()->is_admin)
-                                                <button onclick="deleteComment({{ $comment->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                                <button onclick="deleteComment({{ $comment->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-colors text-left">
                                                     <span class="material-symbols-outlined text-[14px] text-red-500">delete</span>
                                                     <span>{{ __('comments.delete') }}</span>
                                                 </button>
                                             @endif
                                             @if(Auth::id() !== $comment->user_id)
-                                                <button onclick="openReportModal({{ $comment->id }}, 'comment')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                                <button onclick="openReportModal({{ $comment->id }}, 'comment')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-colors text-left">
                                                     <span class="material-symbols-outlined text-[14px] text-yellow-500">flag</span>
                                                     <span>{{ __('comments.report') }}</span>
                                                 </button>
@@ -256,7 +237,6 @@
                             </div>
 
                             @auth
-                                <!-- Reply Form (Hidden by default) -->
                                 <div id="reply-form-{{ $comment->id }}" class="hidden mt-3">
                                     <form action="{{ route('comments.reply', $comment) }}" method="POST" class="flex flex-col gap-2">
                                         @csrf
@@ -265,8 +245,7 @@
                                             name="content" 
                                             rows="3" 
                                             placeholder="{{ __('comments.reply_placeholder') }}"
-
-                                            class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-button border border-slate-200 dark:border-slate-700 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none"
+                                            class="w-full px-4 py-3 bg-gray-50 dark:bg-custom-dark-input border border-gray-200 dark:border-custom-gray-border rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none outline-none text-gray-900 dark:text-gray-100"
                                             required
                                         ></textarea>
                                         <div class="flex justify-end">
@@ -278,46 +257,45 @@
                                 </div>
                             @endauth
 
-                            <!-- Replies -->
                             @if($comment->replies->count() > 0)
-                                <div class="mt-4 pl-4 border-l-2 border-slate-200 dark:border-slate-700 space-y-4">
+                                <div class="mt-4 pl-4 border-l-2 border-gray-200 dark:border-custom-gray-border space-y-4">
                                     @foreach($comment->replies as $reply)
                                         <div class="flex gap-3">
                                             <x-profile-avatar :user="$reply->user" size="sm" />
                                             <div class="flex-1 min-w-0">
                                                 <div class="flex items-center gap-2 mb-1 flex-wrap">
-                                                    <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">{{ $reply->user->name }}</span>
-                                                    <span class="text-xs text-slate-500 dark:text-slate-400">{{ $reply->created_at->diffForHumans() }}</span>
+                                                    <span class="font-bold text-gray-900 dark:text-gray-100 text-sm">{{ $reply->user->name }}</span>
+                                                    <span class="text-xs text-gray-500 dark:text-gray-400">{{ $reply->created_at->diffForHumans() }}</span>
                                                 </div>
-                                                <p class="text-sm text-slate-700 dark:text-slate-300 mb-2 break-words w-full min-w-0">
+                                                <p class="text-sm text-gray-700 dark:text-gray-300 mb-2 break-words w-full min-w-0">
                                                     {{ $reply->content }}
                                                 </p>
                                                 <div class="flex items-center gap-4">
                                                     @auth
-                                                            <button onclick="toggleCommentLike({{ $reply->id }}, this)" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group cursor-pointer">
+                                                            <button onclick="toggleCommentLike({{ $reply->id }}, this)" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group cursor-pointer">
                                                                 <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($reply) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLikedComment($reply) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
                                                                 <span class="font-semibold comment-like-count">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : __('comments.like') }}</span>
                                                             </button>
                                                         @else
-                                                            <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-slate-500 hover:text-red-500 transition-colors group">
+                                                            <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group">
                                                                 <span class="material-symbols-outlined text-sm">favorite</span>
                                                                 <span class="font-semibold">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : __('comments.like') }}</span>
                                                             </a>
                                                         @endauth
                                                     @auth
                                                         <div class="relative ml-auto">
-                                                            <button onclick="toggleCommentMenu({{ $reply->id }})" class="text-xs text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors font-semibold">
+                                                            <button onclick="toggleCommentMenu({{ $reply->id }})" class="text-xs text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors font-semibold">
                                                                 <span class="material-symbols-outlined text-sm">more_vert</span>
                                                             </button>
-                                                            <div id="comment-menu-{{ $reply->id }}" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-xl overflow-hidden z-10">
+                                                            <div id="comment-menu-{{ $reply->id }}" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-custom-dark-bg border border-gray-200 dark:border-custom-gray-border rounded-lg shadow-xl overflow-hidden z-10">
                                                                 @if(Auth::id() === $reply->user_id || Auth::user()->is_admin)
-                                                                    <button onclick="deleteComment({{ $reply->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                                                    <button onclick="deleteComment({{ $reply->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-colors text-left">
                                                                         <span class="material-symbols-outlined text-[14px] text-red-500">delete</span>
                                                                         <span>{{ __('comments.delete') }}</span>
                                                                     </button>
                                                                 @endif
                                                                 @if(Auth::id() !== $reply->user_id)
-                                                                    <button onclick="openReportModal({{ $reply->id }}, 'comment')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-left">
+                                                                    <button onclick="openReportModal({{ $reply->id }}, 'comment')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-colors text-left">
                                                                         <span class="material-symbols-outlined text-[14px] text-yellow-500">flag</span>
                                                                         <span>{{ __('comments.report') }}</span>
                                                                     </button>
@@ -335,16 +313,15 @@
                     </div>
                 @empty
                     <div class="text-center py-8">
-                        <span class="material-symbols-outlined text-slate-300 dark:text-slate-700 text-5xl mb-3 block">chat_bubble</span>
-                        <p class="text-slate-500 dark:text-slate-400">{{ __('comments.no_comments_yet') }}</p>
+                        <span class="material-symbols-outlined text-gray-300 dark:text-custom-dark-button text-5xl mb-3 block">chat_bubble</span>
+                        <p class="text-gray-500 dark:text-gray-400">{{ __('comments.no_comments_yet') }}</p>
                     </div>
                 @endforelse
             </div>
 
-            <!-- Load More Comments (if needed) -->
             @if($comments->hasMorePages())
                 <div class="flex justify-center mt-8">
-                    <a href="{{ $comments->nextPageUrl() }}" class="px-6 py-2 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-all text-sm">
+                    <a href="{{ $comments->nextPageUrl() }}" class="px-6 py-2 border-2 border-gray-300 dark:border-custom-gray-border text-gray-700 dark:text-gray-300 font-bold rounded-xl hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-all text-sm">
                         Load More Comments
                     </a>
                 </div>
