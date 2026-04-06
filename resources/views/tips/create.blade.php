@@ -33,12 +33,14 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     @php
                         $categoryKeys = [
-                            ['key' => 'home', 'icon' => 'home', 'color' => 'blue'],
-                            ['key' => 'energy', 'icon' => 'bolt', 'color' => 'amber'],
-                            ['key' => 'consumption', 'icon' => 'shopping_bag', 'color' => 'purple'],
-                            ['key' => 'transport', 'icon' => 'directions_bike', 'color' => 'emerald'],
-                            ['key' => 'food', 'icon' => 'restaurant', 'color' => 'orange'],
-                            ['key' => 'zero_waste', 'icon' => 'recycling', 'color' => 'green'],
+                            ['key' => 'alimentacion', 'icon' => 'restaurant', 'color' => 'orange'],
+                            ['key' => 'energia', 'icon' => 'bolt', 'color' => 'amber'],
+                            ['key' => 'naturaleza', 'icon' => 'eco', 'color' => 'green'],
+                            ['key' => 'transporte', 'icon' => 'directions_bike', 'color' => 'teal'],
+                            ['key' => 'hogar', 'icon' => 'home', 'color' => 'blue'],
+                            ['key' => 'residuos', 'icon' => 'recycling', 'color' => 'slate'],
+                            ['key' => 'consumo', 'icon' => 'shopping_bag', 'color' => 'purple'],
+                            ['key' => 'educacion', 'icon' => 'school', 'color' => 'rose'],
                         ];
                     @endphp
 

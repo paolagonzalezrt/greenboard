@@ -2,26 +2,32 @@
 
 return [
     // Kategorien
-    'home' => 'Zuhause',
-    'energy' => 'Energie',
-    'consumption' => 'Verbrauch',
-    'transport' => 'Transport',
-    'food' => 'Essen',
-    'zero_waste' => 'Null Abfall',
-    
+    'hogar' => 'Zuhause',
+    'alimentacion' => 'Essen',
+    'consumo' => 'Verbrauch',
+    'transporte' => 'Transport',
+    'residuos' => 'Abfall',
+    'energia' => 'Energie',
+    'naturaleza' => 'Natur',
+    'educacion' => 'Bildung',
+
     // Kategoriebeschreibungen
-    'home_desc' => 'Tipps für nachhaltiges Zuhause',
-    'energy_desc' => 'Energie sparen zu Hause',
-    'consumption_desc' => 'Bewusster Konsum',
-    'transport_desc' => 'Grüner Transport',
-    'food_desc' => 'Nachhaltiges Essen',
-    'zero_waste_desc' => 'Abfall reduzieren',
-    
+    'hogar_desc' => 'Tipps für nachhaltiges Zuhause',
+    'alimentacion_desc' => 'Nachhaltiges Essen',
+    'consumo_desc' => 'Bewusster Konsum',
+    'transporte_desc' => 'Grüner Transport',
+    'residuos_desc' => 'Abfall reduzieren',
+    'energia_desc' => 'Energie sparen zu Hause',
+    'naturaleza_desc' => 'Schutz der Natur',
+    'educacion_desc' => 'Umweltbildung',
+
     // Symbole
-    'home_icon' => 'home',
-    'energy_icon' => 'bolt',
-    'consumption_icon' => 'shopping_bag',
-    'transport_icon' => 'directions_bike',
-    'food_icon' => 'restaurant',
-    'zero_waste_icon' => 'recycling',
+    'hogar_icon' => 'home',
+    'alimentacion_icon' => 'restaurant',
+    'consumo_icon' => 'shopping_bag',
+    'transporte_icon' => 'directions_bike',
+    'residuos_icon' => 'recycling',
+    'energia_icon' => 'bolt',
+    'naturaleza_icon' => 'eco',
+    'educacion_icon' => 'school',
 ];

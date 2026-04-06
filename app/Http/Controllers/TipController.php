@@ -245,7 +245,7 @@ class TipController extends Controller
     {
         // Validar los datos
         $validated = $request->validate([
-            'category' => 'required|string|in:home,energy,consumption,transport,food,zero_waste',
+            'category' => 'required|string|in:hogar,alimentacion,consumo,transporte,residuos,energia,naturaleza,educacion',
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:1000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120', // 5MB max

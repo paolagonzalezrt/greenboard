@@ -3,7 +3,7 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Tips
+    | Tips / Consejos
     |--------------------------------------------------------------------------
     */
     'tips' => 'Tips',
@@ -61,12 +61,14 @@ return [
     |--------------------------------------------------------------------------
     */
     'hero_title' => 'Transform Your Daily Habits into Global Impact',
-    'hero_description' => 'Explore practical tips shared by our community to lead a more sustainable lifestyle.',
-    'search_placeholder' => 'Search for sustainable tips...',
-    'community_insights' => 'Community Insights',
+    'hero_description' => 'Discover practical tips shared by our community.',
+    'search_placeholder' => 'Search...',
+    'community_insights' => 'Insights for a sustainable future',
     'browse_categories' => 'Browse Categories',
-    'featured_tips' => 'Featured Sustainable Tips',
-    'discover_sustainable' => 'Discover Sustainable Living',
+    'browse_title' => 'Discover new ideas',
+    'browse_description' => 'Get inspired with tips from the community.',
+    'featured_tips' => 'Featured Tips',
+    'discover_sustainable' => 'Discover new tips',
     'sort_by' => 'Sort by:',
     'newest' => 'Newest',
     'oldest' => 'Oldest',
@@ -80,7 +82,7 @@ return [
     'login_to_comment' => 'to leave a comment',
     'comments_count' => 'Comments',
     'following_title' => 'Following',
-    'following_desc' => 'Stay updated with posts from people and topics you follow',
+    'following_desc' => 'Stay updated with posts from the people you follow',
     'followers_label' => 'Followers',
     'following_label' => 'Following',
     'no_posts_yet' => 'No posts yet',
@@ -90,9 +92,9 @@ return [
     'saved_desc' => 'Your collection of favorite sustainable tips and ideas',
     'saved_collection' => 'Your Saved Collection',
     'no_saved' => 'No saved posts yet',
-    'no_saved_desc' => 'Start saving posts to build your personal collection',
+    'no_saved_desc' => 'Start saving posts to build your collection',
     'create_post' => 'Create Post',
-    'no_tips_found' => 'No Tips Found',
-    'no_tips_desc' => "We couldn't find any sustainable tips matching your search or filter. Try adjusting your filters or browse our categories.",
+    'no_tips_found' => 'No tips found',
+    'no_tips_desc' => "We couldn't find any tips matching your search or filter. Try adjusting your filters or explore our categories.",
     'clear_filters' => 'Clear Filters',
 ];

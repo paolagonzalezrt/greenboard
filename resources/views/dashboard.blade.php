@@ -3,11 +3,14 @@
 @section('content')
 
 
-    <!-- Hero Search Section -->
+      <!-- Hero Section -->
     <div class="text-center mb-8 sm:mb-10 lg:mb-12 w-full">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-6 sm:mb-8">{{ __('content.discover_sustainable') }}</h1>
-        <div class="max-w-3xl mx-auto">
-            <form action="{{ route('dashboard') }}" method="GET" class="relative max-w-2xl mx-auto group px-2">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">{{ __('content.browse_title') }}</h1>
+        <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-4 sm:mb-6 lg:mb-8">
+            {{ __('content.browse_description') }}
+        </p>
+
+       <form action="{{ route('dashboard') }}" method="GET" class="relative max-w-2xl mx-auto group px-2">
             <input 
                 name="search" 
                 value="{{ $search ?? '' }}" 
@@ -54,7 +57,6 @@
                 @endif
             </div>
         @endif
-        </div>
     </div>
 
     <!-- Categories Grid -->
@@ -68,26 +70,31 @@
                 </a>
             @endif
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-            @php
-                $categoryKeys = [
-                    ['key' => 'home', 'icon' => 'home', 'color' => 'blue'],
-                    ['key' => 'energy', 'icon' => 'bolt', 'color' => 'amber'],
-                    ['key' => 'consumption', 'icon' => 'shopping_bag', 'color' => 'purple'],
-                    ['key' => 'transport', 'icon' => 'directions_bike', 'color' => 'emerald'],
-                    ['key' => 'food', 'icon' => 'restaurant', 'color' => 'orange'],
-                ];
-            @endphp
+        <div class="overflow-x-auto sm:overflow-x-visible pb-3 sm:pb-0 -mx-4 sm:-mx-4 lg:-mx-8 px-4 sm:px-4 lg:px-8">
+            <div class="flex gap-2 sm:gap-4 lg:gap-6 min-w-min sm:w-full sm:justify-between overflow-visible">
+                @php
+                    $categoryKeys = [
+                        ['key' => 'alimentacion', 'icon' => 'restaurant', 'color' => 'orange'],
+                        ['key' => 'energia', 'icon' => 'bolt', 'color' => 'amber'],
+                        ['key' => 'naturaleza', 'icon' => 'eco', 'color' => 'green'],
+                        ['key' => 'transporte', 'icon' => 'directions_bike', 'color' => 'teal'],
+                        ['key' => 'hogar', 'icon' => 'home', 'color' => 'blue'],
+                        ['key' => 'residuos', 'icon' => 'recycling', 'color' => 'slate'],
+                        ['key' => 'consumo', 'icon' => 'shopping_bag', 'color' => 'purple'],
+                        ['key' => 'educacion', 'icon' => 'school', 'color' => 'rose'],
+                    ];
+                @endphp
 
-            @foreach($categoryKeys as $cat)
-                <x-category-card 
-                    icon="{{ $cat['icon'] }}" 
-                    title="{{ __('categories.' . $cat['key']) }}" 
-                    subtitle="{{ __('categories.' . $cat['key'] . '_description') }}"
-                    color="{{ $cat['color'] }}"
-                    :active="($category ?? '') === $cat['key']"
-                />
-            @endforeach
+                @foreach($categoryKeys as $cat)
+                    <x-category-card 
+                        icon="{{ $cat['icon'] }}" 
+                        title="{{ __('categories.' . $cat['key']) }}" 
+                        color="{{ $cat['color'] }}"
+                        slug="{{ $cat['key'] }}"
+                        :active="($category ?? '') === $cat['key']"
+                    />
+                @endforeach
+            </div>
         </div>
     </section>
 

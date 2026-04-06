@@ -1,16 +1,32 @@
 @props(['id' => null, 'userId' => null, 'category', 'user', 'user_obj', 'title', 'description', 'likes', 'comments', 'image' => null, 'published_at' => null, 'isLiked' => false, 'isBookmarked' => false])
 
 @php
-    $categoryColors = [
-        'Consumption' => ['bg' => 'bg-purple-100/90', 'text' => 'text-purple-600'],
-        'Food' => ['bg' => 'bg-orange-100/90', 'text' => 'text-orange-600'],
-        'Energy' => ['bg' => 'bg-amber-100/90', 'text' => 'text-amber-600'],
-        'Transport' => ['bg' => 'bg-emerald-100/90', 'text' => 'text-emerald-600'],
-        'Home' => ['bg' => 'bg-blue-100/90', 'text' => 'text-blue-600'],
-        'Zero Waste' => ['bg' => 'bg-green-100/90', 'text' => 'text-green-600'],
+    $categoryMapping = [
+        'hogar' => ['color' => 'blue', 'label' => 'hogar'],
+        'alimentacion' => ['color' => 'orange', 'label' => 'alimentacion'],
+        'consumo' => ['color' => 'purple', 'label' => 'consumo'],
+        'transporte' => ['color' => 'teal', 'label' => 'transporte'],
+        'residuos' => ['color' => 'slate', 'label' => 'residuos'],
+        'energia' => ['color' => 'amber', 'label' => 'energia'],
+        'naturaleza' => ['color' => 'green', 'label' => 'naturaleza'],
+        'educacion' => ['color' => 'rose', 'label' => 'educacion'],
     ];
 
-    $colors = $categoryColors[$category] ?? ['bg' => 'bg-primary/20', 'text' => 'text-primary'];
+    $categoryColors = [
+        'blue' => ['bg' => 'bg-blue-100/90', 'text' => 'text-blue-600'],
+        'orange' => ['bg' => 'bg-orange-100/90', 'text' => 'text-orange-600'],
+        'purple' => ['bg' => 'bg-violet-100/90', 'text' => 'text-violet-600'],
+        'teal' => ['bg' => 'bg-cyan-100/90', 'text' => 'text-cyan-600'],
+        'slate' => ['bg' => 'bg-slate-100/90', 'text' => 'text-slate-600'],
+        'amber' => ['bg' => 'bg-amber-100/90', 'text' => 'text-amber-600'],
+        'green' => ['bg' => 'bg-emerald-100/90', 'text' => 'text-emerald-600'],
+        'rose' => ['bg' => 'bg-rose-100/90', 'text' => 'text-rose-600'],
+    ];
+
+    $catMapping = $categoryMapping[$category] ?? null;
+    $colorName = $catMapping ? $catMapping['color'] : 'blue';
+    $colors = $categoryColors[$colorName] ?? ['bg' => 'bg-primary/20', 'text' => 'text-primary'];
+    $categoryLabel = $catMapping ? __('categories.' . $catMapping['label']) : $category;
     $uniqueId = uniqid('card-');
 @endphp
 
@@ -33,7 +49,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-1.5 flex-shrink-0">
-                    <span class="{{ $colors['bg'] }} {{ $colors['text'] }} text-[9px] sm:text-[10px] font-extrabold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full uppercase whitespace-nowrap">{{ $category }}</span>
+                    <span class="{{ $colors['bg'] }} {{ $colors['text'] }} text-[9px] sm:text-[10px] font-extrabold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full uppercase whitespace-nowrap">{{ $categoryLabel }}</span>
                     <div class="relative">
                         <button onclick="event.stopPropagation(); toggleCardMenu('{{ $uniqueId }}')" class="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
                             <span class="material-symbols-outlined text-[18px]">more_vert</span>
@@ -101,7 +117,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-1.5 flex-shrink-0">
-                    <span class="{{ $colors['bg'] }} {{ $colors['text'] }} text-[9px] sm:text-[10px] font-extrabold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full uppercase whitespace-nowrap">{{ $category }}</span>
+                    <span class="{{ $colors['bg'] }} {{ $colors['text'] }} text-[9px] sm:text-[10px] font-extrabold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full uppercase whitespace-nowrap">{{ $categoryLabel }}</span>
                     <div class="relative">
                         <button onclick="event.stopPropagation(); toggleCardMenu('{{ $uniqueId }}')" class="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
                             <span class="material-symbols-outlined text-[18px]">more_vert</span>

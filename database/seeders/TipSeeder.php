@@ -61,7 +61,7 @@ class TipSeeder extends Seeder
         );
 
         // Generar 50 posts de prueba SIN IMAGEN para probar la paginación
-        $categories = ['Home', 'Energy', 'Consumption', 'Transport', 'Food', 'Zero Waste'];
+        $categories = ['hogar', 'energia', 'consumo', 'transporte', 'alimentacion', 'residuos', 'naturaleza', 'educacion'];
 
         $titles = [
             'Reduce Water Usage with Simple Tricks',

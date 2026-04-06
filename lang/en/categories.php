@@ -2,26 +2,32 @@
 
 return [
     // Categories
-    'home' => 'Home',
-    'energy' => 'Energy',
-    'consumption' => 'Consumption',
-    'transport' => 'Transport',
-    'food' => 'Food',
-    'zero_waste' => 'Zero Waste',
-    
+    'hogar' => 'Home',
+    'alimentacion' => 'Food',
+    'consumo' => 'Consumption',
+    'transporte' => 'Transport',
+    'residuos' => 'Waste',
+    'energia' => 'Energy',
+    'naturaleza' => 'Nature',
+    'educacion' => 'Education',
+
     // Category Descriptions
-    'home_desc' => 'Sustainable home tips',
-    'energy_desc' => 'Save energy at home',
-    'consumption_desc' => 'Conscious consumption',
-    'transport_desc' => 'Green transportation',
-    'food_desc' => 'Sustainable eating',
-    'zero_waste_desc' => 'Reduce waste',
-    
+    'hogar_desc' => 'Sustainable home tips',
+    'alimentacion_desc' => 'Sustainable eating',
+    'consumo_desc' => 'Conscious consumption',
+    'transporte_desc' => 'Green transportation',
+    'residuos_desc' => 'Reduce waste',
+    'energia_desc' => 'Save energy at home',
+    'naturaleza_desc' => 'Protect nature',
+    'educacion_desc' => 'Environmental education',
+
     // Icons
-    'home_icon' => 'home',
-    'energy_icon' => 'bolt',
-    'consumption_icon' => 'shopping_bag',
-    'transport_icon' => 'directions_bike',
-    'food_icon' => 'restaurant',
-    'zero_waste_icon' => 'recycling',
+    'hogar_icon' => 'home',
+    'alimentacion_icon' => 'restaurant',
+    'consumo_icon' => 'shopping_bag',
+    'transporte_icon' => 'directions_bike',
+    'residuos_icon' => 'recycling',
+    'energia_icon' => 'bolt',
+    'naturaleza_icon' => 'eco',
+    'educacion_icon' => 'school',
 ];
