@@ -4,30 +4,24 @@
 
 @section('content')
     <div class="max-w-3xl mx-auto">
-        <!-- Back Button -->
-        <div class="mb-6">
-            <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">arrow_back</span>
-                <span class="font-semibold">{{ __('tips.back') }}</span>
-            </a>
-        </div>
+       
         <!-- Header -->
         <div class="mb-8 sm:mb-10 text-center">
             <div class="flex justify-center items-center gap-3 mb-4">
-                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">{{ __('tips.create_title') }}</h1>
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight dark:text-background-light">{{ __('tips.create_title') }}</h1>
             </div>
-            <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg">
+            <p class="text-slate-600 dark:text-sort-border-dark text-base sm:text-lg">
                 {{ __('tips.create_subtitle') }}
             </p>
         </div>
 
         <!-- Form -->
-        <form action="{{ route('tips.store') }}" method="POST" enctype="multipart/form-data" class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg p-6 sm:p-8">
+        <form action="{{ route('tips.store') }}" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8">
             @csrf
 
             <!-- Category Selection -->
             <div class="mb-6">
-                <label for="category" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">
+                <label for="category" class="block text-sm font-bold text-slate-700 dark:text-background-light mb-3">
                     {{ __('tips.category') }} <span class="text-red-500">*</span>
                 </label>
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -47,9 +41,9 @@
                     @foreach($categoryKeys as $cat)
                         <label class="relative cursor-pointer group">
                             <input type="radio" name="category" value="{{ $cat['key'] }}" class="peer sr-only" {{ old('category') == $cat['key'] ? 'checked' : '' }} required>
-                            <div class="p-4 border-2 border-slate-200 dark:border-slate-600 rounded-xl transition-all peer-checked:border-{{ $cat['color'] }}-500 peer-checked:bg-{{ $cat['color'] }}-50 dark:peer-checked:bg-{{ $cat['color'] }}-900/20 hover:border-{{ $cat['color'] }}-300 flex flex-col items-center gap-2">
-                                <span class="material-symbols-outlined text-2xl text-slate-600 dark:text-slate-400 peer-checked:text-{{ $cat['color'] }}-600">{{ $cat['icon'] }}</span>
-                                <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">{{ __('categories.' . $cat['key']) }}</span>
+                            <div class="p-4 border-2 border-slate-200 dark:border-custom-gray-border bg-white dark:bg-custom-dark-input rounded-xl transition-all peer-checked:border-{{ $cat['color'] }}-500 peer-checked:bg-{{ $cat['color'] }}-50 dark:peer-checked:bg-{{ $cat['color'] }}-900/20 hover:border-{{ $cat['color'] }}-300 flex flex-col items-center gap-2">
+                                <span class="material-symbols-outlined text-2xl text-slate-600 dark:text-sort-border-dark peer-checked:text-{{ $cat['color'] }}-600">{{ $cat['icon'] }}</span>
+                                <span class="text-sm font-semibold text-slate-700 dark:text-background-light">{{ __('categories.' . $cat['key']) }}</span>
                             </div>
                         </label>
                     @endforeach
@@ -61,7 +55,7 @@
 
             <!-- Title -->
             <div class="mb-6">
-                <label for="title" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                <label for="title" class="block text-sm font-bold text-slate-700 dark:text-background-light mb-2">
                     {{ __('tips.title') }} <span class="text-red-500">*</span>
                 </label>
                 <input 
@@ -69,7 +63,7 @@
                     name="title" 
                     id="title" 
                     value="{{ old('title') }}"
-                    class="w-full px-4 py-3 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base font-medium outline-none @error('title') border-red-500 @enderror"
+                    class="w-full px-4 py-3 bg-white dark:bg-custom-dark-input border-2 border-slate-200 dark:border-custom-gray-border rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base font-medium outline-none dark:text-white @error('title') border-red-500 @enderror"
                     placeholder="{{ __('tips.title_placeholder') }}"
                     maxlength="255"
                     required
@@ -81,14 +75,14 @@
 
             <!-- Description -->
             <div class="mb-6">
-                <label for="description" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                <label for="description" class="block text-sm font-bold text-slate-700 dark:text-background-light mb-2">
                     {{ __('tips.description') }} <span class="text-red-500">*</span>
                 </label>
                 <textarea 
                     name="description" 
                     id="description" 
                     rows="6"
-                    class="w-full px-4 py-3 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base resize-none outline-none @error('description') border-red-500 @enderror"
+                    class="w-full px-4 py-3 bg-white dark:bg-custom-dark-input border-2 border-slate-200 dark:border-custom-gray-border rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base resize-none outline-none dark:text-white @error('description') border-red-500 @enderror"
                     placeholder="{{ __('tips.description_placeholder') }}"
                     maxlength="1000"
                     required
@@ -96,16 +90,15 @@
                 <div class="flex justify-between items-center mt-2">
                     @error('description')
                         <p class="text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                    @else
-                        <p class="text-sm text-slate-500 dark:text-slate-400">{{ __('tips.description_hint') }}</p>
+                    
                     @enderror
-                    <span class="text-xs text-slate-400" id="charCount">0 / 1000</span>
+                    <span class="text-xs text-slate-400 dark:text-sort-border-dark" id="charCount">0 / 1000</span>
                 </div>
             </div>
 
             <!-- Image Upload -->
             <div class="mb-8">
-                <label for="image" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
+                <label for="image" class="block text-sm font-bold text-slate-700 dark:text-background-light mb-2">
                     {{ __('tips.image') }}
                 </label>
                 <div class="relative">
@@ -119,13 +112,13 @@
                     >
                     <label 
                         for="image" 
-                        class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl cursor-pointer hover:border-primary transition-all bg-slate-50 dark:bg-slate-900/50"
+                        class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-slate-300 dark:border-custom-gray-border rounded-xl cursor-pointer hover:border-primary transition-all bg-slate-50 dark:bg-custom-dark-input"
                         id="imageLabel"
                     >
                         <div class="flex flex-col items-center" id="uploadPrompt">
-                            <span class="material-symbols-outlined text-4xl text-slate-400 mb-2">cloud_upload</span>
-                            <p class="text-sm font-semibold text-slate-600 dark:text-slate-400">{{ __('tips.choose_image') }}</p>
-                            <p class="text-xs text-slate-500 dark:text-slate-500 mt-1">{{ __('tips.image_hint') }}</p>
+                            <span class="material-symbols-outlined text-4xl text-slate-400 dark:text-sort-border-dark mb-2">cloud_upload</span>
+                            <p class="text-sm font-semibold text-slate-600 dark:text-sort-border-dark">{{ __('tips.choose_image') }}</p>
+                            <p class="text-xs text-slate-500 dark:text-sort-text-light mt-1">{{ __('tips.image_hint') }}</p>
                         </div>
                         <div class="hidden w-full h-full" id="imagePreviewContainer">
                             <img id="imagePreview" class="w-full h-full object-cover rounded-xl" alt="Preview">
@@ -149,7 +142,7 @@
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
              <a 
                     href="{{ route('dashboard') }}"
-                    class="px-6 py-4 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-bold rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2"
+                    class="px-6 py-4 border-2 border-slate-300 dark:border-custom-gray-border text-slate-700 dark:text-background-light font-bold rounded-full hover:bg-slate-100 dark:hover:bg-custom-dark-button transition-all flex items-center justify-center gap-2"
                 >
                     
                     <span>{{ __('tips.cancel') }}</span>
@@ -163,7 +156,7 @@
                     <span>{{ __('tips.publish') }}</span>
                     
                 </button>
-               
+                
             </div>
         </form>
     </div>
