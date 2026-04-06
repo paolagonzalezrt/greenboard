@@ -49,34 +49,67 @@
             @endif
 
             <div class="p-6 sm:p-8">
-                <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center justify-between mb-4">
+
+                    <!-- Usuario -->
                     <div class="flex items-center gap-3 flex-1 min-w-0">
                         <a href="{{ route('users.show', $tip->user->id) }}" class="flex items-center gap-3 flex-1 min-w-0">
-                            <x-profile-avatar :user="$tip->user" size="xs" class="hover:opacity-80 transition-opacity" onclick="event.stopPropagation()" />
+                            
+                            <x-profile-avatar 
+                                :user="$tip->user" 
+                                size="xs" 
+                                class="hover:opacity-80 transition-opacity" 
+                                onclick="event.stopPropagation()" 
+                            />
+
                             <div class="flex flex-col min-w-0">
-                                <span class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 hover:text-primary transition-colors">{{ $tip->user->name }}</span>
-                                <span class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">{{ $tip->created_at->diffForHumans() }}</span>
+                                <span class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 hover:text-primary transition-colors">
+                                    {{ $tip->user->name }}
+                                </span>
+                                <span class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
+                                    {{ $tip->created_at->diffForHumans() }}
+                                </span>
                             </div>
+
                         </a>
                     </div>
+
+                    <!-- Acciones -->
                     <div class="flex items-center gap-2 flex-shrink-0">
+
                         @auth
                             @if(Auth::id() !== $tip->user_id)
+                                <!-- Follow -->
                                 <button 
                                     id="follow-btn-{{ $tip->user_id }}" 
                                     onclick="toggleFollow({{ $tip->user_id }})" 
-                                    class="follow-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all
-                                    {{ Auth::user()->isFollowing($tip->user_id) ? 'bg-gray-200 dark:bg-custom-dark-input text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-custom-dark-button' : 'bg-primary text-background-dark hover:brightness-105' }}">
-                                    <span class="material-symbols-outlined text-[18px]">{{ Auth::user()->isFollowing($tip->user_id) ? 'person_check' : 'person_add' }}</span>
-                                    <span class="follow-text hidden sm:inline">{{ Auth::user()->isFollowing($tip->user_id) ? __('buttons.unfollow') : __('buttons.follow') }}</span>
+                                    class="follow-btn flex items-center justify-center sm:justify-start gap-1.5 rounded-full text-xs font-bold transition-all size-7 sm:size-auto sm:px-4 sm:py-1.5
+                                    {{ Auth::user()->isFollowing($tip->user_id) 
+                                        ? 'bg-gray-200 dark:bg-custom-dark-input text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-custom-dark-button' 
+                                        : 'bg-primary text-background-dark hover:brightness-105' }}">
+
+                                    <span class="material-symbols-outlined text-[14px]">
+                                        {{ Auth::user()->isFollowing($tip->user_id) ? 'person_check' : 'person_add' }}
+                                    </span>
+
+                                    <span class="follow-text hidden sm:inline">
+                                        {{ Auth::user()->isFollowing($tip->user_id) ? __('buttons.unfollow') : __('buttons.follow') }}
+                                    </span>
                                 </button>
                             @endif
                         @endauth
+
+                        <!-- Menu -->
                         <div class="relative">
-                            <button onclick="toggleCardMenu('show-tip')" class="px-1 py-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
-                                <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                            <button 
+                                onclick="toggleCardMenu('show-tip')" 
+                                class="w-6 h-10 flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                
+                                <span class="material-symbols-outlined text-[18px] leading-none">more_vert</span>
                             </button>
+
                             <div id="menu-show-tip" class="hidden absolute right-0 mt-1 w-40 bg-white dark:bg-custom-dark-bg border border-gray-200 dark:border-custom-gray-border rounded-lg shadow-xl overflow-hidden z-10">
+                                
                                 @auth
                                     @if(Auth::id() === $tip->user_id)
                                         <button onclick="deletePost({{ $tip->id }})" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-colors text-left">
@@ -95,10 +128,14 @@
                                         <span>{{ __('buttons.report') }}</span>
                                     </button>
                                 @endauth
+
                             </div>
                         </div>
+
                     </div>
                 </div>
+            
+            
 
                 <h1 class="text-base sm:text-lg font-extrabold text-gray-900 dark:text-gray-100 mb-4">
                     {{ $tip->title }}
@@ -181,11 +218,13 @@
             <div class="space-y-6">
                 @forelse($comments as $comment)
                     <div class="flex gap-3" id="comment-{{ $comment->id }}">
-                        <x-profile-avatar :user="$comment->user" size="sm" />
-                        
+                        <a href="{{ route('users.show', $comment->user->id) }}" class="flex-shrink-0 hover:opacity-80 transition-opacity">
+                            <x-profile-avatar :user="$comment->user" size="sm" />
+                        </a>
+
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-2 mb-1 flex-wrap">
-                                <span class="font-bold text-gray-900 dark:text-gray-100 text-sm">{{ $comment->user->name }}</span>
+                                <a href="{{ route('users.show', $comment->user->id) }}" class="font-bold text-gray-900 dark:text-gray-100 text-sm hover:text-primary transition-colors">{{ $comment->user->name }}</a>
                                 <span class="text-xs text-gray-500 dark:text-gray-400">{{ $comment->created_at->diffForHumans() }}</span>
                             </div>
 
@@ -227,7 +266,7 @@
                                             @endif
                                             @if(Auth::id() !== $comment->user_id)
                                                 <button onclick="openReportModal({{ $comment->id }}, 'comment')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-colors text-left">
-                                                    <span class="material-symbols-outlined text-[14px] text-yellow-500">flag</span>
+                                                    <span class="material-symbols-outlined text-[14px] text-red-500">flag</span>
                                                     <span>{{ __('comments.report') }}</span>
                                                 </button>
                                             @endif
@@ -261,10 +300,12 @@
                                 <div class="mt-4 pl-4 border-l-2 border-gray-200 dark:border-custom-gray-border space-y-4">
                                     @foreach($comment->replies as $reply)
                                         <div class="flex gap-3">
-                                            <x-profile-avatar :user="$reply->user" size="sm" />
+                                            <a href="{{ route('users.show', $reply->user->id) }}" class="flex-shrink-0 hover:opacity-80 transition-opacity">
+                                                <x-profile-avatar :user="$reply->user" size="sm" />
+                                            </a>
                                             <div class="flex-1 min-w-0">
                                                 <div class="flex items-center gap-2 mb-1 flex-wrap">
-                                                    <span class="font-bold text-gray-900 dark:text-gray-100 text-sm">{{ $reply->user->name }}</span>
+                                                    <a href="{{ route('users.show', $reply->user->id) }}" class="font-bold text-gray-900 dark:text-gray-100 text-sm hover:text-primary transition-colors">{{ $reply->user->name }}</a>
                                                     <span class="text-xs text-gray-500 dark:text-gray-400">{{ $reply->created_at->diffForHumans() }}</span>
                                                 </div>
                                                 <p class="text-sm text-gray-700 dark:text-gray-300 mb-2 break-words w-full min-w-0">
@@ -296,7 +337,7 @@
                                                                 @endif
                                                                 @if(Auth::id() !== $reply->user_id)
                                                                     <button onclick="openReportModal({{ $reply->id }}, 'comment')" class="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-custom-dark-button transition-colors text-left">
-                                                                        <span class="material-symbols-outlined text-[14px] text-yellow-500">flag</span>
+                                                                        <span class="material-symbols-outlined text-[14px] text-red-500">flag</span>
                                                                         <span>{{ __('comments.report') }}</span>
                                                                     </button>
                                                                 @endif
@@ -462,20 +503,53 @@
                 if (data.success) {
                     if (data.following) {
                         button.classList.remove('bg-primary', 'text-background-dark', 'hover:brightness-105');
-                        button.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-300', 'hover:bg-slate-300', 'dark:hover:bg-slate-600');
+                        button.classList.add('bg-gray-200', 'dark:bg-custom-dark-input', 'text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-300', 'dark:hover:bg-custom-dark-button');
                         icon.textContent = 'person_check';
-                        text.textContent = 'Following';
+                        if (text) text.textContent = '{{ __("buttons.unfollow") }}';
                     } else {
-                        button.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-300', 'hover:bg-slate-300', 'dark:hover:bg-slate-600');
+                        button.classList.remove('bg-gray-200', 'dark:bg-custom-dark-input', 'text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-300', 'dark:hover:bg-custom-dark-button');
                         button.classList.add('bg-primary', 'text-background-dark', 'hover:brightness-105');
                         icon.textContent = 'person_add';
-                        text.textContent = 'Follow';
+                        if (text) text.textContent = '{{ __("buttons.follow") }}';
                     }
+                } else {
+                    // Show error notification
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
+                    errorMsg.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined">error</span>
+                            <span>${data.message || '{{ __("messages.error.generic") }}'}</span>
+                        </div>
+                    `;
+                    document.body.appendChild(errorMsg);
+
+                    // Remove notification after 3 seconds
+                    setTimeout(() => {
+                        errorMsg.style.transition = 'opacity 0.3s ease-out';
+                        errorMsg.style.opacity = '0';
+                        setTimeout(() => errorMsg.remove(), 300);
+                    }, 3000);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Error al procesar la solicitud. Por favor intenta de nuevo.');
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 font-semibold';
+                errorMsg.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined">error</span>
+                        <span>{{ __("messages.error.generic") }}</span>
+                    </div>
+                `;
+                document.body.appendChild(errorMsg);
+
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    errorMsg.style.transition = 'opacity 0.3s ease-out';
+                    errorMsg.style.opacity = '0';
+                    setTimeout(() => errorMsg.remove(), 300);
+                }, 3000);
             });
         }
 

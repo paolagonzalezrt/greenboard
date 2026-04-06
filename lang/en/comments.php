@@ -26,6 +26,7 @@ return [
     'report_already_reported' => 'You have already reported this comment.',
     'report_own_comment' => 'You cannot report your own comment.',
     'report_login_required' => 'You must be logged in to report a comment.',
+    'report_already_reported_post' => 'You have already reported this post.',
     'confirm_delete_title' => 'Delete Comment',
     'confirm_delete_message' => 'This action cannot be undone.',
     'confirm_delete_button' => 'Delete',

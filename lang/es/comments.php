@@ -26,6 +26,7 @@ return [
     'report_already_reported' => 'Ya has reportado este comentario anteriormente.',
     'report_own_comment' => 'No puedes reportar tu propio comentario.',
     'report_login_required' => 'Debes iniciar sesión para reportar un comentario.',
+    'report_already_reported_post' => 'Ya has reportado este post anteriormente.',
     'confirm_delete_title' => 'Eliminar Comentario',
     'confirm_delete_message' => 'Esta acción no se puede deshacer.',
     'confirm_delete_button' => 'Eliminar',
