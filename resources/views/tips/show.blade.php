@@ -5,7 +5,7 @@
 @section('content')
     <div class="w-full px-2 sm:px-4 md:px-6">
         <div class="mx-auto max-w-md">
-            <div class="mb-6">
+            <!-- <div class="mb-6">
                 @auth
                     <a href="{{route('dashboard')}}" class="inline-flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
                         <span class="material-symbols-outlined">arrow_back</span>
@@ -17,7 +17,7 @@
                         <span class="font-semibold">{{ __('buttons.back') }}</span>
                     </a>
                 @endauth
-            </div>
+            </div> -->
 
             <article class="bg-white dark:bg-custom-dark-bg rounded-2xl border border-gray-200 dark:border-custom-gray-border shadow-lg overflow-hidden mb-8">
             @php

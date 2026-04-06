@@ -1,4 +1,4 @@
-<header class="flex items-center justify-between px-4 sm:px-6 lg:px-24 py-4 sm:py-6 lg:py-8 border-b border-primary/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+<header class="flex items-center justify-between px-4 sm:px-6 lg:px-24 py-4 sm:py-6 lg:py-8 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
     <!-- Logo Section (Always visible) -->
     <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity">
         <span class="material-symbols-outlined text-primary text-2xl sm:text-3xl">eco</span>

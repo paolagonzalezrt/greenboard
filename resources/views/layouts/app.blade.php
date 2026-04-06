@@ -77,13 +77,13 @@
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen @yield('body-class', 'p-0 m-0') overflow-x-hidden @yield('body-position', 'relative')">
 
     @if(!View::hasSection('no-layout'))
-        <div class="leaf-pattern top-[-5%] left-[-5%] w-64 h-64 bg-primary rounded-full blur-[100px]"></div>
+        <!-- <div class="leaf-pattern top-[-5%] left-[-5%] w-64 h-64 bg-primary rounded-full blur-[100px]"></div> -->
         <div class="leaf-pattern bottom-[-5%] right-[-5%] w-96 h-96 bg-primary/40 rounded-full blur-[120px]"></div>
 
         <div class="relative z-10 flex flex-col min-h-screen">
             @include('partials.nav')
 
-            <main class="flex-1 flex flex-col items-center pt-8 sm:pt-16 lg:pt-24 pb-12 sm:pb-16 lg:pb-24 px-4 sm:px-6 max-w-7xl mx-auto w-full">
+            <main class="flex-1 flex flex-col items-center pt-6 sm:pt-14 lg:pt-20 pb-12 sm:pb-16 lg:pb-24 px-4 sm:px-6 max-w-7xl mx-auto w-full">
                 @yield('content')
             </main>
 
