@@ -167,15 +167,24 @@
             openReportModal(tipId);
         }
 
+        let pendingDeletePostId = null;
+
         function deletePost(tipId) {
             // Close any open menus first
             const allMenus = document.querySelectorAll('[id^="menu-"]');
             allMenus.forEach(menu => menu.classList.add('hidden'));
 
-            // Ask for confirmation
-            if (!confirm(@json(__('tips.confirm_delete_post')))) {
-                return;
-            }
+            // Store the tip ID for later confirmation
+            pendingDeletePostId = tipId;
+
+            // Show the confirm modal
+            showConfirmModal('delete-post-modal');
+        }
+
+        function performDeletePost() {
+            if (!pendingDeletePostId) return;
+            const tipId = pendingDeletePostId;
+            pendingDeletePostId = null;
 
             // Send delete request to backend
             fetch(`/tips/${tipId}`, {
@@ -382,6 +391,17 @@
         description="{{ __('tips.report_description') }}"
         submitFunction="submitReport"
         idFieldName="report-tip-id"
+    />
+
+    <!-- Confirm Delete Post Modal Component -->
+    <x-confirm-modal 
+        id="delete-post-modal" 
+        title="{{ __('tips.confirm_delete_title') }}"
+        message="{{ __('tips.confirm_delete_message') }}"
+        confirmText="{{ __('tips.confirm_delete_button') }}"
+        cancelText="{{ __('tips.cancel') }}"
+        onConfirm="performDeletePost"
+        isDangerous="true"
     />
 
     <script>
