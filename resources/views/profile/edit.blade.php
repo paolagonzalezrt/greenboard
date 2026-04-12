@@ -3,17 +3,17 @@
 @section('title', 'Editar Perfil - GreenBoard')
 
 @section('content')
-    <div class="max-w-3xl mx-auto">
+    <div class="w-full max-w-3xl mx-auto">
 
-    <!-- Hero Section -->
-        <div class="text-center mb-8 sm:mb-10 lg:mb-12 w-full">
+        <!-- Hero Section -->
+        <div class="mb-8 sm:mb-10 lg:mb-12 w-full">
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">{{ __('profile.edit_title') }}</h1>
-            <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
+            <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg w-full">
                 {{ __('profile.edit_subtitle') }}
             </p>
         </div>
 
-        <!-- Update Profile Information -->
+        <!-- Profile Information Section -->
         <div class="mb-4 border-b border-slate-200 dark:border-custom-gray-border overflow-hidden accordion-item">
             <button type="button" class="w-full flex items-center justify-between py-6 text-left accordion-header group focus:outline-none" onclick="toggleAccordion(this)">
                 <div>
@@ -30,8 +30,8 @@
 
                 <!-- Profile Photo Preview -->
                 <div class="mb-6">
-                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">{{ __('profile.profile_photo') }}</label>
-                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4">{{ __('profile.profile_photo') }}</label>
+                    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
                         <div class="flex flex-col items-center">
                             <div id="photo-preview-container" class="hidden size-32 sm:size-40 rounded-full shadow-xl overflow-hidden sm:border-4 sm:border-white sm:dark:border-slate-800 shrink-0 relative group">
                                 <img id="photo-preview" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" />
@@ -40,13 +40,13 @@
                                 <x-profile-avatar :user="Auth::user()" size="xl" class="!size-32 sm:!size-40 !text-5xl shadow-xl shrink-0" />
                             </div>
                         </div>
-                        <div class="flex flex-col items-center sm:items-start pt-2">
+                        <div class="flex flex-col items-center sm:items-start">
                             <input type="file" name="photo" id="photo" accept="image/*" class="hidden" onchange="previewPhoto(event)">
-                            <label for="photo" class="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-custom-dark-input text-slate-900 dark:text-slate-100 rounded-lg font-semibold text-sm cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-600">
+                            <label for="photo" class="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-custom-dark-input text-slate-900 dark:text-slate-100 rounded-lg font-semibold text-sm cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-600 shadow-sm active:scale-95">
                                 <span class="material-symbols-outlined text-lg">upload</span>
                                 {{ __('profile.change_photo') }}
                             </label>
-                            <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">{{ __('profile.photo_formats') }}</p>
+                            <p class="mt-2 text-xs text-slate-500 dark:text-slate-400 font-medium px-1">{{ __('profile.photo_formats') }}</p>
                         </div>
                     </div>
                     @error('photo')
@@ -64,6 +64,44 @@
                     @enderror
                 </div>
 
+                <!-- Bio -->
+                <div class="mb-6">
+                    <label for="bio" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">{{ __('profile.bio') }}</label>
+                    <textarea name="bio" id="bio" rows="4" maxlength="500"
+                        class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-input border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                        placeholder="{{ __('profile.bio_placeholder') }}">{{ old('bio', Auth::user()->bio) }}</textarea>
+                    <p class="mt-1 text-xs text-slate-500 dark:text-slate-400"><span id="bio-count">{{ strlen(Auth::user()->bio ?? '') }}</span>/500</p>
+                    @error('bio')
+                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-end">
+                    <button type="submit" class="px-8 py-3 bg-primary text-background-dark rounded-lg font-bold hover:brightness-105 transition-all shadow-md">
+                        {{ __('profile.save_changes') }}
+                    </button>
+                </div>
+            </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Section -->
+        <div class="mb-4 border-b border-slate-200 dark:border-custom-gray-border overflow-hidden accordion-item">
+            <button type="button" class="w-full flex items-center justify-between py-6 text-left accordion-header group focus:outline-none" onclick="toggleAccordion(this)">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">{{ __('profile.email_section_title') }}</h2>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ __('profile.email_section_subtitle') }}</p>
+                </div>
+                <span class="material-symbols-outlined transform transition-transform duration-300 accordion-icon text-slate-400 group-hover:text-primary">expand_more</span>
+            </button>
+            <div class="accordion-content" style="display: none;">
+                <div class="pb-8">
+            <form method="POST" action="{{ route('profile.update') }}">
+                @csrf
+                @method('PATCH')
+
                 <!-- Email -->
                 <div class="mb-6">
                     <label for="email" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">{{ __('profile.email') }}</label>
@@ -74,22 +112,9 @@
                     @enderror
                 </div>
 
-                <!-- Bio -->
-                <div class="mb-6">
-                    <label for="bio" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">{{ __('profile.bio') }}</label>
-                    <textarea name="bio" id="bio" rows="4" maxlength="500"
-                        class="w-full px-4 py-3 bg-slate-50 dark:bg-custom-dark-input border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
-                        placeholder="{{ __('profile.bio_placeholder') }}">{{ old('bio', Auth::user()->bio) }}</textarea>
-                    <p class="mt-1 text-xs text-slate-500 dark:text-slate-400"><span id="bio-count">{{ strlen(Auth::user()->bio ?? '') }}</span>/{{ __('profile.characters_limit') }}</p>
-                    @error('bio')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                    @enderror
-                </div>
-
                 <!-- Submit Button -->
                 <div class="flex justify-end">
-                    <button type="submit" class="flex items-center gap-2 px-6 py-3 bg-primary text-background-dark rounded-lg font-bold hover:brightness-105 transition-all shadow-md">
-                        <span class="material-symbols-outlined">save</span>
+                    <button type="submit" class="px-8 py-3 bg-primary text-background-dark rounded-lg font-bold hover:brightness-105 transition-all shadow-md">
                         {{ __('profile.save_changes') }}
                     </button>
                 </div>
@@ -142,9 +167,8 @@
 
                 <!-- Submit Button -->
                 <div class="flex justify-end">
-                    <button type="submit" class="flex items-center gap-2 px-6 py-3 bg-primary text-background-dark rounded-lg font-bold hover:brightness-105 transition-all shadow-md">
-                        <span class="material-symbols-outlined">lock</span>
-                        {{ __('profile.update_password_button') }}
+                    <button type="submit" class="px-8 py-3 bg-primary text-background-dark rounded-lg font-bold hover:brightness-105 transition-all shadow-md">
+                        {{ __('profile.save_changes') }}
                     </button>
                 </div>
             </form>
@@ -152,21 +176,29 @@
             </div>
         </div>
 
-        <!-- Delete Account -->
-        <div class="mb-6 overflow-hidden accordion-item">
+        <!-- Advanced Options - Delete Account -->
+
+        <div class="mb-4 overflow-hidden accordion-item">
             <button type="button" class="w-full flex items-center justify-between py-6 text-left accordion-header group focus:outline-none" onclick="toggleAccordion(this)">
                 <div>
-                    <h2 class="text-xl font-bold text-red-600 dark:text-red-400 group-hover:text-red-500 transition-colors">{{ __('profile.delete_account_title') }}</h2>
-                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ __('profile.delete_account_warning') }}</p>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">{{ __('profile.advanced_options_title') }}</h2>
                 </div>
-                <span class="material-symbols-outlined transform transition-transform duration-300 accordion-icon text-red-400 group-hover:text-red-500">expand_more</span>
+                <span class="material-symbols-outlined transform transition-transform duration-300 accordion-icon text-slate-400 group-hover:text-primary">expand_more</span>
             </button>
             <div class="accordion-content" style="display: none;">
                 <div class="pb-8">
-            <button type="button" onclick="openDeleteModal()" class="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-all shadow-md">
-                <span class="material-symbols-outlined">delete_forever</span>
-                {{ __('profile.delete_account_button') }}
-            </button>
+                    <!-- Delete Account Section -->
+                    <div class="bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/20 p-5 sm:p-6 rounded-2xl">
+                        <div class="mb-5">
+                            <h3 class="text-lg font-bold text-red-600 dark:text-red-400 mb-2">{{ __('profile.delete_account_title') }}</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">{{ __('profile.delete_account_warning') }}</p>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="button" onclick="openDeleteModal()" class="px-8 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-all shadow-md">
+                                {{ __('profile.delete_account_button') }}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

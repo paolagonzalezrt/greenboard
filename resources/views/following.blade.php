@@ -5,7 +5,7 @@
 @section('content')
     <!-- Hero Section -->
     <div class="text-center mb-8 sm:mb-10 lg:mb-12 w-full">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">{{ __('content.following_title') }}</h1>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-2">{{ __('content.following_title') }}</h1>
         <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
             {{ __('content.following_desc') }}
         </p>

@@ -5,7 +5,7 @@
 
       <!-- Hero Section -->
     <div class="text-center mb-8 sm:mb-10 lg:mb-12 w-full">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">{{ __('content.browse_title') }}</h1>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-2">{{ __('content.browse_title') }}</h1>
         <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-4 sm:mb-6 lg:mb-8">
             {{ __('content.browse_description') }}
         </p>
