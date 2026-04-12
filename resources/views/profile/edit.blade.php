@@ -3,22 +3,27 @@
 @section('title', 'Editar Perfil - GreenBoard')
 
 @section('content')
-    <div class="w-full max-w-4xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">{{ __('profile.edit_title') }}</h1>
-            <p class="mt-2 text-slate-600 dark:text-slate-400">{{ __('profile.edit_subtitle') }}</p>
+    <div class="max-w-3xl mx-auto">
+
+    <!-- Hero Section -->
+        <div class="text-center mb-8 sm:mb-10 lg:mb-12 w-full">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">{{ __('profile.edit_title') }}</h1>
+            <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
+                {{ __('profile.edit_subtitle') }}
+            </p>
         </div>
 
-        {{-- Success message removed to avoid duplication with the global floating notifier in the layout --}}
-
         <!-- Update Profile Information -->
-        <div class="bg-white dark:bg-custom-dark-button rounded-2xl shadow-lg p-6 sm:p-8 mb-6">
-            <div class="mb-6">
-                <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">{{ __('profile.profile_info_title') }}</h2>
-                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ __('profile.profile_info_subtitle') }}</p>
-            </div>
-
+        <div class="mb-4 border-b border-slate-200 dark:border-custom-gray-border overflow-hidden accordion-item">
+            <button type="button" class="w-full flex items-center justify-between py-6 text-left accordion-header group focus:outline-none" onclick="toggleAccordion(this)">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">{{ __('profile.profile_info_title') }}</h2>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ __('profile.profile_info_subtitle') }}</p>
+                </div>
+                <span class="material-symbols-outlined transform transition-transform duration-300 accordion-icon text-slate-400 group-hover:text-primary">expand_more</span>
+            </button>
+            <div class="accordion-content" style="display: none;">
+                <div class="pb-8">
             <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
@@ -26,16 +31,16 @@
                 <!-- Profile Photo Preview -->
                 <div class="mb-6">
                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">{{ __('profile.profile_photo') }}</label>
-                    <div class="flex items-center gap-6">
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
                         <div class="flex flex-col items-center">
-                            <div id="photo-preview-container" class="hidden size-24 rounded-full shadow-lg overflow-hidden sm:border-4 sm:border-white sm:dark:border-slate-800">
+                            <div id="photo-preview-container" class="hidden size-32 sm:size-40 rounded-full shadow-xl overflow-hidden sm:border-4 sm:border-white sm:dark:border-slate-800 shrink-0 relative group">
                                 <img id="photo-preview" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" />
                             </div>
                             <div id="avatar-preview">
-                                <x-profile-avatar :user="Auth::user()" size="xl" />
+                                <x-profile-avatar :user="Auth::user()" size="xl" class="!size-32 sm:!size-40 !text-5xl shadow-xl shrink-0" />
                             </div>
                         </div>
-                        <div>
+                        <div class="flex flex-col items-center sm:items-start pt-2">
                             <input type="file" name="photo" id="photo" accept="image/*" class="hidden" onchange="previewPhoto(event)">
                             <label for="photo" class="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-custom-dark-input text-slate-900 dark:text-slate-100 rounded-lg font-semibold text-sm cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-600">
                                 <span class="material-symbols-outlined text-lg">upload</span>
@@ -89,15 +94,21 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
 
         <!-- Update Password -->
-        <div class="bg-white dark:bg-custom-dark-button rounded-2xl shadow-lg p-6 sm:p-8 mb-6">
-            <div class="mb-6">
-                <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">{{ __('profile.update_password_title') }}</h2>
-                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ __('profile.update_password_subtitle') }}</p>
-            </div>
-
+        <div class="mb-4 border-b border-slate-200 dark:border-custom-gray-border overflow-hidden accordion-item">
+            <button type="button" class="w-full flex items-center justify-between py-6 text-left accordion-header group focus:outline-none" onclick="toggleAccordion(this)">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">{{ __('profile.update_password_title') }}</h2>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ __('profile.update_password_subtitle') }}</p>
+                </div>
+                <span class="material-symbols-outlined transform transition-transform duration-300 accordion-icon text-slate-400 group-hover:text-primary">expand_more</span>
+            </button>
+            <div class="accordion-content" style="display: none;">
+                <div class="pb-8">
             <form method="POST" action="{{ route('profile.updatePassword') }}">
                 @csrf
                 @method('PUT')
@@ -137,19 +148,27 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
 
         <!-- Delete Account -->
-        <div class="bg-white dark:bg-custom-dark-button rounded-2xl shadow-lg p-6 sm:p-8 border-2 border-red-200 dark:border-red-900">
-            <div class="mb-6">
-                <h2 class="text-xl font-bold text-red-600 dark:text-red-400">{{ __('profile.delete_account_title') }}</h2>
-                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ __('profile.delete_account_warning') }}</p>
-            </div>
-
+        <div class="mb-6 overflow-hidden accordion-item">
+            <button type="button" class="w-full flex items-center justify-between py-6 text-left accordion-header group focus:outline-none" onclick="toggleAccordion(this)">
+                <div>
+                    <h2 class="text-xl font-bold text-red-600 dark:text-red-400 group-hover:text-red-500 transition-colors">{{ __('profile.delete_account_title') }}</h2>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ __('profile.delete_account_warning') }}</p>
+                </div>
+                <span class="material-symbols-outlined transform transition-transform duration-300 accordion-icon text-red-400 group-hover:text-red-500">expand_more</span>
+            </button>
+            <div class="accordion-content" style="display: none;">
+                <div class="pb-8">
             <button type="button" onclick="openDeleteModal()" class="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-all shadow-md">
                 <span class="material-symbols-outlined">delete_forever</span>
                 {{ __('profile.delete_account_button') }}
             </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -228,5 +247,44 @@
                 closeDeleteModal();
             }
         });
+
+        // Accordion functionality with GSAP
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.accordion-icon');
+            const isOpen = content.style.display === 'block';
+
+            // Optional: Close other accordions behavior
+            /*
+            document.querySelectorAll('.accordion-content').forEach(otherContent => {
+                if (otherContent !== content && otherContent.style.display === 'block') {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(otherContent, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.out', onComplete: () => otherContent.style.display = 'none' });
+                    } else {
+                        otherContent.style.display = 'none';
+                    }
+                    otherContent.previousElementSibling.querySelector('.accordion-icon').classList.remove('rotate-180');
+                }
+            });
+            */
+
+            if (isOpen) {
+                // Close
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(content, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.out', onComplete: () => content.style.display = 'none' });
+                } else {
+                    content.style.display = 'none';
+                }
+                icon.classList.remove('rotate-180');
+            } else {
+                // Open
+                content.style.display = 'block';
+                const height = content.scrollHeight;
+                if (typeof gsap !== 'undefined') {
+                    gsap.fromTo(content, { height: 0, opacity: 0 }, { height: height, opacity: 1, duration: 0.4, ease: 'power2.out', clearProps: 'height' });
+                }
+                icon.classList.add('rotate-180');
+            }
+        }
     </script>
 @endsection

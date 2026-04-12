@@ -30,7 +30,7 @@
     $uniqueId = uniqid('card-');
 @endphp
 
-<div class="bg-white dark:bg-custom-dark-button rounded-xl sm:rounded-2xl overflow-hidden border border-slate-100 dark:border-transparent shadow-md hover:shadow-xl transition-all group flex flex-col cursor-pointer h-full" onclick="window.location.href='{{ $id ? route('tips.show', $id) : '#' }}'">
+<div class="bg-white dark:bg-custom-dark-bg rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200 dark:border-custom-gray-border shadow-md hover:shadow-xl transition-all group flex flex-col cursor-pointer h-full" onclick="window.location.href='{{ $id ? route('tips.show', $id) : '#' }}'">
     @if($image)
         <!-- Card with Image -->
         <div class="relative aspect-[4/3] max-h-64">

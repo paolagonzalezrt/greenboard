@@ -35,19 +35,33 @@
         }
     </script> -->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script id="tailwind-config">
     tailwind.config = {
         darkMode: "class",
         theme: {
             extend: {
                 colors: {
+                    slate: {
+                        50: '#fafafa',
+                        100: '#f5f5f5',
+                        200: '#e5e5e5',
+                        300: '#d4d4d4',
+                        400: '#a3a3a3',
+                        500: '#737373',
+                        600: '#525252',
+                        700: '#404040',
+                        800: '#262626',
+                        900: '#171717',
+                        950: '#0a0a0a',
+                    },
                     "primary": "#13ec5b",
                     "background-light": "#f6f6f6",
-                    "background-dark": "#212121",
-                    "custom-dark-bg": "#2d2d2d", // Fondo del modal
-                    "custom-dark-input": "#1c1c1c", // Fondo de inputs
-                    "custom-dark-button": "#3d3d3d", // Hover de botones
-                    "custom-gray-border": "#444444", // Bordes modo oscuro
+                    "background-dark": "#121212",
+                    "custom-dark-bg": "#1c1c1c", // Fondo del modal
+                    "custom-dark-input": "#262626", // Fondo de inputs
+                    "custom-dark-button": "#333333", // Hover de botones
+                    "custom-gray-border": "#2e2e2e", // Bordes modo oscuro
                     "sort-border-dark": "#a6a6a6",
                     "sort-bg-light": "#d6d6d6",
                     "sort-text-light": "#585858",
@@ -60,6 +74,7 @@
 </script>
 
     <style type="text/tailwindcss">
+        button, a.bg-primary { border-radius: 9999px !important; }
         .leaf-pattern { @apply absolute z-0 opacity-10 pointer-events-none; }
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn {
@@ -664,5 +679,22 @@
             animation: spin 1s linear infinite;
         }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Entry animations for main content elements
+            if (!sessionStorage.getItem('hasSeenEntryAnimation')) {
+                gsap.from('main > *', {
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: 'power3.out',
+                    clearProps: 'all' // prevents conflict with tailwind hover/opacity
+                });
+                sessionStorage.setItem('hasSeenEntryAnimation', 'true');
+            }
+        });
+    </script>
 </body>
 </html>
