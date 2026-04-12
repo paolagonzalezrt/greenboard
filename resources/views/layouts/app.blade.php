@@ -283,6 +283,42 @@
                             // Add filled style
                             heartIcon.classList.add('filled', 'text-red-500');
                             heartIcon.style.fontVariationSettings = "'FILL' 1";
+
+                            // Pop animation and floating hearts
+                            if (typeof gsap !== 'undefined') {
+                                gsap.fromTo(heartIcon, 
+                                    { scale: 1 }, 
+                                    { scale: 1.5, duration: 0.4, ease: 'back.out(4)', clearProps: 'transform' }
+                                );
+
+                                const rect = heartIcon.getBoundingClientRect();
+                                for (let i = 0; i < 5; i++) {
+                                    const particle = document.createElement('span');
+                                    particle.className = 'material-symbols-outlined absolute pointer-events-none text-red-500 z-[100]';
+                                    particle.style.fontVariationSettings = "'FILL' 1";
+                                    particle.innerText = 'favorite';
+                                    particle.style.left = (rect.left + window.scrollX + rect.width / 2) + 'px';
+                                    particle.style.top = (rect.top + window.scrollY + rect.height / 2) + 'px';
+                                    particle.style.transform = 'translate(-50%, -50%)';
+                                    document.body.appendChild(particle);
+
+                                    const angle = Math.random() * Math.PI * 2;
+                                    const distance = 25 + Math.random() * 35; 
+
+                                    gsap.fromTo(particle, 
+                                        { scale: 0.2, opacity: 1 },
+                                        {
+                                            x: Math.cos(angle) * distance,
+                                            y: Math.sin(angle) * distance - 45,
+                                            opacity: 0,
+                                            scale: Math.random() * 1.5 + 0.5,
+                                            duration: 1.5 + Math.random() * 1.0,
+                                            ease: 'power1.out',
+                                            onComplete: () => particle.remove()
+                                        }
+                                    );
+                                }
+                            }
                         } else {
                             // Remove filled style
                             heartIcon.classList.remove('filled', 'text-red-500');
