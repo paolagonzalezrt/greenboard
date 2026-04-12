@@ -76,6 +76,7 @@ Route::get('/profile', [TipController::class, 'profile'])->middleware('auth')->n
 // PROFILE EDIT (Protected Route - Editar perfil del usuario autenticado)
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->middleware('auth')->name('profile.edit');
 Route::patch('/profile/update', [ProfileController::class, 'update'])->middleware('auth')->name('profile.update');
+Route::patch('/profile/email', [ProfileController::class, 'updateEmail'])->middleware('auth')->name('profile.updateEmail');
 Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->middleware('auth')->name('profile.updatePassword');
 Route::delete('/profile', [ProfileController::class, 'destroy'])->middleware('auth')->name('profile.destroy');
 

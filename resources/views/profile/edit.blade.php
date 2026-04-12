@@ -33,11 +33,13 @@
                     <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4">{{ __('profile.profile_photo') }}</label>
                     <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
                         <div class="flex flex-col items-center">
-                            <div id="photo-preview-container" class="hidden size-32 sm:size-40 rounded-full shadow-xl overflow-hidden sm:border-4 sm:border-white sm:dark:border-slate-800 shrink-0 relative group">
-                                <img id="photo-preview" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" />
+                            <div id="photo-preview-container" class="{{ Auth::user()->hasProfilePhoto() ? '' : 'hidden' }} size-20 sm:size-24 md:size-32 rounded-full shadow-xl overflow-hidden md:border-4 md:border-white md:dark:border-slate-800 shrink-0 relative group">
+                                <img id="photo-preview" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" src="{{ Auth::user()->getAvatarUrl() }}" />
                             </div>
-                            <div id="avatar-preview">
-                                <x-profile-avatar :user="Auth::user()" size="xl" class="!size-32 sm:!size-40 !text-5xl shadow-xl shrink-0" />
+                            <div id="avatar-preview" class="{{ Auth::user()->hasProfilePhoto() ? 'hidden' : '' }}">
+                                <div class="size-20 sm:size-24 md:size-32 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white shadow-xl">
+                                    <span class="text-2xl sm:text-3xl md:text-4xl">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+                                </div>
                             </div>
                         </div>
                         <div class="flex flex-col items-center sm:items-start">
@@ -98,7 +100,7 @@
             </button>
             <div class="accordion-content" style="display: none;">
                 <div class="pb-8">
-            <form method="POST" action="{{ route('profile.update') }}">
+            <form method="POST" action="{{ route('profile.updateEmail') }}">
                 @csrf
                 @method('PATCH')
 

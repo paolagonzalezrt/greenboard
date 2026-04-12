@@ -97,7 +97,7 @@ return [
     'start_following' => 'Empieza a seguir personas para ver sus publicaciones aquí',
     'explore_posts' => 'Explorar publicaciones',
     'saved_title' => 'Publicaciones guardadas',
-    'saved_desc' => 'Tu colección de consejos y ideas sostenibles favoritas',
+    'saved_desc' => 'Tu colección de consejos e ideas sostenibles favoritas',
     'saved_collection' => 'Tu colección guardada',
     'no_saved' => 'No hay publicaciones guardadas aún',
     'no_saved_desc' => 'Empieza a guardar publicaciones para construir tu colección',

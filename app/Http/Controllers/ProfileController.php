@@ -28,13 +28,11 @@ class ProfileController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'bio' => ['nullable', 'string', 'max:500'],
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ]);
 
         $user->name = $request->name;
-        $user->email = $request->email;
         $user->bio = $request->bio;
 
         // Manejar la foto de perfil
@@ -52,6 +50,23 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->route('profile.edit')->with('success', 'Perfil actualizado correctamente.');
+    }
+
+    /**
+     * Actualizar el correo electrónico del usuario
+     */
+    public function updateEmail(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+        ]);
+
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect()->route('profile.edit')->with('success', 'Correo electrónico actualizado correctamente.');
     }
 
     /**
