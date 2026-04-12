@@ -28,4 +28,8 @@ return [
     'no_followers_yet' => 'Sin seguidores aún',
     'view_profile' => 'Ver Perfil',
     'view_all_posts' => 'Ver Todos los Posts',
+    'remove_follower_title' => 'Eliminar Seguidor',
+    'remove_follower_message' => '¿Estás seguro de que quieres eliminar este seguidor?',
+    'unfollow_title' => 'Dejar de Seguir',
+    'unfollow_message' => '¿Estás seguro de que quieres dejar de seguir a este usuario?',
 ];

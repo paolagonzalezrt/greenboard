@@ -27,4 +27,8 @@ return [
     'no_followers' => 'Noch keine Follower',
     'view_profile' => 'Profil ansehen',
     'view_all_posts' => 'Alle Beiträge',
+    'remove_follower_title' => 'Follower entfernen',
+    'remove_follower_message' => 'Bist du sicher, dass du diesen Follower entfernen möchtest?',
+    'unfollow_title' => 'Benutzer entfolgen',
+    'unfollow_message' => 'Bist du sicher, dass du diesem Benutzer nicht mehr folgen möchtest?',
 ];

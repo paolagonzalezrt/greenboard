@@ -28,4 +28,8 @@ return [
     'no_followers_yet' => 'No followers yet',
     'view_profile' => 'View Profile',
     'view_all_posts' => 'View All Posts',
+    'remove_follower_title' => 'Remove Follower',
+    'remove_follower_message' => 'Are you sure you want to remove this follower?',
+    'unfollow_title' => 'Unfollow User',
+    'unfollow_message' => 'Are you sure you want to unfollow this user?',
 ];

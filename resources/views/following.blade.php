@@ -89,8 +89,97 @@
         </div>
     </div>
 
+    <!-- Modal for Remove Follower Confirmation -->
+    <div 
+        id="remove-follower-modal" 
+        class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] flex items-center justify-center overflow-auto"
+        onclick="if (event.target.id === 'remove-follower-modal') closeRemoveFollowerModal()"
+    >
+        <div 
+            class="bg-white dark:bg-custom-dark-bg rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md mx-4 p-5 sm:p-6 transform transition-all max-h-[90vh] flex flex-col border border-transparent dark:border-custom-gray-border"
+            onclick="event.stopPropagation()"
+        >
+            <div class="flex flex-col items-center my-2">
+                <span class="material-symbols-outlined text-red-500 text-4xl mb-2">
+                    delete_outline
+                </span>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 text-center">
+                    {{ __('users.remove_follower_title') ?? 'Remove Follower' }}
+                </h3>
+            </div>
+
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-center">
+                {{ __('users.remove_follower_message') ?? 'Are you sure you want to remove this follower?' }}
+            </p>
+
+            <div class="mb-2 flex gap-2 justify-center">
+                <button 
+                    type="button"
+                    onclick="closeRemoveFollowerModal()"
+                    class="px-6 py-2 bg-gray-100 dark:bg-custom-dark-input text-gray-700 dark:text-gray-200 font-bold text-sm rounded-full hover:bg-gray-200 dark:hover:bg-custom-dark-button transition-colors cursor-pointer"
+                >
+                    {{ __('buttons.cancel') ?? 'Cancel' }}
+                </button>
+
+                <button 
+                    type="button"
+                    onclick="confirmRemoveFollower()"
+                    class="px-6 py-2 bg-red-500 hover:bg-red-600 shadow-lg shadow-red-500/20 text-white font-bold text-sm rounded-full transition-colors cursor-pointer"
+                >
+                    {{ __('buttons.remove') ?? 'Remove' }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Unfollow Confirmation -->
+    <div 
+        id="unfollow-modal" 
+        class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] flex items-center justify-center overflow-auto"
+        onclick="if (event.target.id === 'unfollow-modal') closeUnfollowModal()"
+    >
+        <div 
+            class="bg-white dark:bg-custom-dark-bg rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md mx-4 p-5 sm:p-6 transform transition-all max-h-[90vh] flex flex-col border border-transparent dark:border-custom-gray-border"
+            onclick="event.stopPropagation()"
+        >
+            <div class="flex flex-col items-center my-2">
+                <span class="material-symbols-outlined text-red-500 text-4xl mb-2">
+                    person_remove
+                </span>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 text-center">
+                    {{ __('users.unfollow_title') ?? 'Unfollow User' }}
+                </h3>
+            </div>
+
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-center">
+                {{ __('users.unfollow_message') ?? 'Are you sure you want to unfollow this user?' }}
+            </p>
+
+            <div class="mb-2 flex gap-2 justify-center">
+                <button 
+                    type="button"
+                    onclick="closeUnfollowModal()"
+                    class="px-6 py-2 bg-gray-100 dark:bg-custom-dark-input text-gray-700 dark:text-gray-200 font-bold text-sm rounded-full hover:bg-gray-200 dark:hover:bg-custom-dark-button transition-colors cursor-pointer"
+                >
+                    {{ __('buttons.cancel') ?? 'Cancel' }}
+                </button>
+
+                <button 
+                    type="button"
+                    onclick="confirmUnfollow()"
+                    class="px-6 py-2 bg-red-500 hover:bg-red-600 shadow-lg shadow-red-500/20 text-white font-bold text-sm rounded-full transition-colors cursor-pointer"
+                >
+                    {{ __('buttons.unfollow') ?? 'Unfollow' }}
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const currentUserId = {{ Auth::id() }};
+        let followerToRemove = null;
+        let userToUnfollow = null;
+        let unfollowButton = null;
 
         // Show followers list
         function showFollowersList() {
@@ -141,8 +230,8 @@
                                     <span class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">${user.name}</span>
                                 </div>
                                 <button 
-                                    onclick="removeFollower(${user.id})" 
-                                    class="px-3 py-1.5 text-xs font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors flex-shrink-0">
+                                    onclick="showRemoveFollowerModal(${user.id})" 
+                                    class="px-3 py-1.5 text-xs font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors flex-shrink-0">
                                     Remove
                                 </button>
                             </div>
@@ -179,11 +268,29 @@
                         `;
                     } else {
                         usersList.innerHTML = data.following.map(user => {
+                            const isSelf = user.id === currentUserId;
                             const initial = user.name.charAt(0).toUpperCase();
                             const hasPhoto = user.has_photo && user.avatar;
                             const avatarHtml = hasPhoto
                                 ? `<img src="${user.avatar}" alt="${user.name}" class="size-10 rounded-full object-cover flex-shrink-0">`
                                 : `<div class="${user.avatar_color || 'bg-primary'} size-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-white"><span class="text-sm">${initial}</span></div>`;
+
+                            let actionButton = '';
+
+                            if (!isSelf && currentUserId) {
+                                // Mostrar Follow/Unfollow basado en el estado actual
+                                const isFollowing = user.is_following;
+                                actionButton = `
+                                    <button 
+                                        onclick="toggleFollowInModal(${user.id}, this)" 
+                                        class="follow-modal-btn px-3 py-1.5 text-xs font-bold rounded-full transition-colors flex-shrink-0 
+                                        ${isFollowing 
+                                            ? 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600' 
+                                            : 'bg-primary text-background-dark hover:brightness-105'}">
+                                        <span class="follow-modal-text">${isFollowing ? 'Unfollow' : 'Follow'}</span>
+                                    </button>
+                                `;
+                            }
 
                             return `
                             <div class="flex items-center justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
@@ -191,11 +298,7 @@
                                     ${avatarHtml}
                                     <span class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">${user.name}</span>
                                 </div>
-                                <button 
-                                    onclick="toggleFollowInModal(${user.id}, this)" 
-                                    class="px-3 py-1.5 text-xs font-bold rounded-full transition-colors flex-shrink-0 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600">
-                                    Unfollow
-                                </button>
+                                ${actionButton}
                             </div>
                         `;
                         }).join('');
@@ -208,24 +311,44 @@
             });
         }
 
-        // Remove follower
-        function removeFollower(followerId) {
-            if (!confirm('¿Estás seguro de que quieres eliminar este seguidor?')) {
-                return;
-            }
+        // Show remove follower confirmation modal
+        function showRemoveFollowerModal(followerId) {
+            followerToRemove = followerId;
+            document.getElementById('remove-follower-modal').classList.remove('hidden');
+            document.documentElement.style.overflow = 'hidden';
+            document.documentElement.style.scrollbarGutter = 'stable';
+        }
 
-            fetch(`/users/${followerId}/remove-follower`, {
+        // Close remove follower modal
+        function closeRemoveFollowerModal() {
+            followerToRemove = null;
+            document.getElementById('remove-follower-modal').classList.add('hidden');
+            document.documentElement.style.overflow = 'auto';
+            document.documentElement.style.scrollbarGutter = 'auto';
+        }
+
+        // Confirm and remove follower
+        function confirmRemoveFollower() {
+            if (!followerToRemove) return;
+
+            fetch(`/users/${followerToRemove}/remove-follower`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
+                    closeRemoveFollowerModal();
                     document.getElementById('followers-count').textContent = data.followers_count;
-                    loadFollowers(); // Reload the list
+                    loadFollowers();
                 } else {
                     alert(data.message || 'Error al eliminar seguidor');
                 }
@@ -233,29 +356,134 @@
             .catch(error => {
                 console.error('Error:', error);
                 alert('Error al eliminar seguidor. Por favor intenta de nuevo.');
+            })
+            .finally(() => {
+                followerToRemove = null;
             });
         }
 
-        // Toggle follow in modal
-        function toggleFollowInModal(userId, button) {
-            fetch(`/users/${userId}/follow`, {
+        // Show unfollow confirmation modal
+        function showUnfollowModal(userId, button) {
+            userToUnfollow = userId;
+            unfollowButton = button;
+            document.getElementById('unfollow-modal').classList.remove('hidden');
+            document.documentElement.style.overflow = 'hidden';
+            document.documentElement.style.scrollbarGutter = 'stable';
+        }
+
+        // Close unfollow modal
+        function closeUnfollowModal() {
+            userToUnfollow = null;
+            unfollowButton = null;
+            document.getElementById('unfollow-modal').classList.add('hidden');
+            document.documentElement.style.overflow = 'auto';
+            document.documentElement.style.scrollbarGutter = 'auto';
+        }
+
+        // Confirm and execute unfollow
+        function confirmUnfollow() {
+            if (!userToUnfollow) return;
+
+            fetch(`/users/${userToUnfollow}/follow`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
-                    document.getElementById('following-count').textContent = data.following_count;
-                    loadFollowing(); // Reload the list
+                    closeUnfollowModal();
+                    // Update button by re-querying it (don't rely on stored reference)
+                    if (unfollowButton) {
+                        unfollowButton.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-300', 'hover:bg-slate-300', 'dark:hover:bg-slate-600');
+                        unfollowButton.classList.add('bg-primary', 'text-background-dark', 'hover:brightness-105');
+                        const textSpan = unfollowButton.querySelector('.follow-modal-text');
+                        if (textSpan) {
+                            textSpan.textContent = 'Follow';
+                        }
+                    }
+                    // Decrement the following count (since we just unfollowed)
+                    const followingCountElement = document.getElementById('following-count');
+                    if (followingCountElement) {
+                        const currentCount = parseInt(followingCountElement.textContent, 10);
+                        if (currentCount > 0) {
+                            followingCountElement.textContent = currentCount - 1;
+                        }
+                    }
+                    // Reload the modal list to reflect changes
+                    if (!document.getElementById('users-modal').classList.contains('hidden')) {
+                        const modalTitle = document.getElementById('modal-title').textContent;
+                        if (modalTitle === 'Following') {
+                            loadFollowing();
+                        } else if (modalTitle === 'Followers') {
+                            loadFollowers();
+                        }
+                    }
+                    // Reload the page to update posts from this user (on /following page)
+                    if (window.location.pathname === '/following') {
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+                    }
+                } else {
+                    alert(data.message || 'Error al dejar de seguir');
+                    closeUnfollowModal();
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('Error al procesar la solicitud. Por favor intenta de nuevo.');
+                console.error('Error completo:', error);
+                closeUnfollowModal();
+                const errorMsg = error.message ? `Error: ${error.message}` : 'Error al procesar la solicitud. Por favor intenta de nuevo.';
+                alert(errorMsg);
+            })
+            .finally(() => {
+                userToUnfollow = null;
+                unfollowButton = null;
             });
+        }
+
+        // Toggle follow in modal
+        function toggleFollowInModal(userId, button) {
+            const isFollowing = button.querySelector('.follow-modal-text').textContent.trim() === 'Unfollow';
+
+            if (isFollowing) {
+                // Si está siguiendo, mostrar modal de confirmación
+                showUnfollowModal(userId, button);
+            } else {
+                // Si no está siguiendo, hacer follow directo
+                fetch(`/users/${userId}/follow`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // Cambiar a "Unfollow"
+                        button.classList.remove('bg-primary', 'text-background-dark', 'hover:brightness-105');
+                        button.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-300', 'hover:bg-slate-300', 'dark:hover:bg-slate-600');
+                        button.querySelector('.follow-modal-text').textContent = 'Unfollow';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al procesar la solicitud. Por favor intenta de nuevo.');
+                });
+            }
         }
 
         // Close modal

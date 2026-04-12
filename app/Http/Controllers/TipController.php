@@ -361,7 +361,7 @@ class TipController extends Controller
                 ->onEachSide(2);
         }
 
-        return view('profile', compact('tips', 'postsCount', 'tab'));
+        return view('profile', compact('user', 'tips', 'postsCount', 'tab'));
     }
 
     /**
@@ -376,35 +376,41 @@ class TipController extends Controller
         // Conteo de posts del usuario
         $postsCount = $user->tips()->count();
 
-        // Check if current user is following this user
-        $isFollowing = $currentUser ? $currentUser->isFollowing($user->id) : false;
+        // Normalizar el tab name para que sea consistente
+        if ($tab === 'my-tips') {
+            $tab = 'posts';
+        }
 
         if ($tab === 'saved') {
-            // Obtener los tips guardados por el usuario
-            $tips = $user->bookmarkedTips()
-                ->with(['user', 'likes', 'comments'])
-                ->withCount(['likes', 'comments'])
-                ->orderBy('bookmarks.created_at', 'desc')
-                ->paginate($perPage)
-                ->appends(['tab' => $tab, 'per_page' => $perPage])
-                ->through(function ($tip) use ($currentUser) {
-                    return [
-                        'id' => $tip->id,
-                        'user_id' => $tip->user->id,
-                        'category' => $tip->category,
-                        'user' => $tip->user->name,
-                        'user_obj' => $tip->user,
-                        'title' => $this->translateTipContent($tip->title),
-                        'description' => $this->translateTipContent($tip->description),
-                        'likes' => $tip->likes_count,
-                        'comments' => $tip->comments_count,
-                        'image' => $tip->image,
-                        'published_at' => $tip->created_at->diffForHumans(),
-                        'is_liked' => $currentUser ? $tip->likes()->where('user_id', $currentUser->id)->exists() : false,
-                        'is_bookmarked' => true,
-                    ];
-                })
-                ->onEachSide(2);
+            // Solo mostrar guardados si es el usuario actual
+            if ($currentUser && $currentUser->id === $user->id) {
+                $tips = $user->bookmarkedTips()
+                    ->with(['user', 'likes', 'comments'])
+                    ->withCount(['likes', 'comments'])
+                    ->orderBy('bookmarks.created_at', 'desc')
+                    ->paginate($perPage)
+                    ->appends(['tab' => $tab, 'per_page' => $perPage])
+                    ->through(function ($tip) use ($currentUser) {
+                        return [
+                            'id' => $tip->id,
+                            'user_id' => $tip->user->id,
+                            'category' => $tip->category,
+                            'user' => $tip->user->name,
+                            'user_obj' => $tip->user,
+                            'title' => $this->translateTipContent($tip->title),
+                            'description' => $this->translateTipContent($tip->description),
+                            'likes' => $tip->likes_count,
+                            'comments' => $tip->comments_count,
+                            'image' => $tip->image,
+                            'published_at' => $tip->created_at->diffForHumans(),
+                            'is_liked' => $currentUser ? $tip->likes()->where('user_id', $currentUser->id)->exists() : false,
+                            'is_bookmarked' => true,
+                        ];
+                    })
+                    ->onEachSide(2);
+            } else {
+                $tips = collect([]);
+            }
         } else {
             // Obtener los tips publicados por el usuario
             $tips = $user->tips()
@@ -433,7 +439,7 @@ class TipController extends Controller
                 ->onEachSide(2);
         }
 
-        return view('users.show', compact('user', 'tips', 'postsCount', 'tab', 'isFollowing'));
+        return view('profile', compact('user', 'tips', 'postsCount', 'tab'));
     }
 
     /**
