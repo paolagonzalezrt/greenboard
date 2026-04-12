@@ -63,6 +63,14 @@ return [
     'hero_title' => 'Verwandle deine täglichen Gewohnheiten in globale Wirkung',
     'hero_description' => 'Entdecke praktische Tipps, die von unserer Gemeinschaft geteilt werden.',
     'search_placeholder' => 'Suchen...',
+    'search_phrases' => [
+        'Wie man Plastik recycelt',
+        'Tipps für erneuerbare Energien',
+        'Wasser sparen zu Hause',
+        'Nachhaltiger Verkehr',
+        'CO2-Fußabdruck reduzieren',
+        'Anleitung zur Heimkompostierung'
+    ],
     'community_insights' => 'Einblicke für eine nachhaltige Zukunft',
     'browse_categories' => 'Nach Kategorien suchen',
     'browse_title' => 'Neue Ideen entdecken',

@@ -63,6 +63,14 @@ return [
     'hero_title' => 'Transform Your Daily Habits into Global Impact',
     'hero_description' => 'Discover practical tips shared by our community.',
     'search_placeholder' => 'Search...',
+    'search_phrases' => [
+        'How to recycle plastic',
+        'Renewable energy tips',
+        'Save water at home',
+        'Sustainable transport',
+        'Reduce carbon footprint',
+        'Home composting guide'
+    ],
     'community_insights' => 'Insights for a sustainable future',
     'browse_categories' => 'Browse Categories',
     'browse_title' => 'Discover new ideas',

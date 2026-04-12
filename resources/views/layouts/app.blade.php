@@ -730,6 +730,78 @@
                 });
                 sessionStorage.setItem('hasSeenEntryAnimation', 'true');
             }
+
+            // Typing effect for search placeholder
+            const searchInputs = document.querySelectorAll('.search-typing-input');
+            const phrases = @json(__('content.search_phrases') ?? []);
+            if (searchInputs.length > 0 && phrases.length > 0) {
+                let phraseIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+                let lastInteractionTime = 0;
+                let isFocused = false;
+
+                // Track user interaction to pause animation
+                searchInputs.forEach(input => {
+                    const updateInteraction = () => { lastInteractionTime = Date.now(); };
+                    input.addEventListener('input', updateInteraction);
+                    input.addEventListener('focus', () => { isFocused = true; updateInteraction(); });
+                    input.addEventListener('blur', () => { isFocused = false; updateInteraction(); });
+                });
+
+                function shouldPause() {
+                    const hasText = Array.from(searchInputs).some(i => i.value !== "");
+                    return hasText || isFocused;
+                }
+
+                // State logic: updates which part of the text to show
+                function type() {
+                    if (shouldPause()) {
+                        charIndex = 0;
+                        isDeleting = false;
+                        setTimeout(type, 500);
+                        return;
+                    }
+
+                    const currentPhrase = phrases[phraseIndex];
+                    let typingSpeed = isDeleting ? 50 : 100;
+
+                    if (!isDeleting && charIndex === currentPhrase.length) {
+                        isDeleting = true;
+                        typingSpeed = 2500;
+                    } else if (isDeleting && charIndex === 0) {
+                        isDeleting = false;
+                        phraseIndex = (phraseIndex + 1) % phrases.length;
+                        typingSpeed = 500;
+                    } else {
+                        charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
+                    }
+
+                    setTimeout(type, typingSpeed);
+                }
+
+                // Rendering logic: updates the placeholder and handles the blinking cursor
+                setInterval(() => {
+                    if (shouldPause()) {
+                        searchInputs.forEach(input => {
+                            if (input.value === "") {
+                                input.setAttribute('placeholder', '');
+                            }
+                        });
+                        return;
+                    }
+
+                    const currentPhrase = phrases[phraseIndex];
+                    const displayedText = currentPhrase.substring(0, charIndex);
+                    const cursor = (Math.floor(Date.now() / 500) % 2 === 0) ? '|' : ' ';
+                    
+                    searchInputs.forEach(input => {
+                        input.setAttribute('placeholder', displayedText + cursor);
+                    });
+                }, 100);
+                
+                setTimeout(type, 1000);
+            }
         });
     </script>
 </body>

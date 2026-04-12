@@ -63,6 +63,14 @@ return [
     'hero_title' => 'Transforma tus hábitos diarios en impacto global',
     'hero_description' => 'Descubre consejos prácticos compartidos por nuestra comunidad.',
     'search_placeholder' => 'Buscar...',
+    'search_phrases' => [
+        'Cómo reciclar plástico',
+        'Consejos de energía renovable',
+        'Ahorrar agua en casa',
+        'Transporte sustentable',
+        'Reducir huella de carbono',
+        'Guía para compostaje en casa'
+    ],
     'community_insights' => 'Aportes para un futuro sostenible',
     'browse_categories' => 'Explora por categorías',
     'browse_title' => 'Descubre nuevas ideas',
