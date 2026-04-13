@@ -30,18 +30,18 @@
         @guest
             <!-- Guest Buttons (All Screens) -->
             <div class="flex items-center gap-1 sm:gap-2">
-                <button id="theme-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode" onclick="window.ThemeManager.toggle()">
+                @include('partials.language-modal')
+
+                <button id="theme-toggle" class="p-2 w-10 h-10 rounded-full bg-white shadow-sm dark:bg-custom-dark-button dark:shadow-none text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode" onclick="window.ThemeManager.toggle()">
                     <span class="material-symbols-outlined text-xl" data-theme-icon>dark_mode</span>
                 </button>
-
-                @include('partials.language-modal')
             </div>
 
-            <a href="{{ route('login') }}" class="px-3 py-1.5 sm:px-5 sm:py-2 rounded-full font-bold text-xs sm:text-sm border-2 border-slate-300 dark:border-slate-700 hover:border-primary hover:text-primary transition-all">
+            <a href="{{ route('login') }}" class="flex items-center justify-center w-10 h-10 sm:w-auto sm:h-auto sm:px-5 sm:py-2 rounded-full font-bold text-xs sm:text-sm border-2 border-slate-300 dark:border-slate-700 hover:border-primary hover:text-primary transition-all">
                 <span class="hidden sm:inline">{{ __('nav.login') }}</span>
                 <span class="sm:hidden material-symbols-outlined text-[18px]">login</span>
             </a>
-            <a href="{{ route('register') }}" class="bg-primary text-background-dark px-3 py-1.5 sm:px-6 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm hover:brightness-105 transition-all shadow-lg shadow-primary/30">
+            <a href="{{ route('register') }}" class="bg-primary text-background-dark flex items-center justify-center w-10 h-10 sm:w-auto sm:h-auto sm:px-6 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm hover:brightness-105 transition-all shadow-lg shadow-primary/30">
                 <span class="hidden sm:inline">{{ __('nav.register') }}</span>
                 <span class="sm:hidden material-symbols-outlined text-[18px]">person_add</span>
             </a>
@@ -50,11 +50,11 @@
 
             <!-- Desktop: Theme, Language & Profile Dropdown -->
             <div class="hidden lg:flex items-center gap-1 sm:gap-2">
-                <button id="theme-toggle" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode" onclick="window.ThemeManager.toggle()">
+                @include('partials.language-modal')
+
+                <button id="theme-toggle" class="p-2 w-10 h-10 rounded-full bg-white shadow-sm dark:bg-custom-dark-button dark:shadow-none text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode" onclick="window.ThemeManager.toggle()">
                     <span class="material-symbols-outlined text-xl" data-theme-icon>dark_mode</span>
                 </button>
-
-                @include('partials.language-modal')
             </div>
 
             <div class="hidden lg:block relative">
@@ -150,6 +150,31 @@
                 <div class="p-4">
                     <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-2">{{ __('nav.settings') }}</p>
                     <div class="flex flex-col gap-1">
+                        <!-- Language Toggle -->
+                        <button onclick="toggleMobileLanguageDropdown(event)" class="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[22px]">translate</span>
+                                <span class="font-medium">{{ __('nav.language') }}</span>
+                            </div>
+                            <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+                        </button>
+
+                        <!-- Language Dropdown -->
+                        <div id="mobile-lang-dropdown" class="hidden bg-slate-50 dark:bg-slate-800/50 rounded-lg overflow-hidden mx-2 mb-2">
+                            <div class="flex flex-col">
+                                @foreach($availableLocales as $code => $locale)
+                                    <a 
+                                        href="{{ route('locale.switch', $code) }}" 
+                                        class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors {{ $currentLocale === $code ? 'bg-primary/10 text-primary font-bold' : '' }}"
+                                        onclick="closeMobileLanguageDropdown()"
+                                    >
+                                        <span class="text-lg">{{ $locale['flag'] }}</span>
+                                        <span>{{ $locale['native'] }}</span>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <!-- Theme Toggle -->
                         <button onclick="window.ThemeManager.toggle(); event.stopPropagation();" class="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
                             <div class="flex items-center gap-3">
@@ -160,30 +185,6 @@
                                 <div class="absolute top-1 left-1 dark:left-6 w-4 h-4 bg-white rounded-full shadow-md transition-all"></div>
                             </div>
                         </button>
-
-                        <!-- Language Toggle -->
-                        <button onclick="toggleMobileLanguageDropdown(event)" class="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-[22px]">translate</span>
-                                <span class="font-medium">{{ __('nav.language') }}</span>
-                            </div>
-                            <span class="text-xs font-bold text-slate-500 dark:text-slate-400">{{ strtoupper($currentLocale) }}</span>
-                        </button>
-
-                        <!-- Language Dropdown -->
-                        <div id="mobile-lang-dropdown" class="hidden bg-slate-50 dark:bg-slate-800/50 rounded-lg overflow-hidden mx-2 mb-2">
-                            <div class="flex flex-col">
-                                @foreach($availableLocales as $code => $locale)
-                                    <a 
-                                        href="{{ route('locale.switch', $code) }}" 
-                                        class="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors {{ $currentLocale === $code ? 'bg-primary/10 text-primary font-bold' : '' }}"
-                                        onclick="closeMobileLanguageDropdown()"
-                                    >
-                                        {{ strtoupper($code) }} - {{ $locale['name'] ?? strtoupper($code) }}
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
                     </div>
                 </div>
 

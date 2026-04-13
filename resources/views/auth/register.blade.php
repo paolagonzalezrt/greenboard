@@ -56,25 +56,24 @@ style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4
 
 <div class="relative">
 
-<button onclick="toggleLangDropdown()" class="flex items-center gap-1 text-xs font-black text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-2 rounded-full bg-slate-100 dark:bg-custom-dark-button flex items-center justify-center w-10 h-10">
+<button onclick="toggleLangDropdown()" class="flex items-center gap-1 text-xs font-black text-slate-600 dark:text-slate-400 hover:text-primary transition-colors p-2 rounded-full bg-white shadow-sm dark:bg-custom-dark-button dark:shadow-none flex items-center justify-center w-10 h-10">
 <span class="material-symbols-outlined text-xl">translate</span>
 </button>
 
-<div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-24 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl shadow-xl overflow-hidden z-50">
-
-<a href="{{ url('/lang/en') }}" class="block px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors">EN</a>
-
-<a href="{{ url('/lang/es') }}" class="block px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors">ES</a>
-
-<a href="{{ url('/lang/de') }}" class="block px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors">DE</a>
-
+<div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-44 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-custom-dark-button rounded-xl shadow-xl overflow-hidden z-50">
+@foreach($availableLocales as $code => $locale)
+    <a href="{{ route('locale.switch', $code) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors {{ $currentLocale === $code ? 'bg-primary/10 text-primary' : '' }}">
+        <span class="text-lg">{{ $locale['flag'] }}</span>
+        <span>{{ $locale['native'] }}</span>
+    </a>
+@endforeach
 </div>
 
 </div>
 
 <!-- DARK MODE -->
 
-<button onclick="toggleDarkMode()" class="p-2 w-10 h-10 rounded-full bg-slate-100 dark:bg-custom-dark-button text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center">
+<button onclick="toggleDarkMode()" class="p-2 w-10 h-10 rounded-full bg-white shadow-sm dark:bg-custom-dark-button dark:shadow-none text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center">
 <span class="material-symbols-outlined text-xl" data-theme-icon>dark_mode</span>
 </button>
 

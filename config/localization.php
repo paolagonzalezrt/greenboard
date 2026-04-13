@@ -10,7 +10,7 @@ return [
         'es' => [
             'name' => 'Español',
             'native' => 'Español',
-            'flag' => '🇪🇸',
+            'flag' => '🇲🇽',
         ],
         'en' => [
             'name' => 'English',
