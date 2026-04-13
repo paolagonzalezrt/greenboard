@@ -99,48 +99,30 @@
     <div id="mobile-menu" class="hidden lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50" onclick="closeMobileMenuOnBackdrop(event)">
         <div class="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white dark:bg-background-dark shadow-2xl transform transition-transform duration-300 flex flex-col" onclick="event.stopPropagation()">
 
-            <!-- Header with User Info -->
-            <div class="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700">
-                <div class="flex items-center gap-3">
-                    <x-profile-avatar :user="Auth::user()" size="sm" />
-                    <div>
-                        <p class="font-bold text-slate-800 dark:text-slate-100">{{ Auth::user()->name }}</p>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">{{ Auth::user()->email }}</p>
-                    </div>
-                </div>
-                <button onclick="toggleMobileMenu()" class="p-1.5 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined text-[24px]">close</span>
-                </button>
-            </div>
-
-            <!-- Scrollable Content -->
-            <div class="flex-1 overflow-y-auto">
+            <!-- Simplified Content -->
+            <div class="flex-1 overflow-y-auto pt-4">
                 <!-- Navigation Section -->
                 <div class="p-4">
                     <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-2">{{ __('nav.navigation') }}</p>
                     <nav class="flex flex-col gap-1">
-                        <a class="{{ request()->routeIs('dashboard') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('dashboard') }}" onclick="toggleMobileMenu()">
+                        <a class="{{ request()->routeIs('dashboard') ? 'bg-primary/10 text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('dashboard') }}" onclick="toggleMobileMenu()">
                             <span class="material-symbols-outlined text-[22px]">explore</span>
                             <span class="font-medium">{{ __('nav.explore') }}</span>
                         </a>
-                        <a class="{{ request()->routeIs('following') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('following') }}" onclick="toggleMobileMenu()">
+                        <a class="{{ request()->routeIs('following') ? 'bg-primary/10 text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('following') }}" onclick="toggleMobileMenu()">
                             <span class="material-symbols-outlined text-[22px]">favorite</span>
                             <span class="font-medium">{{ __('nav.following') }}</span>
                         </a>
-                        <a class="{{ request()->routeIs('saved') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('saved') }}" onclick="toggleMobileMenu()">
+                        <a class="{{ request()->routeIs('saved') ? 'bg-primary/10 text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('saved') }}" onclick="toggleMobileMenu()">
                             <span class="material-symbols-outlined text-[22px]">bookmark</span>
                             <span class="font-medium">{{ __('nav.saved') }}</span>
                         </a>
                         @if(Auth::user()->is_admin)
-                            <a class="{{ request()->routeIs('admin.*') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('admin.reported-tips') }}" onclick="toggleMobileMenu()">
+                            <a class="{{ request()->routeIs('admin.*') ? 'bg-primary/10 text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('admin.reported-tips') }}" onclick="toggleMobileMenu()">
                                 <span class="material-symbols-outlined text-[22px]">shield_person</span>
                                 <span class="font-medium">{{ __('nav.administration') }}</span>
                             </a>
                         @endif
-                        <a class="{{ request()->routeIs('profile') ? 'bg-primary/10 text-primary' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('profile') }}" onclick="toggleMobileMenu()">
-                            <span class="material-symbols-outlined text-[22px]">person</span>
-                            <span class="font-medium">{{ __('nav.profile') }}</span>
-                        </a>
                     </nav>
                 </div>
 
@@ -157,7 +139,6 @@
                                 <span class="material-symbols-outlined text-[22px]">translate</span>
                                 <span class="font-medium">{{ __('nav.language') }}</span>
                             </div>
-                            <span class="material-symbols-outlined text-slate-400">chevron_right</span>
                         </button>
 
                         <!-- Language Dropdown -->
@@ -176,14 +157,11 @@
                             </div>
                         </div>
 
-                        <!-- Theme Toggle -->
-                        <button onclick="window.ThemeManager.toggle(); event.stopPropagation();" class="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
+                        <!-- Theme Toggle (Icon/Text only) -->
+                        <button onclick="window.ThemeManager.toggle(); event.stopPropagation();" class="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
                             <div class="flex items-center gap-3">
                                 <span class="material-symbols-outlined text-[22px]" data-theme-icon>dark_mode</span>
                                 <span class="font-medium">{{ __('nav.dark_mode') }}</span>
-                            </div>
-                            <div class="w-12 h-6 bg-slate-300 dark:bg-primary rounded-full relative transition-colors">
-                                <div class="absolute top-1 left-1 dark:left-6 w-4 h-4 bg-white rounded-full shadow-md transition-all"></div>
                             </div>
                         </button>
                     </div>
@@ -195,13 +173,19 @@
                 <!-- Account Section -->
                 <div class="p-4">
                     <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 px-2">{{ __('nav.account') }}</p>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-red-600 dark:text-red-400 text-left">
-                            <span class="material-symbols-outlined text-[22px]">logout</span>
-                            <span class="font-medium">{{ __('nav.logout') }}</span>
-                        </button>
-                    </form>
+                    <div class="flex flex-col gap-1">
+                        <a class="{{ request()->routeIs('profile') ? 'bg-primary/10 text-primary font-bold' : 'text-slate-700 dark:text-slate-300' }} flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{{ route('profile') }}" onclick="toggleMobileMenu()">
+                            <span class="material-symbols-outlined text-[22px]">person</span>
+                            <span class="font-medium">{{ __('nav.profile') }}</span>
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-red-600 dark:text-red-400 text-left">
+                                <span class="material-symbols-outlined text-[22px]">logout</span>
+                                <span class="font-medium">{{ __('nav.logout') }}</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

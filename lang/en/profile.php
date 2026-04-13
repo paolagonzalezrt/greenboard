@@ -37,7 +37,7 @@ return [
     // Delete Account Section
     'advanced_options_title' => 'Advanced Options',
     'delete_account_title' => 'Delete Account',
-    'delete_account_warning' => 'Your account and all its contents will be permanently deleted. This action cannot be undone.'
+    'delete_account_warning' => 'Your account and all its contents will be permanently deleted. This action cannot be undone.',
     'delete_account_button' => 'Delete Account',
     'confirm_deletion' => 'Confirm Deletion',
     'delete_confirmation' => 'Are you sure you want to delete your account? This action is permanent and cannot be undone.',
