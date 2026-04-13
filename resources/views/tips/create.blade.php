@@ -3,20 +3,18 @@
 @section('title', 'Create Post - GreenBoard')
 
 @section('content')
-    <div class="max-w-3xl mx-auto">
+    <div class="w-full max-w-3xl mx-auto px-4 sm:px-0">
        
         <!-- Header -->
-        <div class="mb-8 sm:mb-10 text-center">
-            <div class="flex justify-center items-center gap-3 mb-4">
-                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight dark:text-background-light">{{ __('tips.create_title') }}</h1>
-            </div>
-            <p class="text-slate-600 dark:text-sort-border-dark text-base sm:text-lg">
+        <div class="mb-8 sm:mb-10 lg:mb-12 text-center">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-2">{{ __('tips.create_title') }}</h1>
+            <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
                 {{ __('tips.create_subtitle') }}
             </p>
         </div>
 
         <!-- Form -->
-        <form action="{{ route('tips.store') }}" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8">
+        <form action="{{ route('tips.store') }}" method="POST" enctype="multipart/form-data" class="px-0 py-6 sm:p-8">
             @csrf
 
             <!-- Category Selection -->
