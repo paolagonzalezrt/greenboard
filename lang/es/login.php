@@ -2,13 +2,13 @@
 
 return [
     'hero_title'    => 'Bienvenido de nuevo',
-    'hero_desc'     => 'Inicia sesión para continuar tu viaje sostenible y conectar con la comunidad.',
+    'hero_desc'     => 'Inicia sesión para conectar con la comunidad.',
     'form_title'    => 'Accede a tu cuenta',
-    'form_desc'     => 'Ingresa tus credenciales para acceder a tu panel.',
-    'email'         => 'Correo Electrónico',
+    'form_desc'     => 'Ingresa tus credenciales',
+    'email'         => 'Correo electrónico',
     'password'      => 'Contraseña',
     'forgot'        => '¿Olvidaste tu contraseña?',
-    'login_button'  => 'Entrar Ahora',
+    'login_button'  => 'Entrar ahora',
     'no_account'    => '¿No tienes cuenta?',
     'sign_up'       => 'Regístrate',
     'tap_login'     => 'Toca para entrar',

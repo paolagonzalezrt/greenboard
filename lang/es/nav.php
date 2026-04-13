@@ -13,8 +13,8 @@ return [
     'saved' => 'Guardados',
     'profile' => 'Perfil',
     'settings' => 'Configuración',
-    'logout' => 'Cerrar Sesión',
-    'login' => 'Iniciar Sesión',
+    'logout' => 'Cerrar sesión',
+    'login' => 'Iniciar sesión',
     'register' => 'Registrarse',
     'search' => 'Buscar',
     'menu' => 'Menú',
@@ -22,6 +22,6 @@ return [
     'explore' => 'Explorar',
     'administration' => 'Administración',
     'navigation' => 'Navegación',
-    'dark_mode' => 'Modo Oscuro',
+    'dark_mode' => 'Modo oscuro',
     'account' => 'Cuenta',
 ];

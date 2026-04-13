@@ -28,7 +28,7 @@ return [
     'followers' => 'Seguidores',
     'following' => 'Siguiendo',
     'profile' => 'Perfil',
-    'edit_profile' => 'Editar Perfil',
+    'edit_profile' => 'Editar perfil',
 
     /*
     |--------------------------------------------------------------------------
@@ -37,8 +37,8 @@ return [
     */
     'categories' => 'Categorías',
     'category' => 'Categoría',
-    'all_categories' => 'Todas las Categorías',
-    'select_category' => 'Seleccionar Categoría',
+    'all_categories' => 'Todas las categorías',
+    'select_category' => 'Seleccionar categoría',
 
     /*
     |--------------------------------------------------------------------------
@@ -83,8 +83,8 @@ return [
     'active_filters' => 'Filtros activos:',
     'clear_all' => 'Limpiar todo',
     'view_all' => 'Ver todo',
-    'join_title' => 'Comienza Tu Viaje Sostenible Hoy',
-    'join_button' => 'Únete al Movimiento',
+    'join_title' => 'Únete al movimiento',
+    'join_button' => 'Regístrate',
     'post_comment' => 'Publicar comentario',
     'add_comment' => 'Agregar un comentario...',
     'login_to_comment' => 'para dejar un comentario',

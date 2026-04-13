@@ -37,7 +37,7 @@ return [
     // Eliminar Cuenta
     'advanced_options_title' => 'Opciones avanzadas',
     'delete_account_title' => 'Eliminar cuenta',
-    'delete_account_warning' => 'Tu cuenta y todo su contenido se eliminarán permanentemente. Esta acción no se puede deshacer.',
+    'delete_account_warning' => 'Tu cuenta y todo su contenido se eliminarán permanentemente.',
     'delete_account_button' => 'Eliminar cuenta',
     'confirm_deletion' => 'Confirmar eliminación',
     'delete_confirmation' => '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es permanente y no se puede deshacer.',

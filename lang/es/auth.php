@@ -6,15 +6,15 @@ return [
     | Autenticación
     |--------------------------------------------------------------------------
     */
-    'login' => 'Iniciar Sesión',
+    'login' => 'Iniciar sesión',
     'register' => 'Registrarse',
-    'logout' => 'Cerrar Sesión',
-    'email' => 'Correo Electrónico',
+    'logout' => 'Cerrar sesión',
+    'email' => 'Correo electrónico',
     'password' => 'Contraseña',
-    'password_confirmation' => 'Confirmar Contraseña',
+    'password_confirmation' => 'Confirmar contraseña',
     'remember_me' => 'Recordarme',
     'forgot_password' => '¿Olvidaste tu contraseña?',
-    'reset_password' => 'Restablecer Contraseña',
+    'reset_password' => 'Restablecer contraseña',
     'send_reset_link' => 'Enviar enlace de restablecimiento',
     'name' => 'Nombre',
     'username' => 'Nombre de usuario',
