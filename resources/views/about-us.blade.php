@@ -4,11 +4,11 @@
 
 @section('content')
 <!-- Hero Section -->
-<header class="relative w-full pt-16 pb-24 lg:pt-32 lg:pb-40">
+<header class="relative w-full pt-12 pb-24 lg:pt-6 lg:pb-40">
 <div class="max-w-7xl mx-auto px-6 relative z-10">
 <div class="grid lg:grid-cols-12 gap-12 items-center">
 <div class="lg:col-span-7">
-            <h2 class="text-lg font-bold text-primary uppercase tracking-[0.3em] mb-6">{{ __('pages.about_title') }}</h2>
+            <!-- <h2 class="text-lg font-bold text-primary uppercase tracking-[0.3em] mb-6">{{ __('pages.about_title') }}</h2> -->
             <h1 class="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter mb-8">
                 {{ __('pages.hero_title_part1') }} <span class="text-primary italic">{{ __('pages.hero_title_part2') }}</span> {{ __('pages.hero_title_part3') }}
             </h1>
@@ -99,11 +99,11 @@
                 {{ __('pages.legacy_description') }}
             </p>
 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
+                <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-3 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
                     {{ __('pages.explore_initiatives') }}
                 </a>
                 @guest
-                    <a href="{{ route('register') }}" class="bg-primary text-background-dark px-10 py-4 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm text-center">
+                    <a href="{{ route('register') }}" class="bg-primary text-background-dark px-10 py-3 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm text-center">
                         {{ __('pages.create_profile') }}
                     </a>
                 @endguest

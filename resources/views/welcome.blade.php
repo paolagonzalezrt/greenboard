@@ -174,9 +174,9 @@
 
     {{-- CTA Section (Only for guests) --}}
     @guest
-        <section class="py-16 lg:py-28 bg-background-light dark:bg-background-dark relative overflow-hidden w-full mb-4">
+        <section class="py-12 lg:py-20 bg-background-light dark:bg-background-dark relative overflow-hidden w-full mb-4">
             <div class="max-w-7xl mx-auto px-6 relative z-10">
-                <div class="w-full rounded-[3rem] p-12 lg:p-20 relative overflow-hidden flex flex-col items-center text-center border border-primary/20 bg-primary/5">
+                <div class="w-full rounded-[3rem] p-10 lg:p-16 relative overflow-hidden flex flex-col items-center text-center border border-primary/20 bg-primary/5">
                     <!-- Animated green glows -->
                     <style>
                         @keyframes welcomeCtaFloat1 {
@@ -206,10 +206,10 @@
                             Contribuye al desarrollo de soluciones sostenibles dentro de tu entorno y conecta con una comunidad consciente
                         </p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="{{ route('about-us') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
+                            <a href="{{ route('about-us') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-3 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
                                 Conoce más
                             </a>
-                            <a href="{{ route('register') }}" class="bg-primary text-background-dark px-10 py-4 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm text-center">
+                            <a href="{{ route('register') }}" class="bg-primary text-background-dark px-10 py-3 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm text-center">
                                 {{ __('content.join_button') }}
                             </a>
                         </div>
