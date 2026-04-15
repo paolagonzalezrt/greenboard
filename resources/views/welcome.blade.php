@@ -174,15 +174,51 @@
 
     {{-- CTA Section (Only for guests) --}}
     @guest
-        <div class="w-full max-w-4xl mx-auto bg-white dark:bg-custom-dark-button p-8 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl shadow-2xl border border-primary/20 text-center relative overflow-hidden mb-12 sm:mb-16">
-            <div class="relative z-10">
-                <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-6 sm:mb-8 tracking-tight px-2">{{ __('content.join_title') }}</h3>
-                <a href="{{ route('register') }}" class="inline-block bg-primary text-background-dark px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-bold text-base sm:text-lg hover:brightness-105 hover:scale-105 hover:shadow-[0_0_30px_rgba(19,236,91,0.4)] shadow-lg shadow-primary/30 transition-all duration-300">
-                    {{ __('content.join_button') }}
-                </a>
+        <section class="py-16 lg:py-28 bg-background-light dark:bg-background-dark relative overflow-hidden w-full mb-4">
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="w-full rounded-[3rem] p-12 lg:p-20 relative overflow-hidden flex flex-col items-center text-center border border-primary/20 bg-primary/5">
+                    <!-- Animated green glows -->
+                    <style>
+                        @keyframes welcomeCtaFloat1 {
+                            0%, 100% { transform: translate(0px, 0px); }
+                            33% { transform: translate(40px, -50px); }
+                            66% { transform: translate(-30px, -30px); }
+                        }
+                        @keyframes welcomeCtaFloat2 {
+                            0%, 100% { transform: translate(0px, 0px); }
+                            33% { transform: translate(-50px, 40px); }
+                            66% { transform: translate(30px, 20px); }
+                        }
+                        @keyframes welcomeCtaPulse {
+                            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+                            50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.7; }
+                        }
+                    </style>
+                    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                        <div class="absolute -top-16 -left-16 w-72 h-72 bg-primary/10 rounded-full blur-[90px]" style="animation: welcomeCtaFloat1 5s ease-in-out infinite;"></div>
+                        <div class="absolute -bottom-16 -right-16 w-64 h-64 bg-primary/8 rounded-full blur-[90px]" style="animation: welcomeCtaFloat2 6s ease-in-out infinite;"></div>
+                        <div class="absolute top-1/2 left-1/2 w-40 h-40 bg-primary/6 rounded-full blur-[70px]" style="animation: welcomeCtaPulse 3s ease-in-out infinite;"></div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <h2 class="text-2xl md:text-5xl font-black mb-6 leading-tight text-slate-900 dark:text-white">{{ __('content.join_title') }}</h2>
+                        <p class="text-sm md:text-lg font-medium mb-10 max-w-xl mx-auto leading-relaxed text-slate-600 dark:text-slate-400">
+                            Contribuye al desarrollo de soluciones sostenibles dentro de tu entorno y conecta con una comunidad consciente
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="{{ route('about-us') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
+                                Conoce más
+                            </a>
+                            <a href="{{ route('register') }}" class="bg-primary text-background-dark px-10 py-4 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm text-center">
+                                {{ __('content.join_button') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     @endguest
+
 
 <script>
 function toggleSortDropdown() {

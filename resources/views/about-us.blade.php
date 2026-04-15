@@ -4,23 +4,17 @@
 
 @section('content')
 <!-- Hero Section -->
-<header class="relative  pt-16 pb-24 lg:pt-32 lg:pb-40">
+<header class="relative w-full pt-16 pb-24 lg:pt-32 lg:pb-40">
 <div class="max-w-7xl mx-auto px-6 relative z-10">
 <div class="grid lg:grid-cols-12 gap-12 items-center">
 <div class="lg:col-span-7">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-6">
-<span class="relative flex h-2 w-2">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-</span>
-                    {{ __('pages.hero_badge') }}
-                </div>
-<h1 class="text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter mb-8">
-                    {{ __('pages.hero_title_part1') }} <span class="text-primary italic">{{ __('pages.hero_title_part2') }}</span> {{ __('pages.hero_title_part3') }}.
-                </h1>
-<p class="text-xl text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
-                    {{ __('pages.hero_description') }}
-                </p>
+            <h2 class="text-lg font-bold text-primary uppercase tracking-[0.3em] mb-6">{{ __('pages.about_title') }}</h2>
+            <h1 class="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter mb-8">
+                {{ __('pages.hero_title_part1') }} <span class="text-primary italic">{{ __('pages.hero_title_part2') }}</span> {{ __('pages.hero_title_part3') }}
+            </h1>
+            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+                {{ __('pages.hero_description') }}
+            </p>
 </div>
 <div class="lg:col-span-5 relative">
 <div class="organic-shape bg-primary/20 absolute -inset-4 blur-3xl"></div>
@@ -37,7 +31,7 @@
 </div>
 </header>
 <!-- Mission Section -->
-<section class="py-24 bg-background-light dark:bg-background-dark relative overflow-hidden">
+<section class="py-24 bg-background-light dark:bg-background-dark relative overflow-hidden w-full">
 <div class="max-w-7xl mx-auto px-6 relative z-10">
 <div class="text-center max-w-3xl mx-auto mb-20">
 <h2 class="text-sm font-bold text-primary uppercase tracking-[0.2em] mb-4">{{ __('pages.our_mission') }}</h2>
@@ -72,26 +66,50 @@
 </div>
 </section>
 <!-- Call to Action -->
-<section class="px-6 py-20 lg:py-32 bg-background-light dark:bg-background-dark">
-<div class="max-w-5xl mx-auto rounded-[3rem] p-12 lg:p-20 relative overflow-hidden flex flex-col items-center text-center border border-primary/20 bg-primary/5">
+<section class="py-12 lg:py-20 bg-background-light dark:bg-background-dark relative overflow-hidden w-full">
+<div class="max-w-7xl mx-auto px-6 relative z-10">
+<div class="w-full rounded-[3rem] p-10 lg:p-16 relative overflow-hidden flex flex-col items-center text-center border border-primary/20 bg-primary/5">
+<!-- Animated green glows -->
+<style>
+    @keyframes ctaFloat1 {
+        0%, 100% { transform: translate(0px, 0px); }
+        33% { transform: translate(40px, -50px); }
+        66% { transform: translate(-30px, -30px); }
+    }
+    @keyframes ctaFloat2 {
+        0%, 100% { transform: translate(0px, 0px); }
+        33% { transform: translate(-50px, 40px); }
+        66% { transform: translate(30px, 20px); }
+    }
+    @keyframes ctaPulse {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+        50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.7; }
+    }
+</style>
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute -top-16 -left-16 w-72 h-72 bg-primary/10 rounded-full blur-[90px]" style="animation: ctaFloat1 5s ease-in-out infinite;"></div>
+    <div class="absolute -bottom-16 -right-16 w-64 h-64 bg-primary/8 rounded-full blur-[90px]" style="animation: ctaFloat2 6s ease-in-out infinite;"></div>
+    <div class="absolute top-1/2 left-1/2 w-40 h-40 bg-primary/6 rounded-full blur-[70px]" style="animation: ctaPulse 3s ease-in-out infinite;"></div>
+</div>
 <div class="relative z-10">
-<h2 class="text-4xl md:text-6xl font-black mb-6 leading-tight text-slate-900 dark:text-white">
+<h2 class="text-2xl md:text-5xl font-black mb-6 leading-tight text-slate-900 dark:text-white">
                 {{ __('pages.ready_legacy') }}
 </h2>
-<p class="text-lg font-medium mb-10 max-w-xl mx-auto leading-relaxed text-slate-600 dark:text-slate-400">
+<p class="text-sm md:text-lg font-medium mb-10 max-w-xl mx-auto leading-relaxed text-slate-600 dark:text-slate-400">
                 {{ __('pages.legacy_description') }}
             </p>
 <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
+                    {{ __('pages.explore_initiatives') }}
+                </a>
                 @guest
                     <a href="{{ route('register') }}" class="bg-primary text-background-dark px-10 py-4 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm text-center">
                         {{ __('pages.create_profile') }}
                     </a>
                 @endguest
-                <a href="{{ route('dashboard') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
-                    {{ __('pages.explore_initiatives') }}
-                </a>
             </div>
 </div>
 </div>
 </section>
-@endsection
+
+ @endsection 

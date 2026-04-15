@@ -74,7 +74,7 @@ return [
     'community_insights' => 'Aportes para un futuro sostenible',
     'browse_categories' => 'Explora por categorías',
     'browse_title' => 'Descubre nuevas ideas',
-    'browse_description' => 'Inspírate con consejos de la comunidad.',
+    'browse_description' => 'Inspírate con consejos de la comunidad',
     'featured_tips' => 'Consejos destacados',
     'discover_sustainable' => 'Descubre nuevos tips',
     'sort_by' => 'Ordenar por:',
