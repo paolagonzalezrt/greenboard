@@ -3,8 +3,7 @@
 @section('content')
     <!-- Hero Section -->
     <div class="text-center mb-12 sm:mb-16 lg:mb-20 w-full px-2 sm:px-4">
-        <span class="inline-block px-3 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6 lg:mb-8 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 rounded-full">{{ __('content.community_insights') }}</span>
-        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 sm:mb-6 lg:mb-8 bg-gradient-to-br from-slate-900 to-slate-600 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent px-2">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-2 sm:mb-4 lg:mb-6 text-slate-900 dark:text-white px-2">
             {{ __('content.hero_title') }}
         </h1>
         <p class="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-6 sm:mb-8 lg:mb-12 px-4">
