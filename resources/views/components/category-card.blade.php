@@ -15,9 +15,13 @@
     $bgColor = $colorClasses[$color] ?? $colorClasses['blue'];
 
     $params = request()->all();
-    $params['category'] = $slug ?? $title;
+    if ($active) {
+        unset($params['category']);
+    } else {
+        $params['category'] = $slug ?? $title;
+    }
     unset($params['page']); 
-    $categoryUrl = request()->url() . '?' . http_build_query($params);
+    $categoryUrl = request()->url() . (empty($params) ? '' : '?' . http_build_query($params));
 @endphp
 
 <a href="{{ $categoryUrl }}" 

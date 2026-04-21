@@ -63,14 +63,8 @@
     <section class="mb-12 sm:mb-14 lg:mb-16 w-full">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
             <h2 class="text-xl sm:text-2xl font-bold">{{ __('content.browse_categories') }}</h2>
-            @if($category ?? false)
-                <a class="text-primary text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all" href="{{ route('dashboard') }}?sort={{ $sortBy ?? 'desc' }}{{ ($search ?? false) ? '&search=' . $search : '' }}">
-                    View all 
-                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                </a>
-            @endif
         </div>
-        <div class="overflow-x-auto sm:overflow-x-visible pb-3 sm:pb-0 -mx-4 sm:-mx-4 lg:-mx-8 px-4 sm:px-4 lg:px-8">
+        <div class="overflow-x-auto sm:overflow-x-visible pt-2 -mt-2 sm:pt-0 sm:mt-0 pb-3 sm:pb-0 -mx-4 sm:-mx-4 lg:-mx-8 px-4 sm:px-4 lg:px-8">
             <div class="flex gap-2 sm:gap-4 lg:gap-6 min-w-min sm:w-full sm:justify-between overflow-visible">
                 @php
                     $categoryKeys = [
