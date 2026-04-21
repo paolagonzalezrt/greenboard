@@ -25,7 +25,7 @@
 @endphp
 
 <a href="{{ $categoryUrl }}" 
-   class="group cursor-pointer flex flex-col items-center gap-3 transition-all duration-300 flex-shrink-0 sm:flex-1 {{ $active ? 'opacity-100 scale-110' : 'opacity-80 hover:opacity-100' }}">
+   class="group cursor-pointer flex flex-col items-center gap-3 transition-all duration-300 flex-shrink-0 min-w-[72px] sm:min-w-0 sm:flex-1 {{ $active ? 'opacity-100 scale-110' : 'opacity-80 hover:opacity-100' }}">
 
     <div class="size-16 md:size-20 rounded-full {{ $bgColor }} flex items-center justify-center text-white group-hover:scale-110 group-hover:shadow-lg transition-all origin-center">
         <span class="material-symbols-outlined text-2xl md:text-3xl">{{ $icon }}</span>

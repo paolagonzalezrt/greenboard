@@ -32,19 +32,19 @@
                 <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ __('content.active_filters') }}</span>
 
                 @if($search ?? false)
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-custom-dark-input border border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-bold shadow-sm">
                         <span>{{ $search }}</span>
-                        <a href="{{ route('home') }}?sort={{ $sortBy ?? 'desc' }}{{ ($category ?? false) ? '&category=' . $category : '' }}" class="hover:scale-110 transition-transform">
-                            <span class="material-symbols-outlined text-[14px]">close</span>
+                        <a href="{{ route('home') }}?sort={{ $sortBy ?? 'desc' }}{{ ($category ?? false) ? '&category=' . $category : '' }}" class="hover:scale-110 transition-transform flex items-center">
+                            <span class="material-symbols-outlined text-[16px]">close</span>
                         </a>
                     </div>
                 @endif
 
                 @if($category ?? false)
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-semibold">
-                        <span>{{ $category }}</span>
-                        <a href="{{ route('home') }}?sort={{ $sortBy ?? 'desc' }}{{ ($search ?? false) ? '&search=' . $search : '' }}" class="hover:scale-110 transition-transform">
-                            <span class="material-symbols-outlined text-[14px]">close</span>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-custom-dark-input border border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-bold shadow-sm">
+                        <span>{{ __('categories.' . $category) }}</span>
+                        <a href="{{ route('home') }}?sort={{ $sortBy ?? 'desc' }}{{ ($search ?? false) ? '&search=' . $search : '' }}" class="hover:scale-110 transition-transform flex items-center">
+                            <span class="material-symbols-outlined text-[16px]">close</span>
                         </a>
                     </div>
                 @endif
@@ -65,7 +65,7 @@
             <h2 class="text-xl sm:text-2xl font-bold">{{ __('content.browse_categories') }}</h2>
         </div>
         <div class="overflow-x-auto sm:overflow-x-visible pt-2 -mt-2 sm:pt-0 sm:mt-0 pb-3 sm:pb-0 -mx-4 sm:-mx-4 lg:-mx-8 px-4 sm:px-4 lg:px-8">
-            <div class="flex gap-2 sm:gap-4 lg:gap-6 min-w-min sm:w-full sm:justify-between overflow-visible">
+            <div class="flex gap-4 sm:gap-4 lg:gap-6 min-w-min sm:w-full sm:justify-between overflow-visible">
                 @php
                     $categoryKeys = [
                         ['key' => 'alimentacion', 'icon' => 'restaurant', 'color' => 'orange'],
