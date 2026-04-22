@@ -66,9 +66,8 @@
 </div>
 </section>
 <!-- Call to Action -->
-<section class="py-12 lg:py-20 bg-background-light dark:bg-background-dark relative overflow-hidden w-full">
-<div class="max-w-7xl mx-auto px-6 relative z-10">
-<div class="w-full rounded-[3rem] p-10 lg:p-16 relative overflow-hidden flex flex-col items-center text-center border border-primary/20 bg-primary/5">
+<section class="py-12 lg:py-20 relative overflow-hidden w-full">
+    <div class="w-full rounded-3xl p-10 lg:p-16 relative overflow-hidden flex flex-col items-center text-center border border-primary/20 bg-primary/5 shadow-xl shadow-slate-200/50 dark:shadow-none z-10">
 <!-- Animated green glows -->
 <style>
     @keyframes ctaFloat1 {
@@ -92,23 +91,22 @@
     <div class="absolute top-1/2 left-1/2 w-40 h-40 bg-primary/6 rounded-full blur-[70px]" style="animation: ctaPulse 3s ease-in-out infinite;"></div>
 </div>
 <div class="relative z-10">
-<h2 class="text-2xl md:text-5xl font-black mb-6 leading-tight text-slate-900 dark:text-white">
+<h2 class="text-2xl md:text-5xl font-black mb-3 leading-tight text-slate-900 dark:text-white">
                 {{ __('pages.ready_legacy') }}
 </h2>
-<p class="text-sm md:text-lg font-medium mb-10 max-w-xl mx-auto leading-relaxed text-slate-600 dark:text-slate-400">
+<p class="text-sm md:text-lg font-medium mb-6 max-w-xl mx-auto leading-relaxed text-slate-600 dark:text-slate-400">
                 {{ __('pages.legacy_description') }}
             </p>
-<div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-3 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
+<div class="flex flex-row gap-4 justify-center items-center">
+                <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-6 py-2.5 rounded-full font-bold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
                     {{ __('pages.explore_initiatives') }}
                 </a>
                 @guest
-                    <a href="{{ route('register') }}" class="bg-primary text-background-dark px-10 py-3 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm text-center">
+                    <a href="{{ route('register') }}" class="bg-primary text-background-dark px-6 py-2.5 rounded-full font-bold text-sm hover:bg-primary/90 transition-all shadow-sm text-center">
                         {{ __('pages.create_profile') }}
                     </a>
                 @endguest
             </div>
-</div>
 </div>
 </section>
 

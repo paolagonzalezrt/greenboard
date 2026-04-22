@@ -167,48 +167,45 @@
 
     {{-- CTA Section (Only for guests) --}}
     @guest
-        <section class="py-12 lg:py-20 bg-background-light dark:bg-background-dark relative overflow-hidden w-full mb-4">
-            <div class="max-w-7xl mx-auto px-6 relative z-10">
-                <div class="w-full rounded-[3rem] p-10 lg:p-16 relative overflow-hidden flex flex-col items-center text-center border border-primary/20 bg-primary/5">
-                    <!-- Animated green glows -->
-                    <style>
-                        @keyframes welcomeCtaFloat1 {
-                            0%, 100% { transform: translate(0px, 0px); }
-                            33% { transform: translate(40px, -50px); }
-                            66% { transform: translate(-30px, -30px); }
-                        }
-                        @keyframes welcomeCtaFloat2 {
-                            0%, 100% { transform: translate(0px, 0px); }
-                            33% { transform: translate(-50px, 40px); }
-                            66% { transform: translate(30px, 20px); }
-                        }
-                        @keyframes welcomeCtaPulse {
-                            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
-                            50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.7; }
-                        }
-                    </style>
-                    <div class="absolute inset-0 pointer-events-none overflow-hidden">
-                        <div class="absolute -top-16 -left-16 w-72 h-72 bg-primary/10 rounded-full blur-[90px]" style="animation: welcomeCtaFloat1 5s ease-in-out infinite;"></div>
-                        <div class="absolute -bottom-16 -right-16 w-64 h-64 bg-primary/8 rounded-full blur-[90px]" style="animation: welcomeCtaFloat2 6s ease-in-out infinite;"></div>
-                        <div class="absolute top-1/2 left-1/2 w-40 h-40 bg-primary/6 rounded-full blur-[70px]" style="animation: welcomeCtaPulse 3s ease-in-out infinite;"></div>
-                    </div>
+        <section class="py-12 lg:py-20 relative overflow-hidden w-full mb-4">
+            <div class="w-full rounded-3xl p-10 lg:p-16 relative overflow-hidden flex flex-col items-center text-center border border-primary/20 bg-primary/5 shadow-xl shadow-slate-200/50 dark:shadow-none z-10">
+                <!-- Animated green glows -->
+                <style>
+                    @keyframes welcomeCtaFloat1 {
+                        0%, 100% { transform: translate(0px, 0px); }
+                        33% { transform: translate(40px, -50px); }
+                        66% { transform: translate(-30px, -30px); }
+                    }
+                    @keyframes welcomeCtaFloat2 {
+                        0%, 100% { transform: translate(0px, 0px); }
+                        33% { transform: translate(-50px, 40px); }
+                        66% { transform: translate(30px, 20px); }
+                    }
+                    @keyframes welcomeCtaPulse {
+                        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+                        50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.7; }
+                    }
+                </style>
+                <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div class="absolute -top-16 -left-16 w-72 h-72 bg-primary/10 rounded-full blur-[90px]" style="animation: welcomeCtaFloat1 5s ease-in-out infinite;"></div>
+                    <div class="absolute -bottom-16 -right-16 w-64 h-64 bg-primary/8 rounded-full blur-[90px]" style="animation: welcomeCtaFloat2 6s ease-in-out infinite;"></div>
+                    <div class="absolute top-1/2 left-1/2 w-40 h-40 bg-primary/6 rounded-full blur-[70px]" style="animation: welcomeCtaPulse 3s ease-in-out infinite;"></div>
+                </div>
 
-                    <div class="relative z-10">
-                        <h2 class="text-2xl md:text-5xl font-black mb-6 leading-tight text-slate-900 dark:text-white">{{ __('content.join_title') }}</h2>
-                        <p class="text-sm md:text-lg font-medium mb-10 max-w-xl mx-auto leading-relaxed text-slate-600 dark:text-slate-400">
-                            Contribuye al desarrollo de soluciones sostenibles dentro de tu entorno y conecta con una comunidad consciente
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="{{ route('about-us') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-10 py-3 rounded-full font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
-                                Conoce más
-                            </a>
-                            <a href="{{ route('register') }}" class="bg-primary text-background-dark px-10 py-3 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-sm text-center">
-                                {{ __('content.join_button') }}
-                            </a>
-                        </div>
+                <div class="relative z-10">
+                    <h2 class="text-2xl md:text-5xl font-black mb-3 leading-tight text-slate-900 dark:text-white">{{ __('content.join_title') }}</h2>
+                    <p class="text-sm md:text-lg font-medium mb-6 max-w-xl mx-auto leading-relaxed text-slate-600 dark:text-slate-400">
+                        Contribuye al desarrollo de soluciones sostenibles dentro de tu entorno y conecta con una comunidad consciente
+                    </p>
+                    <div class="flex flex-row gap-4 justify-center items-center">
+                        <a href="{{ route('about-us') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-6 py-2.5 rounded-full font-bold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
+                            Conoce más
+                        </a>
+                        <a href="{{ route('register') }}" class="bg-primary text-background-dark px-6 py-2.5 rounded-full font-bold text-sm hover:bg-primary/90 transition-all shadow-sm text-center">
+                            {{ __('content.join_button') }}
+                        </a>
                     </div>
                 </div>
-            </div>
         </section>
     @endguest
 
