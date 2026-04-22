@@ -84,6 +84,8 @@ return [
     'clear_all' => 'Limpiar todo',
     'view_all' => 'Ver todo',
     'join_title' => 'Únete al movimiento',
+    'join_description' => 'Contribuye al desarrollo de soluciones sostenibles dentro de tu entorno',
+    'learn_more' => 'Conoce más',
     'join_button' => 'Regístrate',
     'post_comment' => 'Publicar comentario',
     'add_comment' => 'Agregar un comentario...',

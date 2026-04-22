@@ -84,6 +84,8 @@ return [
     'clear_all' => 'Alles löschen',
     'view_all' => 'Alles anzeigen',
     'join_title' => 'Beginne deine nachhaltige Reise heute',
+    'join_description' => 'Tragen Sie zur Entwicklung nachhaltiger Lösungen in Ihrer Umgebung bei',
+    'learn_more' => 'Mehr erfahren',
     'join_button' => 'Treten Sie der Bewegung bei',
     'post_comment' => 'Kommentar posten',
     'add_comment' => 'Einen Kommentar hinzufügen...',

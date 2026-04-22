@@ -20,7 +20,7 @@ return [
     'action_oriented' => 'Orientado a la acción',
     'action_description' => 'Ofrecemos herramientas que permiten compartir iniciativas ambientales de forma eficiente.',
     'ready_legacy' => 'Sé parte del cambio',
-    'legacy_description' => 'Contribuye al desarrollo de soluciones sostenibles dentro de tu entorno y conecta con una comunidad consciente',
+    'legacy_description' => 'Contribuye al desarrollo de soluciones sostenibles dentro de tu entorno',
     'create_profile' => 'Crear perfil',
     'explore_initiatives' => 'Explorar iniciativas',
     'our_values' => 'Nuestros valores',

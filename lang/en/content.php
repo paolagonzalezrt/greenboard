@@ -84,6 +84,8 @@ return [
     'clear_all' => 'Clear all',
     'view_all' => 'View all',
     'join_title' => 'Start Your Sustainable Journey Today',
+    'join_description' => 'Contribute to the development of sustainable solutions within your environment',
+    'learn_more' => 'Learn more',
     'join_button' => 'Join the Movement',
     'post_comment' => 'Post Comment',
     'add_comment' => 'Add a comment...',

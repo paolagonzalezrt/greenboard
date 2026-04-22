@@ -195,13 +195,13 @@
                 <div class="relative z-10">
                     <h2 class="text-2xl md:text-5xl font-black mb-3 leading-tight text-slate-900 dark:text-white">{{ __('content.join_title') }}</h2>
                     <p class="text-sm md:text-lg font-medium mb-6 max-w-xl mx-auto leading-relaxed text-slate-600 dark:text-slate-400">
-                        Contribuye al desarrollo de soluciones sostenibles dentro de tu entorno y conecta con una comunidad consciente
+                        {{ __('content.join_description') }}
                     </p>
-                    <div class="flex flex-row gap-4 justify-center items-center">
-                        <a href="{{ route('about-us') }}" class="bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-6 py-2.5 rounded-full font-bold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
-                            Conoce más
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <a href="{{ route('about-us') }}" class="w-full max-w-[240px] sm:w-auto bg-transparent text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600 px-6 py-2.5 rounded-full font-bold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center">
+                            {{ __('content.learn_more') }}
                         </a>
-                        <a href="{{ route('register') }}" class="bg-primary text-background-dark px-6 py-2.5 rounded-full font-bold text-sm hover:bg-primary/90 transition-all shadow-sm text-center">
+                        <a href="{{ route('register') }}" class="w-full max-w-[240px] sm:w-auto bg-primary text-background-dark px-6 py-2.5 rounded-full font-bold text-sm hover:bg-primary/90 transition-all shadow-sm text-center">
                             {{ __('content.join_button') }}
                         </a>
                     </div>
