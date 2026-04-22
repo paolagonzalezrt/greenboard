@@ -22,7 +22,7 @@
                 <label for="category" class="block text-sm font-bold text-slate-700 dark:text-background-light mb-3">
                     {{ __('tips.category') }} <span class="text-red-500">*</span>
                 </label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                     @php
                         $categoryKeys = [
                             ['key' => 'alimentacion', 'icon' => 'restaurant', 'color' => 'orange'],
@@ -137,22 +137,18 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-             <a 
+            <div class="flex flex-row gap-3 sm:gap-4 justify-end items-center w-full">
+                <a 
                     href="{{ route('dashboard') }}"
-                    class="px-6 py-4 border-2 border-slate-300 dark:border-custom-gray-border text-slate-700 dark:text-background-light font-bold rounded-full hover:bg-slate-100 dark:hover:bg-custom-dark-button transition-all flex items-center justify-center gap-2"
+                    class="flex-1 sm:flex-none sm:w-auto px-6 sm:px-10 py-3 border-2 border-slate-300 dark:border-custom-gray-border text-slate-700 dark:text-background-light font-bold rounded-full hover:bg-slate-100 dark:hover:bg-custom-dark-button transition-all flex items-center justify-center gap-2 text-sm"
                 >
-                    
                     <span>{{ __('tips.cancel') }}</span>
-                    
                 </a>    
-            <button 
+                <button 
                     type="submit"
-                    class="flex-1 px-6 py-4 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2"
+                    class="flex-1 sm:flex-none sm:w-auto px-8 sm:px-12 py-3 bg-primary text-background-dark font-bold rounded-full hover:brightness-105 shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2 text-sm"
                 >
-                    
                     <span>{{ __('tips.publish') }}</span>
-                    
                 </button>
                 
             </div>
