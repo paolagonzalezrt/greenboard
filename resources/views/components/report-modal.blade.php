@@ -66,7 +66,7 @@
                 </button>
                 <button 
                     type="submit" 
-                    class="px-6 py-2 bg-red-500 text-white font-bold text-sm rounded-full hover:bg-red-600 transition-colors shadow-lg shadow-red-500/20"
+                    class="px-6 py-2 bg-red-500 text-white font-bold text-sm rounded-full hover:bg-red-600 transition-colors shadow-lg shadow-red-500/20 flex items-center justify-center gap-2 min-w-[120px] whitespace-nowrap"
                 >
                     {{ __('buttons.send') }}
                 </button>

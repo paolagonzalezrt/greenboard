@@ -557,21 +557,21 @@
         // Show notification
         function showNotification(message, type = 'success') {
             const bgColor = type === 'success' 
-                ? 'bg-green-100 dark:bg-green-900/30' 
-                : 'bg-red-100 dark:bg-red-900/30';
+                ? 'bg-green-50/95 dark:bg-green-900/90' 
+                : 'bg-red-50/95 dark:bg-red-900/90';
             
             const borderColor = type === 'success' 
                 ? 'border-green-500' 
                 : 'border-red-500';
             
             const textColor = type === 'success' 
-                ? 'text-green-700 dark:text-green-400' 
-                : 'text-red-700 dark:text-red-400';
+                ? 'text-green-700 dark:text-green-300' 
+                : 'text-red-700 dark:text-red-300';
             
             const icon = type === 'success' ? 'check_circle' : 'error';
 
             const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 p-4 border rounded-xl flex items-center gap-3 ${bgColor} ${borderColor} ${textColor} shadow-lg z-[110] max-w-md animate-slide-in`;
+            notification.className = `fixed top-4 right-4 p-4 border rounded-xl flex items-center gap-3 ${bgColor} ${borderColor} ${textColor} shadow-2xl z-[110] max-w-md animate-slide-in backdrop-blur-md`;
             notification.innerHTML = `
                 <span class="material-symbols-outlined">${icon}</span>
                 <span class="font-semibold">${message}</span>

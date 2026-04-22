@@ -109,7 +109,7 @@
                             </div>
 
                             <!-- Action Buttons -->
-                            <div class="p-6 border-t-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                            <div class="p-6 bg-slate-50 dark:bg-slate-900/50">
                                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
                                     <a href="{{ route('tips.show', $tip['id']) }}" target="_blank" class="w-full sm:w-auto px-5 py-2.5 bg-blue-500 text-white text-sm font-bold rounded-full hover:bg-blue-600 transition-colors text-center">
                                         {{ __('admin.view_full_post') }}
@@ -118,7 +118,7 @@
                                         <form action="{{ route('admin.tips.dismiss-all', $tip['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="confirmAction(event, this, 'confirm-dismiss-modal')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="w-full px-5 py-2.5 bg-green-500 text-white text-sm font-bold rounded-full hover:bg-green-600 transition-colors">
+                                            <button type="submit" class="w-full px-5 py-2.5 bg-slate-500 text-white text-sm font-bold rounded-full hover:bg-slate-600 transition-colors">
                                                 {{ __('admin.discard_report') }}
                                             </button>
                                         </form>
@@ -211,7 +211,7 @@
                             </div>
 
                             <!-- Action Buttons -->
-                            <div class="p-6 border-t-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                            <div class="p-6 bg-slate-50 dark:bg-slate-900/50">
                                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
                                     <a href="{{ route('tips.show', $comment['tip_id']) }}#comment-{{ $comment['id'] }}" target="_blank" class="w-full sm:w-auto px-5 py-2.5 bg-blue-500 text-white text-sm font-bold rounded-full hover:bg-blue-600 transition-colors text-center">
                                         {{ __('admin.view_comment') }}
@@ -220,7 +220,7 @@
                                         <form action="{{ route('admin.comments.dismiss-all', $comment['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="confirmAction(event, this, 'confirm-dismiss-modal')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="w-full px-5 py-2.5 bg-green-500 text-white text-sm font-bold rounded-full hover:bg-green-600 transition-colors">
+                                            <button type="submit" class="w-full px-5 py-2.5 bg-slate-500 text-white text-sm font-bold rounded-full hover:bg-slate-600 transition-colors">
                                                 {{ __('admin.discard_report') }}
                                             </button>
                                         </form>
