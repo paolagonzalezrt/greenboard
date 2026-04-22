@@ -125,23 +125,46 @@ class AdminController extends Controller
     }
 
     /**
-     * Marcar un reporte como revisado/resuelto
+     * Eliminar (descartar) todos los reportes de un tip
      */
-    public function updateReportStatus(Report $report, Request $request)
+    public function dismissAllReportsForTip(Tip $tip)
+    {
+        if (!auth()->user()->is_admin) {
+            return redirect()->back()->with('error', __('messages.error.no_permission'));
+        }
+
+        $tip->reports()->whereNull('comment_id')->delete();
+
+        return redirect()->back()->with('success', __('admin.reports_dismissed_success'));
+    }
+
+    /**
+     * Eliminar (descartar) todos los reportes de un comentario
+     */
+    public function dismissAllReportsForComment(Comment $comment)
+    {
+        if (!auth()->user()->is_admin) {
+            return redirect()->back()->with('error', __('messages.error.no_permission'));
+        }
+
+        $comment->reports()->delete();
+
+        return redirect()->back()->with('success', __('admin.reports_dismissed_success'));
+    }
+
+    /**
+     * Eliminar (descartar) un reporte individual
+     */
+    public function dismissReport(Report $report)
     {
         // Verificar que el usuario sea administrador
         if (!auth()->user()->is_admin) {
             return redirect()->back()->with('error', __('messages.error.no_permission'));
         }
 
-        $request->validate([
-            'status' => 'required|in:pending,reviewed,resolved,dismissed'
-        ]);
+        $report->delete();
 
-        $report->status = $request->status;
-        $report->save();
-
-        return redirect()->back()->with('success', __('admin.report_status_updated'));
+        return redirect()->back()->with('success', __('admin.reports_dismissed_success'));
     }
 }
 

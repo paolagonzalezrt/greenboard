@@ -181,7 +181,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/reported-tips', [AdminController::class, 'reportedTips'])->name('reported-tips');
     Route::delete('/tips/{tip}', [AdminController::class, 'deleteTip'])->name('tips.delete');
     Route::delete('/comments/{comment}', [AdminController::class, 'deleteComment'])->name('comments.delete');
-    Route::patch('/reports/{report}/status', [AdminController::class, 'updateReportStatus'])->name('reports.update-status');
+    Route::delete('/tips/{tip}/dismiss-all', [AdminController::class, 'dismissAllReportsForTip'])->name('tips.dismiss-all');
+    Route::delete('/comments/{comment}/dismiss-all', [AdminController::class, 'dismissAllReportsForComment'])->name('comments.dismiss-all');
+    Route::delete('/reports/{report}/dismiss', [AdminController::class, 'dismissReport'])->name('reports.dismiss');
 });
 
 /*

@@ -24,62 +24,22 @@
             />
         @endif
 
-        <!-- Tabs -->
-        <div class="mb-8 flex gap-2 border-b border-slate-200 dark:border-slate-700">
-            <button onclick="switchTab('tips')" id="tabs-tips" class="px-6 py-3 font-bold text-slate-600 dark:text-slate-400 border-b-2 border-transparent hover:text-primary hover:border-primary transition-colors active-tab">
-                <span class="flex items-center gap-2">
-                    <span class="material-symbols-outlined">article</span>
+        <!-- Tabs Navigation -->
+        <div class="mb-6 sm:mb-8 w-full">
+            <div class="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar">
+                <a href="javascript:void(0)" onclick="switchTab('tips')" id="tabs-tips" class="border-b-2 border-primary text-primary px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap active-tab">
                     {{ __('admin.reported_tips_tab') }}
-                </span>
-            </button>
-            <button onclick="switchTab('comments')" id="tabs-comments" class="px-6 py-3 font-bold text-slate-600 dark:text-slate-400 border-b-2 border-transparent hover:text-primary hover:border-primary transition-colors">
-                <span class="flex items-center gap-2">
-                    <span class="material-symbols-outlined">chat_bubble</span>
+                </a>
+                <a href="javascript:void(0)" onclick="switchTab('comments')" id="tabs-comments" class="border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap">
                     {{ __('admin.reported_comments_tab') }}
-                </span>
-            </button>
+                </a>
+            </div>
         </div>
 
         <!-- TIPS TAB -->
         <div id="tab-content-tips" class="tab-content">
             <!-- Stats Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">{{ __('admin.reported_count') }}</p>
-                            <p class="text-3xl font-extrabold text-primary">{{ $reportedTips->count() }}</p>
-                        </div>
-                        <span class="material-symbols-outlined text-5xl text-red-500 opacity-20">report</span>
-                    </div>
-                </div>
-                
-                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">{{ __('admin.pending_count') }}</p>
-                            <p class="text-3xl font-extrabold text-orange-500">
-                                {{ $reportedTips->sum(function($tip) { 
-                                    return $tip['reports']->where('status', 'pending')->count(); 
-                                }) }}
-                            </p>
-                        </div>
-                        <span class="material-symbols-outlined text-5xl text-orange-500 opacity-20">pending</span>
-                    </div>
-                </div>
-                
-                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">{{ __('admin.total_reports') }}</p>
-                            <p class="text-3xl font-extrabold text-blue-500">
-                                {{ $reportedTips->sum('reports_count') }}
-                            </p>
-                        </div>
-                        <span class="material-symbols-outlined text-5xl text-blue-500 opacity-20">analytics</span>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- Reported Tips List -->
             @if($reportedTips->isEmpty())
@@ -129,15 +89,9 @@
                                                 <div class="flex-1">
                                                     <div class="flex items-center gap-2 mb-2">
                                                         <span class="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 text-xs font-bold rounded-full">
-                                                            {{ $report['reason'] }}
+                                                            {{ __('admin.reason_' . ($report['reason'] === 'misleading' ? 'misinformation' : $report['reason'])) }}
                                                         </span>
-                                                        <span class="px-2 py-1 text-xs font-bold rounded-full
-                                                            {{ $report['status'] === 'pending' ? 'bg-yellow-100 text-yellow-700' : '' }}
-                                                            {{ $report['status'] === 'reviewed' ? 'bg-blue-100 text-blue-700' : '' }}
-                                                            {{ $report['status'] === 'resolved' ? 'bg-green-100 text-green-700' : '' }}
-                                                            {{ $report['status'] === 'dismissed' ? 'bg-gray-100 text-gray-700' : '' }}">
-                                                            {{ ucfirst($report['status']) }}
-                                                        </span>
+
                                                     </div>
                                                     <p class="text-slate-700 dark:text-slate-300 mb-2">{{ $report['description'] ?? __('admin.no_description') }}</p>
                                                     <div class="text-xs text-slate-500">
@@ -147,20 +101,7 @@
                                                     </div>
                                                 </div>
                                                 
-                                                <!-- Status Update Form -->
-                                                <form action="{{ route('admin.reports.update-status', $report['id']) }}" method="POST" class="flex items-center gap-2">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <select name="status" class="text-xs px-2 py-1 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none">
-                                                        <option value="pending" {{ $report['status'] === 'pending' ? 'selected' : '' }}>{{ __('admin.status_pending') }}</option>
-                                                        <option value="reviewed" {{ $report['status'] === 'reviewed' ? 'selected' : '' }}>{{ __('admin.status_reviewed') }}</option>
-                                                        <option value="resolved" {{ $report['status'] === 'resolved' ? 'selected' : '' }}>{{ __('admin.status_resolved') }}</option>
-                                                        <option value="dismissed" {{ $report['status'] === 'dismissed' ? 'selected' : '' }}>{{ __('admin.status_dismissed') }}</option>
-                                                    </select>
-                                                    <button type="submit" class="px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded-lg hover:bg-blue-600 transition-colors">
-                                                        {{ __('admin.update') }}
-                                                    </button>
-                                                </form>
+
                                             </div>
                                         </div>
                                     @endforeach
@@ -170,19 +111,26 @@
                             <!-- Action Buttons -->
                             <div class="p-6 border-t-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
                                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-                                    <a href="{{ route('tips.show', $tip['id']) }}" target="_blank" class="w-full sm:w-auto px-6 py-3 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 transition-colors flex items-center justify-center gap-2">
-                                        <span class="material-symbols-outlined">open_in_new</span>
-                                        {{ __('admin.view_full_post') ?? 'Ver Post Completo' }}
+                                    <a href="{{ route('tips.show', $tip['id']) }}" target="_blank" class="w-full sm:w-auto px-5 py-2.5 bg-blue-500 text-white text-sm font-bold rounded-full hover:bg-blue-600 transition-colors text-center">
+                                        {{ __('admin.view_full_post') }}
                                     </a>
-                                    
-                                    <form action="{{ route('admin.tips.delete', $tip['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('{{ __('admin.confirm_delete_post') ?? '¿Estás seguro?' }}');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="w-full px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors flex items-center justify-center gap-2">
-                                            <span class="material-symbols-outlined">delete</span>
-                                            {{ __('admin.delete_post') }}
-                                        </button>
-                                    </form>
+                                    <div class="flex flex-wrap sm:flex-nowrap gap-3 w-full sm:w-auto">
+                                        <form action="{{ route('admin.tips.dismiss-all', $tip['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="confirmAction(event, this, 'confirm-dismiss-modal')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="w-full px-5 py-2.5 bg-green-500 text-white text-sm font-bold rounded-full hover:bg-green-600 transition-colors">
+                                                {{ __('admin.discard_report') }}
+                                            </button>
+                                        </form>
+                                        
+                                        <form action="{{ route('admin.tips.delete', $tip['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="confirmAction(event, this, 'confirm-delete-tip-modal')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="w-full px-5 py-2.5 bg-red-500 text-white text-sm font-bold rounded-full hover:bg-red-600 transition-colors">
+                                                {{ __('admin.delete_post') }}
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -194,43 +142,7 @@
         <!-- COMMENTS TAB -->
         <div id="tab-content-comments" class="tab-content hidden">
             <!-- Stats Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">{{ __('admin.reported_comments') }}</p>
-                            <p class="text-3xl font-extrabold text-primary">{{ $reportedComments->count() }}</p>
-                        </div>
-                        <span class="material-symbols-outlined text-5xl text-red-500 opacity-20">report</span>
-                    </div>
-                </div>
-                
-                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">{{ __('admin.pending_reports') }}</p>
-                            <p class="text-3xl font-extrabold text-orange-500">
-                                {{ $reportedComments->sum(function($comment) { 
-                                    return $comment['reports']->where('status', 'pending')->count(); 
-                                }) }}
-                            </p>
-                        </div>
-                        <span class="material-symbols-outlined text-5xl text-orange-500 opacity-20">pending</span>
-                    </div>
-                </div>
-                
-                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border-2 border-slate-200 dark:border-slate-700">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1">Total Reportes</p>
-                            <p class="text-3xl font-extrabold text-blue-500">
-                                {{ $reportedComments->sum('reports_count') }}
-                            </p>
-                        </div>
-                        <span class="material-symbols-outlined text-5xl text-blue-500 opacity-20">analytics</span>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- Reported Comments List -->
             @if($reportedComments->isEmpty())
@@ -279,15 +191,9 @@
                                                 <div class="flex-1">
                                                     <div class="flex items-center gap-2 mb-2">
                                                         <span class="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 text-xs font-bold rounded-full">
-                                                            {{ $report['reason'] }}
+                                                            {{ __('admin.reason_' . ($report['reason'] === 'misleading' ? 'misinformation' : $report['reason'])) }}
                                                         </span>
-                                                        <span class="px-2 py-1 text-xs font-bold rounded-full
-                                                            {{ $report['status'] === 'pending' ? 'bg-yellow-100 text-yellow-700' : '' }}
-                                                            {{ $report['status'] === 'reviewed' ? 'bg-blue-100 text-blue-700' : '' }}
-                                                            {{ $report['status'] === 'resolved' ? 'bg-green-100 text-green-700' : '' }}
-                                                            {{ $report['status'] === 'dismissed' ? 'bg-gray-100 text-gray-700' : '' }}">
-                                                            {{ ucfirst($report['status']) }}
-                                                        </span>
+
                                                     </div>
                                                     <p class="text-slate-700 dark:text-slate-300 mb-2">{{ $report['description'] ?? __('admin.no_description') }}</p>
                                                     <div class="text-xs text-slate-500">
@@ -297,20 +203,7 @@
                                                     </div>
                                                 </div>
                                                 
-                                                <!-- Status Update Form -->
-                                                <form action="{{ route('admin.reports.update-status', $report['id']) }}" method="POST" class="flex items-center gap-2">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <select name="status" class="text-xs px-2 py-1 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none">
-                                                        <option value="pending" {{ $report['status'] === 'pending' ? 'selected' : '' }}>{{ __('admin.status_pending') }}</option>
-                                                        <option value="reviewed" {{ $report['status'] === 'reviewed' ? 'selected' : '' }}>{{ __('admin.status_reviewed') }}</option>
-                                                        <option value="resolved" {{ $report['status'] === 'resolved' ? 'selected' : '' }}>{{ __('admin.status_resolved') }}</option>
-                                                        <option value="dismissed" {{ $report['status'] === 'dismissed' ? 'selected' : '' }}>{{ __('admin.status_dismissed') }}</option>
-                                                    </select>
-                                                    <button type="submit" class="px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded-lg hover:bg-blue-600 transition-colors">
-                                                        {{ __('admin.update') }}
-                                                    </button>
-                                                </form>
+
                                             </div>
                                         </div>
                                     @endforeach
@@ -320,19 +213,26 @@
                             <!-- Action Buttons -->
                             <div class="p-6 border-t-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
                                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-                                    <a href="{{ route('tips.show', $comment['tip_id']) }}#comment-{{ $comment['id'] }}" target="_blank" class="w-full sm:w-auto px-6 py-3 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 transition-colors flex items-center justify-center gap-2">
-                                        <span class="material-symbols-outlined">open_in_new</span>
-                                        {{ __('admin.view_comment') ?? 'View Comment' }}
+                                    <a href="{{ route('tips.show', $comment['tip_id']) }}#comment-{{ $comment['id'] }}" target="_blank" class="w-full sm:w-auto px-5 py-2.5 bg-blue-500 text-white text-sm font-bold rounded-full hover:bg-blue-600 transition-colors text-center">
+                                        {{ __('admin.view_comment') }}
                                     </a>
-                                    
-                                    <form action="{{ route('admin.comments.delete', $comment['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('{{ __('admin.confirm_delete_comment') ?? '¿Estás seguro de que deseas eliminar este comentario? Esta acción no se puede deshacer.' }}');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="w-full px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors flex items-center justify-center gap-2">
-                                            <span class="material-symbols-outlined">delete</span>
-                                            {{ __('admin.delete_comment') ?? 'Delete Comment' }}
-                                        </button>
-                                    </form>
+                                    <div class="flex flex-wrap sm:flex-nowrap gap-3 w-full sm:w-auto">
+                                        <form action="{{ route('admin.comments.dismiss-all', $comment['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="confirmAction(event, this, 'confirm-dismiss-modal')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="w-full px-5 py-2.5 bg-green-500 text-white text-sm font-bold rounded-full hover:bg-green-600 transition-colors">
+                                                {{ __('admin.discard_report') }}
+                                            </button>
+                                        </form>
+
+                                        <form action="{{ route('admin.comments.delete', $comment['id']) }}" method="POST" class="w-full sm:w-auto" onsubmit="confirmAction(event, this, 'confirm-delete-comment-modal')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="w-full px-5 py-2.5 bg-red-500 text-white text-sm font-bold rounded-full hover:bg-red-600 transition-colors">
+                                                {{ __('admin.delete_comment') }}
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -357,35 +257,94 @@
             animation: fade-in 0.3s ease-in-out;
         }
         
-        button[onclick*="switchTab"].active-tab {
-            @apply border-primary text-primary;
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
     </style>
 
     <script>
         function switchTab(tabName) {
+            // Classes constants
+            const activeClasses = ['border-primary', 'text-primary'];
+            const inactiveClasses = ['border-transparent', 'text-slate-500', 'hover:text-slate-700', 'dark:hover:text-slate-300'];
+
             // Hide all tab contents
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.add('hidden');
             });
             
-            // Remove active class from all tabs
+            // Update all tabs to inactive state
             document.querySelectorAll('[id^="tabs-"]').forEach(tab => {
-                tab.classList.remove('active-tab');
+                tab.classList.remove('active-tab', ...activeClasses);
+                tab.classList.add(...inactiveClasses);
             });
             
             // Show selected tab content
-            document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
+            const content = document.getElementById(`tab-content-${tabName}`);
+            if (content) content.classList.remove('hidden');
             
-            // Add active class to selected tab
-            document.getElementById(`tabs-${tabName}`).classList.add('active-tab');
+            // Set selected tab to active state
+            const activeTab = document.getElementById(`tabs-${tabName}`);
+            if (activeTab) {
+                activeTab.classList.add('active-tab', ...activeClasses);
+                activeTab.classList.remove(...inactiveClasses);
+            }
         }
         
         // Set initial active tab
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('tabs-tips').classList.add('active-tab');
+            switchTab('tips');
         });
     </script>
+    <!-- Modales de confirmación -->
+    <x-confirm-modal 
+        id="confirm-dismiss-modal" 
+        title="{{ __('admin.discard_report') }}"
+        message="{{ __('admin.confirm_dismiss_all') }}"
+        confirmText="{{ __('admin.discard') }}"
+        cancelText="{{ __('admin.cancel') }}"
+        onConfirm="performConfirmedAction"
+        isDangerous="false"
+    />
 
-    </style>
+    <x-confirm-modal 
+        id="confirm-delete-tip-modal" 
+        title="{{ __('admin.delete_post') }}"
+        message="{{ __('admin.confirm_delete_post') }}"
+        confirmText="{{ __('admin.delete_tip') ?? 'Eliminar' }}"
+        cancelText="{{ __('admin.cancel') }}"
+        onConfirm="performConfirmedAction"
+        isDangerous="true"
+    />
+
+    <x-confirm-modal 
+        id="confirm-delete-comment-modal" 
+        title="{{ __('admin.delete_comment') }}"
+        message="{{ __('admin.confirm_delete_comment') }}"
+        confirmText="{{ __('admin.delete_comment') }}"
+        cancelText="{{ __('admin.cancel') }}"
+        onConfirm="performConfirmedAction"
+        isDangerous="true"
+    />
+
+    <script>
+        let formToSubmit = null;
+
+        function confirmAction(event, form, modalId) {
+            event.preventDefault();
+            formToSubmit = form;
+            showConfirmModal(modalId);
+        }
+
+        window.performConfirmedAction = function() {
+            if (formToSubmit) {
+                formToSubmit.submit();
+            }
+        };
+    </script>
 @endsection
