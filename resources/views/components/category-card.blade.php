@@ -7,7 +7,7 @@
         'green' => 'bg-emerald-700 dark:bg-emerald-800',     // Naturaleza: #059669
         'teal' => 'bg-cyan-600 dark:bg-cyan-700',            // Transporte: #0891B2
         'blue' => 'bg-blue-600 dark:bg-blue-700',            // Hogar: #2563EB
-        'slate' => 'bg-slate-600 dark:bg-slate-700',         // Residuos: #475569
+        'brown' => 'bg-brown-700 dark:bg-brown-800',         // Residuos: Cafe
         'purple' => 'bg-violet-600 dark:bg-violet-700',      // Consumo: #9333EA
         'rose' => 'bg-rose-600 dark:bg-rose-700',            // Educacion: #E11D48
     ];

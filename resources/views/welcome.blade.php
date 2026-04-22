@@ -65,7 +65,7 @@
             <h2 class="text-xl sm:text-2xl font-bold">{{ __('content.browse_categories') }}</h2>
         </div>
         <div class="overflow-x-auto sm:overflow-x-visible pt-2 -mt-2 sm:pt-0 sm:mt-0 pb-3 sm:pb-0 -mx-4 sm:-mx-4 lg:-mx-8 px-4 sm:px-4 lg:px-8">
-            <div class="flex gap-4 sm:gap-4 lg:gap-6 min-w-min sm:w-full sm:justify-between overflow-visible">
+            <div class="flex gap-3 sm:gap-4 lg:gap-6 min-w-min sm:w-full sm:justify-between overflow-visible">
                 @php
                     $categoryKeys = [
                         ['key' => 'alimentacion', 'icon' => 'restaurant', 'color' => 'orange'],
@@ -73,9 +73,9 @@
                         ['key' => 'naturaleza', 'icon' => 'eco', 'color' => 'green'],
                         ['key' => 'transporte', 'icon' => 'directions_bike', 'color' => 'teal'],
                         ['key' => 'hogar', 'icon' => 'home', 'color' => 'blue'],
-                        ['key' => 'residuos', 'icon' => 'recycling', 'color' => 'slate'],
                         ['key' => 'consumo', 'icon' => 'shopping_bag', 'color' => 'purple'],
                         ['key' => 'educacion', 'icon' => 'school', 'color' => 'rose'],
+                        ['key' => 'residuos', 'icon' => 'recycling', 'color' => 'brown'],
                     ];
                 @endphp
 

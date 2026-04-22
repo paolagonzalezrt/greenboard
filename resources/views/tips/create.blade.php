@@ -22,7 +22,7 @@
                 <label for="category" class="block text-sm font-bold text-slate-700 dark:text-background-light mb-3">
                     {{ __('tips.category') }} <span class="text-red-500">*</span>
                 </label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
                     @php
                         $categoryKeys = [
                             ['key' => 'alimentacion', 'icon' => 'restaurant', 'color' => 'orange'],
@@ -30,9 +30,9 @@
                             ['key' => 'naturaleza', 'icon' => 'eco', 'color' => 'green'],
                             ['key' => 'transporte', 'icon' => 'directions_bike', 'color' => 'teal'],
                             ['key' => 'hogar', 'icon' => 'home', 'color' => 'blue'],
-                            ['key' => 'residuos', 'icon' => 'recycling', 'color' => 'slate'],
                             ['key' => 'consumo', 'icon' => 'shopping_bag', 'color' => 'purple'],
                             ['key' => 'educacion', 'icon' => 'school', 'color' => 'rose'],
+                            ['key' => 'residuos', 'icon' => 'recycling', 'color' => 'brown'],
                         ];
                     @endphp
 
