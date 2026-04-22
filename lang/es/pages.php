@@ -21,7 +21,7 @@ return [
     'action_description' => 'Ofrecemos herramientas que permiten compartir iniciativas ambientales de forma eficiente.',
     'ready_legacy' => 'Sé parte del cambio',
     'legacy_description' => 'Contribuye al desarrollo de soluciones sostenibles dentro de tu entorno',
-    'create_profile' => 'Crear perfil',
+    'create_profile' => 'Regístrate',
     'explore_initiatives' => 'Explorar iniciativas',
     'our_values' => 'Nuestros valores',
     'sustainability' => 'Sostenibilidad',
@@ -30,7 +30,7 @@ return [
     'education' => 'Educación',
     
     // Privacy Policy
-    'privacy_title' => 'Política de Privacidad',
+    'privacy_title' => 'Política de privacidad',
     'privacy_updated' => 'Última actualización: 20 de abril, 2026',
     'privacy_intro' => 'En GreenBoard, nos comprometemos a proteger tu privacidad y asegurar que tu experiencia en nuestra plataforma sea segura y transparente.',
     'section_1_title' => '1. Información que recopilamos',

@@ -20,10 +20,10 @@ return [
     'confirm_password' => 'Confirmar contraseña',
     'confirm_password_placeholder' => 'Repetir contraseña',
 
-    'signup_button' => 'Registrarse',
+    'signup_button' => 'Crear cuenta',
 
-    'have_account' => '¿Ya tienes cuenta?',
-    'login' => 'Iniciar sesión',
+    'have_account' => '¿Ya estás registrado?',
+    'login' => 'Inicia sesión',
 
     'explore' => 'Explorar',
 

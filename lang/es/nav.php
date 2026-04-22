@@ -15,7 +15,7 @@ return [
     'settings' => 'Configuración',
     'logout' => 'Cerrar sesión',
     'login' => 'Iniciar sesión',
-    'register' => 'Registrarse',
+    'register' => 'Crear cuenta',
     'search' => 'Buscar',
     'menu' => 'Menú',
     'language' => 'Idioma',

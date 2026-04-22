@@ -8,7 +8,7 @@ return [
     'email'         => 'Correo electrónico',
     'password'      => 'Contraseña',
     'forgot'        => '¿Olvidaste tu contraseña?',
-    'login_button'  => 'Entrar ahora',
+    'login_button'  => 'Iniciar sesión',
     'no_account'    => '¿No tienes cuenta?',
     'sign_up'       => 'Regístrate',
     'tap_login'     => 'Toca para entrar',

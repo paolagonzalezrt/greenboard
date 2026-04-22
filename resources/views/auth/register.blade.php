@@ -223,19 +223,19 @@ class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border @erro
 </div>
 
 
-<button class="w-full bg-primary text-slate-900 font-extrabold text-base py-4 rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.95] mt-4" type="submit">
+<button class="block w-2/5 sm:w-1/3 mx-auto bg-primary text-slate-900 font-extrabold text-sm py-3 rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.95] !mt-8" type="submit">
 {{ __('register.signup_button') }}
 </button>
 
 </form>
 
 
-<p class="text-center mt-8 text-slate-600 dark:text-slate-400">
-    <span class="block">
+<p class="flex items-center justify-center gap-1.5 text-center mt-8 text-slate-600 dark:text-slate-400">
+    <span>
         {{ __('register.have_account') }}
     </span>
 
-    <a class="block text-primary font-bold hover:underline" href="{{ route('login') }}">
+    <a class="text-primary font-bold hover:underline" href="{{ route('login') }}">
         {{ __('register.login') }}
     </a>
 </p>

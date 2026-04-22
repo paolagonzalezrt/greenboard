@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'items_per_page' => 'Items por página:',
+    'items_per_page' => 'Publicaciones por página:',
 ];

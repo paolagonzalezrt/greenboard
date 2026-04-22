@@ -14,7 +14,7 @@ return [
     'terms' => 'Bedingungen',
     'contact' => 'Kontakt',
     'follow_us' => 'Folgen Sie uns',
-    'copyright' => '\u00a9 2026 GreenBoard. Alle Rechte vorbehalten.',    'footer_copyright' => '© 2026 GreenBoard. Alle Rechte vorbehalten.',    'all_rights_reserved' => 'Alle Rechte vorbehalten.',
+    'copyright' => '© 2026 GreenBoard',    'footer_copyright' => '© 2026 GreenBoard',    
     'company' => 'Unternehmen',
     'support' => 'Unterstützung',
     'status' => 'Status',

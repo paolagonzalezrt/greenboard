@@ -69,9 +69,8 @@
                 </div>
 
                 <div>
-                    <div class="flex justify-between mb-2">
+                    <div class="mb-2">
                         <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">{{ __('login.password') }}</label>
-                        <a href="#" class="text-xs text-primary font-bold hover:underline">{{ __('login.forgot') }}</a>
                     </div>
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock</span>
@@ -83,14 +82,14 @@
                     @include('components.field-error', ['fieldName' => 'password'])
                 </div>
 
-                <button class="w-full bg-primary text-slate-900 font-extrabold text-base py-4 rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.95] mt-4" type="submit">
+                <button class="block w-2/5 sm:w-1/3 mx-auto bg-primary text-slate-900 font-extrabold text-sm py-3 rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.95] !mt-8" type="submit">
                     {{ __('login.login_button') }}
                 </button>
             </form>
 
-            <p class="text-center mt-8 text-slate-600 dark:text-slate-400">
-                <span class="block">{{ __('login.no_account') }}</span>
-                <a class="block text-primary font-bold hover:underline" href="{{ route('register') }}">
+            <p class="flex items-center justify-center gap-1.5 text-center mt-8 text-slate-600 dark:text-slate-400">
+                <span>{{ __('login.no_account') }}</span>
+                <a class="text-primary font-bold hover:underline" href="{{ route('register') }}">
                     {{ __('login.sign_up') }}
                 </a>
             </p>

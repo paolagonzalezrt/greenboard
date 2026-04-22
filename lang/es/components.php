@@ -9,13 +9,13 @@ return [
     'info_title' => 'Información',
     
     // Footer
-    'about' => 'Sobre Nosotros',
+    'about' => 'Sobre nosotros',
     'privacy' => 'Privacidad',
     'terms' => 'Términos',
     'contact' => 'Contacto',
     'follow_us' => 'Síguenos',
-    'copyright' => '© 2026 GreenBoard. Todos los derechos reservados.',
-    'footer_copyright' => '© 2026 GreenBoard. Todos los derechos reservados.',
+    'copyright' => '© 2026 GreenBoard',
+    'footer_copyright' => '© 2026 GreenBoard',
     'all_rights_reserved' => 'Todos los derechos reservados.',
     'company' => 'Empresa',
     'support' => 'Soporte',

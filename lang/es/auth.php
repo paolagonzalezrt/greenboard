@@ -7,7 +7,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'login' => 'Iniciar sesión',
-    'register' => 'Registrarse',
+    'register' => 'Crear cuenta',
     'logout' => 'Cerrar sesión',
     'email' => 'Correo electrónico',
     'password' => 'Contraseña',
