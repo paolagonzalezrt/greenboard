@@ -31,13 +31,20 @@ return [
     
     // Privacy Policy
     'privacy_title' => 'Política de Privacidad',
-    'privacy_updated' => 'Última actualización',
-    'privacy_intro' => 'En GreenBoard, tomamos tu privacidad en serio. Esta política describe cómo recopilamos, usamos y protegemos tu información personal.',
-    'data_collection' => 'Recopilación de Datos',
-    'data_usage' => 'Uso de Datos',
-    'data_protection' => 'Protección de Datos',
-    'data_rights' => 'Tus Derechos',
-    'contact_us' => 'Contáctanos',
+    'privacy_updated' => 'Última actualización: 20 de abril, 2026',
+    'privacy_intro' => 'En GreenBoard, nos comprometemos a proteger tu privacidad y asegurar que tu experiencia en nuestra plataforma sea segura y transparente.',
+    'section_1_title' => '1. Información que recopilamos',
+    'section_1_content' => 'Recopilamos información que nos proporcionas directamente al crear una cuenta, como tu nombre de usuario, dirección de correo electrónico y contraseña. También guardamos el contenido que generas, incluyendo tips, comentarios e imágenes de perfil.',
+    'section_2_title' => '2. Cómo usamos tu información',
+    'section_2_content' => 'Utilizamos tus datos para gestionar tu cuenta, permitirte interactuar con otros usuarios (seguir, dar me gusta), procesar reportes de contenido y enviarte notificaciones importantes sobre el servicio.',
+    'section_3_title' => '3. Cookies y Almacenamiento Local',
+    'section_3_content' => 'Utilizamos cookies esenciales para mantener tu sesión iniciada y proteger el sitio contra ataques de seguridad (CSRF). No utilizamos cookies de rastreo de terceros para publicidad.',
+    'section_4_title' => '4. Compartir información',
+    'section_4_content' => 'Tu nombre de usuario, foto de perfil y el contenido que publiques son públicos para otros usuarios de la plataforma. No vendemos ni compartimos tus datos privados con terceras empresas.',
+    'section_5_title' => '5. Tus derechos y eliminación de datos',
+    'section_5_content' => 'Puedes editar tu perfil o eliminar tu cuenta en cualquier momento desde los ajustes. Al eliminar tu cuenta, tus datos personales serán borrados de nuestros servidores de forma permanente.',
+    'section_6_title' => '6. Contacto',
+    'section_6_content' => 'Si tienes cualquier duda o comentario sobre cómo protegemos tu privacidad en GreenBoard, no dudes en ponerte en contacto con nosotros a través de',
     'privacy_email' => 'privacy@greenboard.io',
     
     // Following

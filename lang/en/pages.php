@@ -31,13 +31,20 @@ return [
     
     // Privacy Policy
     'privacy_title' => 'Privacy Policy',
-    'privacy_updated' => 'Last updated',
-    'privacy_intro' => 'At GreenBoard, we take your privacy seriously. This policy describes how we collect, use, and protect your personal information.',
-    'data_collection' => 'Data Collection',
-    'data_usage' => 'Data Usage',
-    'data_protection' => 'Data Protection',
-    'data_rights' => 'Your Rights',
-    'contact_us' => 'Contact Us',
+    'privacy_updated' => 'Last updated: April 20, 2026',
+    'privacy_intro' => 'At GreenBoard, we are committed to protecting your privacy and ensuring your experience on our platform is safe and transparent.',
+    'section_1_title' => '1. Information We Collect',
+    'section_1_content' => 'We collect information you provide directly when creating an account, such as your username, email address, and password. We also store content you generate, including tips, comments, and profile images.',
+    'section_2_title' => '2. How We Use Your Information',
+    'section_2_content' => 'We use your data to manage your account, allow you to interact with other users (follow, like), process content reports, and send you important service notifications.',
+    'section_3_title' => '3. Cookies and Local Storage',
+    'section_3_content' => 'We use essential cookies to keep you logged in and protect the site against security attacks (CSRF). We do not use third-party tracking cookies for advertising.',
+    'section_4_title' => '4. Information Sharing',
+    'section_4_content' => 'Your username, profile photo, and the content you post are public to other users of the platform. We do not sell or share your private data with third-party companies.',
+    'section_5_title' => '5. Your Rights and Data Deletion',
+    'section_5_content' => 'You can edit your profile or delete your account at any time from the settings. Upon deleting your account, your personal data will be permanently removed from our servers.',
+    'section_6_title' => '6. Contact',
+    'section_6_content' => 'If you have any questions or comments about how we protect your privacy at GreenBoard, please feel free to get in touch with us at',
     'privacy_email' => 'privacy@greenboard.io',
     
     // Following

@@ -1,32 +1,59 @@
 @extends('layouts.app')
 
-@section('title', 'GreenBoard - Privacy Policy')
+@section('title', 'GreenBoard - ' . __('pages.privacy_title'))
 
 @section('content')
-<div class="max-w-4xl mx-auto">
-    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-8 bg-gradient-to-br from-slate-900 to-slate-600 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent">
-        {{ __('pages.privacy_title') }}
-    </h1>
+<div class="max-w-3xl mx-auto py-12 px-6">
+    <header class="mb-16">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+            {{ __('pages.privacy_title') }}
+        </h1>
+        <p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+            {{ __('pages.privacy_updated') }}
+        </p>
+    </header>
     
-    <div class="prose dark:prose-invert max-w-none">
-        <p class="text-lg text-slate-600 dark:text-slate-400 mb-6">
-            {{ __('pages.privacy_intro') }}
-        </p>
+    <div class="space-y-12 text-slate-600 dark:text-slate-300 leading-relaxed">
+        <section>
+            <p class="text-lg md:text-xl text-slate-500 dark:text-slate-400 italic text-justify">
+                {{ __('pages.privacy_intro') }}
+            </p>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">{{ __('pages.section_1_title') }}</h2>
+            <p class="text-justify">{{ __('pages.section_1_content') }}</p>
+        </section>
         
-        <h2 class="text-2xl font-bold mb-4 mt-8">{{ __('pages.data_collection') }}</h2>
-        <p class="text-slate-600 dark:text-slate-400 mb-4">
-            Content about information collection...
-        </p>
-        
-        <h2 class="text-2xl font-bold mb-4 mt-8">{{ __('pages.data_usage') }}</h2>
-        <p class="text-slate-600 dark:text-slate-400 mb-4">
-            Content about how information is used...
-        </p>
-        
-        <h2 class="text-2xl font-bold mb-4 mt-8">{{ __('pages.contact_us') }}</h2>
-        <p class="text-slate-600 dark:text-slate-400 mb-4">
-            If you have any questions about this {{ __('pages.privacy_title') }}, please contact us at {{ __('pages.privacy_email') }}.
-        </p>
+        <section>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">{{ __('pages.section_2_title') }}</h2>
+            <p class="text-justify">{{ __('pages.section_2_content') }}</p>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">{{ __('pages.section_3_title') }}</h2>
+            <p class="text-justify">{{ __('pages.section_3_content') }}</p>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">{{ __('pages.section_4_title') }}</h2>
+            <p class="text-justify">{{ __('pages.section_4_content') }}</p>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">{{ __('pages.section_5_title') }}</h2>
+            <p class="text-justify">{{ __('pages.section_5_content') }}</p>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">{{ __('pages.section_6_title') }}</h2>
+            <p class="text-justify">
+                {{ __('pages.section_6_content') }}
+                <a href="mailto:{{ __('pages.privacy_email') }}" class="hover:underline">
+                    {{ __('pages.privacy_email') }}
+                </a>
+            </p>
+        </section>
     </div>
 </div>
 @endsection
