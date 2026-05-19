@@ -17,37 +17,13 @@ class TipController extends Controller
     ) {}
 
     /**
-     * Translate tip content to the current locale if needed.
-     * First checks TranslatableText (pre-translated via DeepL),
-     * then falls back to on-demand translation if not found.
+     * Translate any user-generated content to the current locale.
+     * Uses DeepL auto-detection so posts and comments written in any
+     * language are correctly translated regardless of locale.
      */
-    private function translateTipContent(string $text): string
+    private function translateContent(string $text): string
     {
-        $locale = app()->getLocale();
-        $sourceLocale = config('localization.default_locale', 'es');
-
-        if ($locale === $sourceLocale) {
-            return $text;
-        }
-
-        // Try to find pre-translated version from TranslatableText
-        // by searching for any key with this exact text
-        $translatableText = \App\Models\TranslatableText::where('source_text', $text)
-            ->where('source_locale', $sourceLocale)
-            ->first();
-
-        if ($translatableText) {
-            $translation = $translatableText->translations()
-                ->where('locale', $locale)
-                ->first();
-
-            if ($translation && $translation->translated_text) {
-                return $translation->translated_text;
-            }
-        }
-
-        // Fallback to on-demand translation
-        return $this->translator->translate($text, $locale, $sourceLocale);
+        return $this->translator->translateAutoDetect($text, app()->getLocale());
     }
 
     public function index(Request $request)
@@ -87,8 +63,8 @@ class TipController extends Controller
                     'category' => $tip->category,
                     'user' => $tip->user->name,
                     'user_obj' => $tip->user,
-                    'title' => $this->translateTipContent($tip->title),
-                    'description' => $this->translateTipContent($tip->description),
+                    'title' => $this->translateContent($tip->title),
+                    'description' => $this->translateContent($tip->description),
                     'likes' => $tip->likes_count,
                     'comments' => $tip->comments_count,
                     'image' => $tip->image,
@@ -139,8 +115,8 @@ class TipController extends Controller
                     'category' => $tip->category,
                     'user' => $tip->user->name,
                     'user_obj' => $tip->user,
-                    'title' => $this->translateTipContent($tip->title),
-                    'description' => $this->translateTipContent($tip->description),
+                    'title' => $this->translateContent($tip->title),
+                    'description' => $this->translateContent($tip->description),
                     'likes' => $tip->likes_count,
                     'comments' => $tip->comments_count,
                     'image' => $tip->image,
@@ -181,8 +157,8 @@ class TipController extends Controller
                     'category' => $tip->category,
                     'user' => $tip->user->name,
                     'user_obj' => $tip->user,
-                    'title' => $this->translateTipContent($tip->title),
-                    'description' => $this->translateTipContent($tip->description),
+                    'title' => $this->translateContent($tip->title),
+                    'description' => $this->translateContent($tip->description),
                     'likes' => $tip->likes_count,
                     'comments' => $tip->comments_count,
                     'image' => $tip->image,
@@ -215,8 +191,8 @@ class TipController extends Controller
                     'category' => $tip->category,
                     'user' => $tip->user->name,
                     'user_obj' => $tip->user,
-                    'title' => $this->translateTipContent($tip->title),
-                    'description' => $this->translateTipContent($tip->description),
+                    'title' => $this->translateContent($tip->title),
+                    'description' => $this->translateContent($tip->description),
                     'likes' => $tip->likes_count,
                     'comments' => $tip->comments_count,
                     'image' => $tip->image,
@@ -289,8 +265,23 @@ class TipController extends Controller
             ->appends(['per_page' => $commentsPerPage])
             ->onEachSide(2);
 
-        $tip->title = $this->translateTipContent($tip->title);
-        $tip->description = $this->translateTipContent($tip->description);
+        $tip->title = $this->translateContent($tip->title);
+        $tip->description = $this->translateContent($tip->description);
+
+        // Traducir comentarios principales y sus respuestas
+        // Usa auto-detect para manejar comentarios escritos en cualquier idioma
+        $comments->through(function ($comment) {
+            $comment->content = $this->translateContent($comment->content);
+
+            // Traducir respuestas anidadas
+            if ($comment->relationLoaded('replies')) {
+                $comment->replies->each(function ($reply) {
+                    $reply->content = $this->translateContent($reply->content);
+                });
+            }
+
+            return $comment;
+        });
 
         return view('tips.show', compact('tip', 'comments'));
     }
@@ -322,8 +313,8 @@ class TipController extends Controller
                         'category' => $tip->category,
                         'user' => $tip->user->name,
                         'user_obj' => $tip->user,
-                        'title' => $this->translateTipContent($tip->title),
-                        'description' => $this->translateTipContent($tip->description),
+                        'title' => $this->translateContent($tip->title),
+                        'description' => $this->translateContent($tip->description),
                         'likes' => $tip->likes_count,
                         'comments' => $tip->comments_count,
                         'image' => $tip->image,
@@ -348,8 +339,8 @@ class TipController extends Controller
                         'category' => $tip->category,
                         'user' => $tip->user->name,
                         'user_obj' => $tip->user,
-                        'title' => $this->translateTipContent($tip->title),
-                        'description' => $this->translateTipContent($tip->description),
+                        'title' => $this->translateContent($tip->title),
+                        'description' => $this->translateContent($tip->description),
                         'likes' => $tip->likes_count,
                         'comments' => $tip->comments_count,
                         'image' => $tip->image,
@@ -397,8 +388,8 @@ class TipController extends Controller
                             'category' => $tip->category,
                             'user' => $tip->user->name,
                             'user_obj' => $tip->user,
-                            'title' => $this->translateTipContent($tip->title),
-                            'description' => $this->translateTipContent($tip->description),
+                            'title' => $this->translateContent($tip->title),
+                            'description' => $this->translateContent($tip->description),
                             'likes' => $tip->likes_count,
                             'comments' => $tip->comments_count,
                             'image' => $tip->image,
@@ -426,8 +417,8 @@ class TipController extends Controller
                         'category' => $tip->category,
                         'user' => $tip->user->name,
                         'user_obj' => $tip->user,
-                        'title' => $this->translateTipContent($tip->title),
-                        'description' => $this->translateTipContent($tip->description),
+                        'title' => $this->translateContent($tip->title),
+                        'description' => $this->translateContent($tip->description),
                         'likes' => $tip->likes_count,
                         'comments' => $tip->comments_count,
                         'image' => $tip->image,

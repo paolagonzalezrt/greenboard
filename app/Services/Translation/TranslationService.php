@@ -89,6 +89,42 @@ class TranslationService
     }
 
     /**
+     * Traducir un texto dejando que DeepL auto-detecte el idioma origen.
+     * Útil para contenido generado por usuarios (comentarios) que puede estar
+     * escrito en cualquier idioma.
+     */
+    public function translateAutoDetect(string $text, string $targetLocale): string
+    {
+        // Clave de cache usando 'auto' como fuente para diferenciarla del cache normal
+        $cacheKey = $this->cachePrefix . md5("auto:{$targetLocale}:{$text}");
+
+        if ($this->cacheEnabled) {
+            $cached = \Illuminate\Support\Facades\Cache::get($cacheKey);
+            if ($cached !== null) {
+                return $cached;
+            }
+        }
+
+        try {
+            // Pasar null como sourceLocale para que DeepL auto-detecte el idioma
+            $translated = $this->provider->translate($text, $targetLocale, null);
+
+            if ($this->cacheEnabled) {
+                \Illuminate\Support\Facades\Cache::put($cacheKey, $translated, $this->cacheTtl);
+            }
+
+            return $translated;
+        } catch (TranslationException $e) {
+            Log::warning('Auto-detect translation failed, returning original text', [
+                'error' => $e->getMessage(),
+                'provider' => $e->getProvider(),
+            ]);
+
+            return $text;
+        }
+    }
+
+    /**
      * Traducir usando cola (async).
      */
     public function translateAsync(string $text, string $targetLocale, ?string $sourceLocale = null): void
