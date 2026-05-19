@@ -33,7 +33,7 @@
 <div class="bg-white dark:bg-custom-dark-bg rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200 dark:border-custom-gray-border shadow-md hover:shadow-xl transition-all group flex flex-col cursor-pointer h-full" onclick="window.location.href='{{ $id ? route('tips.show', $id) : '#' }}'">
     @if($image)
         <!-- Card with Image -->
-        <div class="relative aspect-[4/3] max-h-64">
+        <div class="relative h-48 overflow-hidden">
             <img class="w-full h-full object-cover" data-alt="{{ $title }}" src="{{ $image }}"/>
         </div>
         <div class="p-4 sm:p-5 lg:p-6 flex-1 flex flex-col min-h-0">
