@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tip;
 use App\Models\Like;
+use App\Notifications\PostLiked;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,9 +30,14 @@ class LikeController extends Controller
             // Si no existe, crear el like
             Like::create([
                 'user_id' => $user->id,
-                'tip_id' => $tip->id,
+                'tip_id'  => $tip->id,
             ]);
             $liked = true;
+
+            // Notificar al autor del tip (si no es el mismo usuario)
+            if ($tip->user_id !== $user->id) {
+                $tip->user->notify(new PostLiked($user, $tip));
+            }
         }
 
         // Contar el total de likes del tip

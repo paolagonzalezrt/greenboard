@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\NewFollower;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,6 +37,9 @@ class FollowController extends Controller
             $currentUser->following()->attach($user->id);
             $message = 'Ahora sigues a ' . $user->name;
             $following = true;
+
+            // Enviar notificación al usuario seguido
+            $user->notify(new NewFollower($currentUser));
         }
 
         // Contar seguidores y seguidos

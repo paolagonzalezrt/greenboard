@@ -47,14 +47,34 @@
                 </a>
             </div>
         @else
-            <!-- Authenticated Users (Desktop: Theme, Language & Profile) -->
+            <!-- Authenticated Users (Desktop: Theme, Language, Notifications & Profile) -->
             <div class="hidden lg:flex items-center gap-4 sm:gap-5">
-                <div class="flex items-center gap-2">
+                <!-- Icon group: Language + Dark mode + Notifications -->
+                <div class="flex items-center gap-1">
                     @include('partials.language-modal')
 
                     <button id="theme-toggle" class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Toggle dark mode" onclick="window.ThemeManager.toggle()">
                         <span class="material-symbols-outlined text-xl" data-theme-icon>dark_mode</span>
                     </button>
+
+                    <!-- Notification Bell (Desktop) -->
+                    <div class="relative" id="notification-wrapper-desktop">
+                        <button id="notification-bell-desktop" onclick="toggleNotifications('desktop')" class="relative p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Notificaciones">
+                            <span class="material-symbols-outlined text-xl">notifications</span>
+                            <span id="notif-badge-desktop" class="hidden absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">0</span>
+                        </button>
+
+                        <!-- Notification Dropdown (Desktop) -->
+                        <div id="notification-dropdown-desktop" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl overflow-hidden z-[60]">
+                            <div class="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-slate-700">
+                                <span class="text-sm font-bold text-slate-800 dark:text-slate-200">Notificaciones</span>
+                                <button onclick="markAllRead()" class="text-xs text-primary hover:underline font-medium">Marcar todo como leído</button>
+                            </div>
+                            <div id="notification-list-desktop" class="max-h-80 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-700">
+                                <p class="text-center text-slate-500 dark:text-slate-400 text-sm py-6">Cargando...</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="relative text-right">
@@ -86,10 +106,30 @@
                 </div>
             </div>
 
-            <!-- Mobile: Hamburger Menu Button (Right Side) -->
-            <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined text-[28px]">menu</span>
-            </button>
+            <!-- Mobile: right-side icon group -->
+            <div class="lg:hidden flex items-center justify-center gap-1">
+                <!-- Notification Bell (Mobile) -->
+                <div class="relative flex items-center justify-center" id="notification-wrapper-mobile">
+                    <button id="notification-bell-mobile" onclick="toggleNotifications('mobile')" class="relative p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center" title="Notificaciones">
+                        <span class="material-symbols-outlined text-[26px]">notifications</span>
+                        <span id="notif-badge-mobile" class="hidden absolute top-1.5 right-1.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">0</span>
+                    </button>
+                    <!-- Notification Dropdown (Mobile) - fixed position to avoid overflow -->
+                    <div id="notification-dropdown-mobile" class="hidden fixed left-2 right-2 mt-2 bg-white dark:bg-custom-dark-input border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl overflow-hidden z-[60]" style="top: 64px;">
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-slate-700">
+                            <span class="text-sm font-bold text-slate-800 dark:text-slate-200">Notificaciones</span>
+                            <button onclick="markAllRead()" class="text-xs text-primary hover:underline font-medium">Marcar todo como leído</button>
+                        </div>
+                        <div id="notification-list-mobile" class="max-h-72 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-700">
+                            <p class="text-center text-slate-500 dark:text-slate-400 text-sm py-6">Cargando...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="toggleMobileMenu()" class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[26px]">menu</span>
+                </button>
+            </div>
         @endguest
     </div>
 </header>
@@ -266,4 +306,179 @@
             mobileThemeIcon.textContent = 'dark_mode';
         }
     });
+
+    // ──────────────────────────────────────────────────────────
+    // NOTIFICATION SYSTEM
+    // ──────────────────────────────────────────────────────────
+    @auth
+    (function () {
+        const CSRF = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
+        // Tracks which dropdown is open and when it was opened
+        let openScope       = null;
+        let openedAt        = null;
+        let dismissTimer    = null;
+        const GRACE_SECONDS = 5; // seconds after viewing before deletion
+
+        // ── Icon per notification type ──────────────────────────
+        function typeIcon(type) {
+            if (type === 'new_follower') {
+                return '<span class="material-symbols-outlined text-primary text-[18px]">person_add</span>';
+            } else if (type === 'post_commented') {
+                return '<span class="material-symbols-outlined text-blue-500 text-[18px]">chat_bubble</span>';
+            } else if (type === 'comment_liked') {
+                return '<span class="material-symbols-outlined text-purple-500 text-[18px]">favorite</span>';
+            } else {
+                return '<span class="material-symbols-outlined text-amber-500 text-[18px]">favorite</span>';
+            }
+        }
+
+        // ── Avatar HTML ─────────────────────────────────────────
+        function buildAvatar(name, avatarUrl, avatarColor) {
+            if (avatarUrl) {
+                return `<img src="${avatarUrl}" alt="${name}" class="w-9 h-9 rounded-full object-cover flex-shrink-0">`;
+            }
+            const initial = name ? name.charAt(0).toUpperCase() : '?';
+            return `<div class="w-9 h-9 rounded-full ${avatarColor} flex items-center justify-center text-white font-bold text-sm flex-shrink-0">${initial}</div>`;
+        }
+
+        // ── Render list ─────────────────────────────────────────
+        function renderNotifications(notifications, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (!notifications || notifications.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-500 dark:text-slate-400 text-sm py-8 px-4">No tienes notificaciones.</p>`;
+                return;
+            }
+
+            container.innerHTML = notifications.map(n => {
+                const unreadDot = !n.read
+                    ? '<span class="w-2 h-2 rounded-full bg-primary flex-shrink-0 mt-1.5"></span>'
+                    : '<span class="w-2 h-2 flex-shrink-0 mt-1.5"></span>';
+                const bgClass = !n.read ? 'bg-primary/5 dark:bg-primary/10' : '';
+
+                return `
+                    <a href="${n.url}" onclick="handleNotifClick('${n.id}', event)"
+                       class="flex items-start gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer ${bgClass}">
+                        ${buildAvatar(n.actor_name, n.actor_avatar, n.actor_avatar_color)}
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm text-slate-700 dark:text-slate-300 leading-snug">${n.message}</p>
+                            <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">${n.created_at}</p>
+                        </div>
+                        ${unreadDot}
+                    </a>`;
+            }).join('');
+        }
+
+        // ── Badge ───────────────────────────────────────────────
+        function updateBadge(count) {
+            ['desktop', 'mobile'].forEach(scope => {
+                const badge = document.getElementById(`notif-badge-${scope}`);
+                if (!badge) return;
+                if (count > 0) {
+                    badge.textContent = count > 99 ? '99+' : count;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            });
+        }
+
+        // ── Fetch from server ───────────────────────────────────
+        async function fetchNotifications() {
+            try {
+                const res  = await fetch('/notifications', {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    updateBadge(data.unread_count);
+                    renderNotifications(data.notifications, 'notification-list-desktop');
+                    renderNotifications(data.notifications, 'notification-list-mobile');
+                }
+            } catch (e) {
+                console.error('Error fetching notifications:', e);
+            }
+        }
+
+        // ── Toggle open/close ───────────────────────────────────
+        window.toggleNotifications = function(scope) {
+            const dropdown = document.getElementById(`notification-dropdown-${scope}`);
+            if (!dropdown) return;
+
+            const isHidden = dropdown.classList.contains('hidden');
+
+            // Close any open dropdown first
+            closeAllDropdowns();
+
+            if (isHidden) {
+                dropdown.classList.remove('hidden');
+                openScope  = scope;
+                openedAt   = Date.now();
+            }
+        };
+
+        // ── Close all dropdowns ─────────────────────────────────
+        function closeAllDropdowns() {
+            ['desktop', 'mobile'].forEach(s => {
+                const d = document.getElementById(`notification-dropdown-${s}`);
+                if (d && !d.classList.contains('hidden')) {
+                    d.classList.add('hidden');
+                    // Refresh list when closing to remove the read notifications
+                    fetchNotifications();
+                }
+            });
+            openScope = null;
+        }
+
+        // ── Click a notification → mark read + navigate ─────────
+        window.handleNotifClick = function(id, event) {
+            event.preventDefault();
+            const url = event.currentTarget.href;
+            fetch(`/notifications/${id}/read`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': CSRF,
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            }).finally(() => {
+                window.location.href = url;
+            });
+        };
+
+        // ── Mark all read (header button) ───────────────────────
+        window.markAllRead = function() {
+            fetch('/notifications/read-all', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': CSRF,
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            }).then(() => {
+                updateBadge(0);
+                fetchNotifications();
+            });
+        };
+
+        // ── Close on outside click ──────────────────────────────
+        document.addEventListener('click', function(event) {
+            if (!openScope) return;
+            const wrapper = document.getElementById(`notification-wrapper-${openScope}`);
+            // For mobile the dropdown is fixed (not inside wrapper), check by id too
+            const dropdown = document.getElementById(`notification-dropdown-${openScope}`);
+            const clickedInside = (wrapper && wrapper.contains(event.target))
+                               || (dropdown && dropdown.contains(event.target));
+            if (!clickedInside) {
+                closeAllDropdowns();
+            }
+        });
+
+        // ── Initial fetch + poll every 30 s ────────────────────
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchNotifications();
+            setInterval(fetchNotifications, 30000);
+        });
+    })();
+    @endauth
 </script>
+

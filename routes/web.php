@@ -64,6 +64,13 @@ Route::post('/tips/{tip}/like', [\App\Http\Controllers\LikeController::class, 't
 // BOOKMARKS
 Route::post('/tips/{tip}/bookmark', [\App\Http\Controllers\BookmarkController::class, 'toggle'])->middleware('auth')->name('tips.bookmark');
 
+// NOTIFICATIONS
+Route::middleware('auth')->prefix('notifications')->name('notifications.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\NotificationController::class, 'index'])->name('index');
+    Route::post('/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('markAsRead');
+    Route::post('/read-all', [\App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('markAllAsRead');
+});
+
 // FOLLOWS
 Route::post('/users/{user}/follow', [\App\Http\Controllers\FollowController::class, 'toggle'])->middleware('auth')->name('users.follow');
 Route::get('/users/{user}/followers', [\App\Http\Controllers\FollowController::class, 'followers'])->middleware('auth')->name('users.followers');

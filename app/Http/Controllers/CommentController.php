@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Tip;
+use App\Notifications\PostCommented;
+use App\Notifications\CommentLiked;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,9 +22,14 @@ class CommentController extends Controller
 
         $comment = Comment::create([
             'user_id' => Auth::id(),
-            'tip_id' => $tip->id,
+            'tip_id'  => $tip->id,
             'content' => $validated['content'],
         ]);
+
+        // Notificar al autor del tip si no es el mismo que comenta
+        if ($tip->user_id !== Auth::id()) {
+            $tip->user->notify(new PostCommented(Auth::user(), $comment));
+        }
 
         return redirect()->route('tips.show', $tip)->with('success', __('comments.comment_posted_success'));
     }
@@ -37,11 +44,17 @@ class CommentController extends Controller
         ]);
 
         $reply = Comment::create([
-            'user_id' => Auth::id(),
-            'tip_id' => $comment->tip_id,
+            'user_id'   => Auth::id(),
+            'tip_id'    => $comment->tip_id,
             'parent_id' => $comment->id,
-            'content' => $validated['content'],
+            'content'   => $validated['content'],
         ]);
+
+        // Notificar al autor del tip si no es el mismo que responde
+        $tip = $comment->tip;
+        if ($tip->user_id !== Auth::id()) {
+            $tip->user->notify(new PostCommented(Auth::user(), $reply));
+        }
 
         return redirect()->route('tips.show', $comment->tip)->with('success', __('comments.reply_posted_success'));
     }
@@ -65,6 +78,11 @@ class CommentController extends Controller
                 'comment_id' => $comment->id,
             ]);
             $liked = true;
+
+            // Notificar al autor del comentario si no es el mismo
+            if ($comment->user_id !== $user->id) {
+                $comment->user->notify(new CommentLiked($user, $comment));
+            }
         }
 
         return response()->json([
