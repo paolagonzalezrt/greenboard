@@ -423,7 +423,7 @@ function updateStrengthBar(entropy) {
         strengthColor = 'bg-yellow-500';
     }
 
-    strengthText.innerText = `${strengthLabel} (${entropy} bits)`;
+    strengthText.innerText = strengthLabel;
 
     bars.forEach((barId, index) => {
         const bar = document.getElementById(barId);
