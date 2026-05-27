@@ -16,6 +16,19 @@ return [
 
     'password' => 'Password',
     'password_placeholder' => 'Minimum 8 characters',
+    'password_strength' => 'Password strength',
+    'passwords_match' => 'Passwords match',
+    'password_requirements' => 'Password must contain:',
+    'min_chars' => 'At least 8 characters',
+    'uppercase' => 'Uppercase letter',
+    'lowercase' => 'Lowercase letter',
+    'number' => 'Number',
+    'special_char' => 'Special character',
+    'strength_very_weak' => 'Very Weak',
+    'strength_weak' => 'Weak',
+    'strength_fair' => 'Fair',
+    'strength_good' => 'Good',
+    'strength_strong' => 'Strong',
 
     'confirm_password' => 'Confirm Password',
     'confirm_password_placeholder' => 'Repeat password',
@@ -29,6 +42,7 @@ return [
 
     'error_email_exists' => 'This email is already registered. Try another or login.',
     'error_password_min' => 'The password must be at least 8 characters.',
+    'error_password_requirements' => 'Password must contain uppercase, lowercase, number and special character.',
     'error_name_required' => 'Name is required.',
     'error_email_required' => 'Email address is required.',
     'error_email_invalid' => 'Email address must be valid.',

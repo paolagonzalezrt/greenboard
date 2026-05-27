@@ -16,6 +16,19 @@ return [
 
     'password' => 'Contraseña',
     'password_placeholder' => 'Mínimo 8 caracteres',
+    'password_strength' => 'Seguridad de la contraseña',
+    'passwords_match' => 'Las contraseñas coinciden',
+    'password_requirements' => 'La contraseña debe contener:',
+    'min_chars' => 'Al menos 8 caracteres',
+    'uppercase' => 'Letra mayúscula',
+    'lowercase' => 'Letra minúscula',
+    'number' => 'Número',
+    'special_char' => 'Carácter especial',
+    'strength_very_weak' => 'Muy débil',
+    'strength_weak' => 'Débil',
+    'strength_fair' => 'Regular',
+    'strength_good' => 'Buena',
+    'strength_strong' => 'Fuerte',
 
     'confirm_password' => 'Confirmar contraseña',
     'confirm_password_placeholder' => 'Repetir contraseña',
@@ -29,6 +42,7 @@ return [
 
     'error_email_exists' => 'Este correo ya está registrado. Intenta con otro o inicia sesión.',
     'error_password_min' => 'La contraseña debe tener al menos 8 caracteres.',
+    'error_password_requirements' => 'La contraseña debe contener mayúscula, minúscula, número y carácter especial.',
     'error_name_required' => 'El nombre es requerido.',
     'error_email_required' => 'El correo electrónico es requerido.',
     'error_email_invalid' => 'El correo electrónico debe ser válido.',

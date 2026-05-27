@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TipController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Rules\StrongPassword;
 
 /*
 |--------------------------------------------------------------------------
@@ -135,8 +136,12 @@ Route::post('/register', function (Request $request) {
     $validated = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:8',
-        'password_confirmation' => 'required|same:password',
+       'password' => [
+            'required',
+            'string',
+            new StrongPassword(),
+            'confirmed',
+        ],
     ], [
         'name.required' => __('register.error_name_required'),
         'name.string' => 'El nombre debe ser texto',
