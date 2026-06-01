@@ -52,9 +52,9 @@
         </div>
 
         <div class="w-full max-w-[440px] mt-20 lg:mt-0">
-            <div class="mb-10 text-center lg:text-left">
+            <div class="mb-8 text-center lg:text-left">
                 <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">{{ __('login.form_title') }}</h2>
-                <p class="text-slate-600 dark:text-slate-400">{{ __('login.form_desc') }}</p>
+                <!-- <p class="text-slate-600 dark:text-slate-400">{{ __('login.form_desc') }}</p> -->
             </div>
 
             <form method="POST" action="{{ route('login') }}" class="space-y-5">

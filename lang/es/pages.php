@@ -47,6 +47,26 @@ return [
     'section_6_content' => 'Si tienes cualquier duda o comentario sobre cómo protegemos tu privacidad en GreenBoard, no dudes en ponerte en contacto con nosotros a través de',
     'privacy_email' => 'privacy@greenboard.io',
     
+    // Terms of Service
+    'terms_title' => 'Términos y Condiciones',
+    'terms_updated' => 'Última actualización: 27 de mayo, 2026',
+    'terms_intro' => 'Al crear una cuenta en GreenBoard, aceptas estos términos y condiciones. Por favor, léelos cuidadosamente.',
+    'terms_section_1_title' => '1. Uso de la Plataforma',
+    'terms_section_1_content' => 'GreenBoard es una plataforma dedicada al compartir conocimiento sobre sostenibilidad y vida ecológica. Al usar nuestros servicios, te comprometes a utilizarlos de manera legal, ética y respetuosa con los demás usuarios.',
+    'terms_section_2_title' => '2. Cuenta de Usuario',
+    'terms_section_2_content' => 'Eres responsable de mantener la confidencialidad de tu contraseña y de todas las actividades que ocurran bajo tu cuenta. Debes proporcionarnos información exacta y completa al registrarte.',
+    'terms_section_3_title' => '3. Contenido de Usuario',
+    'terms_section_3_content' => 'El contenido que publiques en GreenBoard es de tu responsabilidad. No debes publicar contenido que sea ilegal, ofensivo, discriminatorio o que viole los derechos de terceros. Nos reservamos el derecho de eliminar contenido que viole estos términos.',
+    'terms_section_4_title' => '4. Prohibiciones',
+    'terms_section_4_content' => 'No está permitido acosar, intimidar, o atacar a otros usuarios. Tampoco está permitido publicar contenido de odio, discriminatorio o que promueva la violencia. Las violaciones graves resultarán en la suspensión o eliminación de tu cuenta.',
+    'terms_section_5_title' => '5. Propiedad Intelectual',
+    'terms_section_5_content' => 'El contenido, diseño y funcionalidad de GreenBoard están protegidos por derechos de autor y leyes de propiedad intelectual. No está permitido reproducir, modificar o distribuir nuestro contenido sin permiso explícito.',
+    'terms_section_6_title' => '6. Limitación de Responsabilidad',
+    'terms_section_6_content' => 'GreenBoard se proporciona "tal cual". No garantizamos que el servicio sea ininterrumpido o libre de errores. No seremos responsables de daños indirectos o consecuentes derivados del uso de la plataforma.',
+    'terms_contact_title' => '7. Contacto',
+    'terms_contact_content' => 'Si tienes preguntas sobre estos términos y condiciones, contáctanos a través de ',
+    'contact_email' => 'contact@greenboard.io',
+    
     // Following
     'following_title' => 'Siguiendo',
     'following_subtitle' => 'Usuarios que estás siguiendo',

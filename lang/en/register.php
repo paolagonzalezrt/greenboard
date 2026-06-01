@@ -48,4 +48,9 @@ return [
     'error_email_invalid' => 'Email address must be valid.',
     'error_password_required' => 'Password is required.',
     'error_password_mismatch' => 'Passwords do not match.',
+    
+    // Terms and Privacy
+    'accept_terms' => 'I accept',
+    'accept_terms_html' => 'By signing up, I accept the :terms and the :privacy.',
+    'error_terms_required' => 'You must accept the terms and privacy policy to continue.',
 ];

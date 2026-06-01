@@ -47,6 +47,26 @@ return [
     'section_6_content' => 'Wenn Sie Fragen oder Anmerkungen zum Schutz Ihrer Privatsphäre bei GreenBoard haben, können Sie sich gerne an uns wenden unter',
     'privacy_email' => 'privacy@greenboard.io',
     
+    // Geschäftsbedingungen
+    'terms_title' => 'Geschäftsbedingungen',
+    'terms_updated' => 'Letzte Aktualisierung: 27. Mai 2026',
+    'terms_intro' => 'Durch die Erstellung eines Kontos auf GreenBoard stimmen Sie diesen Geschäftsbedingungen zu. Bitte lesen Sie sie sorgfältig durch.',
+    'terms_section_1_title' => '1. Nutzung der Plattform',
+    'terms_section_1_content' => 'GreenBoard ist eine Plattform, die sich dem Austausch von Wissen über Nachhaltigkeit und ökologisches Leben widmet. Durch die Nutzung unserer Dienste verpflichten Sie sich, diese in legaler, ethischer und respektvoller Weise gegenüber anderen Benutzern zu nutzen.',
+    'terms_section_2_title' => '2. Benutzerkonto',
+    'terms_section_2_content' => 'Sie sind verantwortlich für die Geheimhaltung Ihres Passworts und aller Aktivitäten, die unter Ihrem Konto stattfinden. Sie müssen uns bei der Registrierung genaue und vollständige Informationen zur Verfügung stellen.',
+    'terms_section_3_title' => '3. Benutzerinhalte',
+    'terms_section_3_content' => 'Die Inhalte, die Sie auf GreenBoard veröffentlichen, sind Ihre Verantwortung. Sie dürfen keine Inhalte veröffentlichen, die illegal, beleidigend, diskriminierend sind oder die Rechte Dritter verletzen. Wir behalten uns das Recht vor, Inhalte zu löschen, die gegen diese Bedingungen verstoßen.',
+    'terms_section_4_title' => '4. Verbote',
+    'terms_section_4_content' => 'Belästigung, Einschüchterung oder Angriffe gegen andere Benutzer sind nicht gestattet. Hassreden, diskriminierende Inhalte oder Inhalte, die Gewalt fördern, sind nicht zulässig. Schwerwiegende Verstöße führen zur Sperrung oder Löschung des Kontos.',
+    'terms_section_5_title' => '5. Geistiges Eigentum',
+    'terms_section_5_content' => 'Der Inhalt, das Design und die Funktionalität von GreenBoard sind durch Urheberrechte und Gesetze zum Schutz des geistigen Eigentums geschützt. Sie dürfen unsere Inhalte nicht reproduzieren, ändern oder verbreiten, ohne ausdrückliche Genehmigung.',
+    'terms_section_6_title' => '6. Haftungsbeschränkung',
+    'terms_section_6_content' => 'GreenBoard wird "wie besehen" bereitgestellt. Wir garantieren nicht, dass der Dienst unterbrechungsfrei oder fehlerfrei ist. Wir haften nicht für indirekte oder Folgeschäden, die sich aus der Nutzung der Plattform ergeben.',
+    'terms_contact_title' => '7. Kontakt',
+    'terms_contact_content' => 'Wenn Sie Fragen zu diesen Geschäftsbedingungen haben, kontaktieren Sie uns unter ',
+    'contact_email' => 'contact@greenboard.io',
+    
     // Folgend
     'following_title' => 'Folgende',
     'following_subtitle' => 'Benutzer, denen Sie folgen',

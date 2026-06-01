@@ -48,4 +48,10 @@ return [
     'error_email_invalid' => 'El correo electrónico debe ser válido.',
     'error_password_required' => 'La contraseña es requerida.',
     'error_password_mismatch' => 'Las contraseñas no coinciden.',
+    
+    // Terms and Privacy
+    'accept_terms' => 'Acepto',
+    'accept_terms_html' => 'Al registrarme, acepto los :terms y la :privacy.',
+    'error_terms_required' => 'Debes aceptar los términos y la política de privacidad para continuar.',
+
 ];

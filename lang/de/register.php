@@ -48,4 +48,10 @@ return [
     'error_email_invalid' => 'E-Mail-Adresse muss gültig sein.',
     'error_password_required' => 'Passwort ist erforderlich.',
     'error_password_mismatch' => 'Passwörter stimmen nicht überein.',
+    
+    // Terms and Privacy
+    'accept_terms' => 'Ich akzeptiere',
+    'accept_terms_html' => 'Mit der Registrierung akzeptiere ich die :terms und die :privacy.',
+    'error_terms_required' => 'Sie müssen den Bedingungen und der Datenschutzrichtlinie zustimmen, um fortzufahren.',
+
 ];

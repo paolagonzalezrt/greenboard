@@ -28,6 +28,11 @@ Route::get('/privacy-policy', function () {
     return view('privacy-policy');
 })->name('privacy-policy');
 
+// TERMS OF SERVICE
+Route::get('/terms-of-service', function () {
+    return view('terms-of-service');
+})->name('terms');
+
 /*
 |--------------------------------------------------------------------------
 | RUTAS DE AUTENTICACIÓN
@@ -142,6 +147,7 @@ Route::post('/register', function (Request $request) {
             new StrongPassword(),
             'confirmed',
         ],
+        'accept_terms' => 'required|accepted',
     ], [
         'name.required' => __('register.error_name_required'),
         'name.string' => 'El nombre debe ser texto',
@@ -153,6 +159,8 @@ Route::post('/register', function (Request $request) {
         'password.min' => __('register.error_password_min'),
         'password_confirmation.required' => __('register.error_password_required'),
         'password_confirmation.same' => __('register.error_password_mismatch'),
+        'accept_terms.required' => __('register.error_terms_required'),
+        'accept_terms.accepted' => __('register.error_terms_required'),
     ]);
 
     try {

@@ -87,15 +87,15 @@ style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4
 
 <div class="w-full max-w-[440px] mt-20 lg:mt-0">
 
-<div class="mb-10 text-center lg:text-left">
+<div class="mb-8 text-center lg:text-left">
 
 <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
 {{ __('register.form_title') }}
 </h2>
 
-<p class="text-slate-600 dark:text-slate-400">
+<!-- <p class="text-slate-600 dark:text-slate-400">
 {{ __('register.form_desc') }}
-</p>
+</p> -->
 
 </div>
 
@@ -292,13 +292,40 @@ class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border @erro
 </div>
 
 
+<!-- TERMS AND PRIVACY POLICY CHECKBOX -->
+
+<div class="flex items-start gap-3 mt-6">
+
+<input
+type="checkbox"
+id="accept_terms"
+name="accept_terms"
+class="w-5 h-5 mt-1 rounded border-slate-300 dark:border-slate-600 bg-white dark:bg-custom-dark-input text-primary focus:ring-2 focus:ring-primary cursor-pointer"
+value="1"
+{{ old('accept_terms') ? 'checked' : '' }}
+required
+onchange="validateCheckboxes()"
+>
+
+<label for="accept_terms" class="text-sm text-slate-700 dark:text-slate-300">
+    {!! __('register.accept_terms_html', [
+        'terms' => '<a href="'.route('terms').'" target="_blank" class="text-primary hover:underline inline"><strong>'.__('pages.terms_title').'</strong></a>',
+        'privacy' => '<a href="'.route('privacy-policy').'" target="_blank" class="text-primary hover:underline inline"><strong>'.__('pages.privacy_title').'</strong></a>'
+    ]) !!}
+</label>
+
+</div>
+
+@include('components.field-error', ['fieldName' => 'accept_terms'])
+
+
 <button id="submit-button" class="block w-2/5 sm:w-1/3 mx-auto bg-primary text-slate-900 font-extrabold text-sm py-3 rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-[0.95] !mt-8 disabled:bg-slate-300
 disabled:text-slate-500
 disabled:cursor-not-allowed
 disabled:shadow-none
 
 dark:disabled:bg-slate-700
-dark:disabled:text-white/70" type="submit" disabled>
+dark:disabled:text-white/70" type="submit">
 {{ __('register.signup_button') }}
 </button>
 
@@ -375,13 +402,39 @@ function validatePassword() {
     hasSpecial &&
     entropy >= 50;
     const passwordsMatch = password === confirmPassword && password !== '';
+    const acceptTerms = document.getElementById('accept_terms').checked;
     const submitButton = document.getElementById('submit-button');
     
-    if (allRequirementsMet && passwordsMatch) {
-        submitButton.disabled = false;
-    } else {
-        submitButton.disabled = true;
-    }
+    // Keep submit button always enabled
+    submitButton.disabled = false;
+}
+
+// Validate checkboxes for terms and privacy
+function validateCheckboxes() {
+    const acceptTerms = document.getElementById('accept_terms').checked;
+    const password = document.getElementById('register-password').value;
+    const confirmPassword = document.getElementById('register-password-confirm').value;
+    const entropy = calculateEntropy(password);
+    const submitButton = document.getElementById('submit-button');
+    
+    // Check requirements
+    const hasLength = password.length >= 8;
+    const hasUppercase = /\p{Lu}/u.test(password);
+    const hasLowercase = /\p{Ll}/u.test(password);
+    const hasNumber = /\p{N}/u.test(password);
+    const hasSpecial = /[\p{P}\p{S}]/u.test(password);
+    
+    const allRequirementsMet =
+    hasLength &&
+    hasUppercase &&
+    hasLowercase &&
+    hasNumber &&
+    hasSpecial &&
+    entropy >= 50;
+    const passwordsMatch = password === confirmPassword && password !== '';
+    
+    // Keep submit button always enabled
+    submitButton.disabled = false;
 }
 
 function updateRequirement(elementId, isMet) {
@@ -397,6 +450,7 @@ function updateRequirement(elementId, isMet) {
 
 function updateStrengthBar(entropy) {
     const strengthText = document.getElementById('strength-value');
+    const password = document.getElementById('register-password').value;
 
     const bars = [
         'strength-bar-1',
@@ -404,6 +458,26 @@ function updateStrengthBar(entropy) {
         'strength-bar-3',
         'strength-bar-4'
     ];
+
+    // If no password entered, clear strength text and reset bars
+    if (!password) {
+        strengthText.innerText = '';
+        const barsReset = [
+            'strength-bar-1',
+            'strength-bar-2',
+            'strength-bar-3',
+            'strength-bar-4'
+        ];
+        barsReset.forEach((barId) => {
+            const bar = document.getElementById(barId);
+            if (bar) bar.className = 'flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full transition-all';
+        });
+        const strengthBox = document.getElementById('password-strength');
+        if (strengthBox) strengthBox.classList.add('hidden');
+        const matchIndicator = document.getElementById('match-indicator');
+        if (matchIndicator) matchIndicator.classList.add('hidden');
+        return;
+    }
 
     let activeBars = 1;
     let strengthLabel = '{{ __("register.strength_very_weak") }}';
@@ -515,12 +589,17 @@ function showRequirements() {
 function hideRequirements() {
     const requirementsBox = document.getElementById('password-requirements');
     const strengthBox = document.getElementById('password-strength');
-    const password = document.getElementById('register-password').value;
-    if (!password) {
-        requirementsBox.classList.add('hidden');
-        strengthBox.classList.add('hidden');
-    }
+    // Hide only the detailed requirements box on blur; keep strength/match indicator visible
+    requirementsBox.classList.add('hidden');
+    // ensure strength box remains visible so match indicator and strength text persist
+    strengthBox.classList.remove('hidden');
 }
+
+// Inicializar estado del formulario al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    // Ejecutar validación para ajustar el estado del botón de envío
+    try { validatePassword(); } catch (e) { /* ignore */ }
+});
 
 </script>
 @endsection
