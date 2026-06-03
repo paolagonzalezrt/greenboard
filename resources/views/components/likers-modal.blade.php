@@ -87,22 +87,52 @@
 </div>
 
 <script>
-    function openLikersModal(tipId) {
+    let likersRequestId = 0;
+
+    function getLikersLoadingMarkup() {
+        return `
+            <div class="flex justify-center items-center h-12">
+                <div class="animate-spin">
+                    <span class="material-symbols-outlined text-slate-400">progress_activity</span>
+                </div>
+            </div>
+        `;
+    }
+
+    function resetLikersModal(showLoading = true) {
         const modal = document.getElementById('likers-modal');
         const likersList = document.getElementById('likers-list');
 
-        // Show modal
-        modal.classList.remove('hidden');
+        if (!modal || !likersList) {
+            return { modal, likersList };
+        }
 
-        // Fetch likers
-        fetch(`${window.APP_URL}/tips/${tipId}/likers`)
+        modal.classList.remove('hidden');
+        likersList.innerHTML = showLoading ? getLikersLoadingMarkup() : '';
+
+        return { modal, likersList };
+    }
+
+    function loadLikers(endpoint) {
+        const requestId = ++likersRequestId;
+        const { modal, likersList } = resetLikersModal(true);
+
+        if (!modal || !likersList) {
+            return;
+        }
+
+        fetch(endpoint)
             .then(response => response.json())
             .then(data => {
+                if (requestId !== likersRequestId || modal.classList.contains('hidden')) {
+                    return;
+                }
+
                 if (data.success && data.likers.length > 0) {
                     likersList.innerHTML = data.likers.map(liker => `
                         <div class="flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer transition-colors mb-2" onclick="closeLikersModal(); window.location.href='${window.APP_URL}/users/${liker.id}'">
                             <div class="flex-shrink-0">
-                                ${liker.avatar_url 
+                                ${liker.avatar_url
                                     ? `<img src="${liker.avatar_url}" alt="${liker.name}" class="w-10 h-10 rounded-full object-cover">`
                                     : `<div class="w-10 h-10 rounded-full ${liker.avatar_bg_color} flex items-center justify-center text-white font-bold text-sm">${liker.name.charAt(0)}</div>`
                                 }
@@ -117,51 +147,37 @@
                 }
             })
             .catch(error => {
+                if (requestId !== likersRequestId) {
+                    return;
+                }
+
                 console.error('Error loading likers:', error);
                 likersList.innerHTML = '<p class="text-center text-red-500 py-8">{{ __("messages.error.generic") }}</p>';
             });
+    }
+
+    function openLikersModal(tipId) {
+        loadLikers(`${window.APP_URL}/tips/${tipId}/likers`);
     }
 
     function openCommentLikersModal(commentId) {
-        const modal = document.getElementById('likers-modal');
-        const likersList = document.getElementById('likers-list');
-
-        // Show modal
-        modal.classList.remove('hidden');
-
-        // Fetch likers
-        fetch(`${window.APP_URL}/comments/${commentId}/likers`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && data.likers.length > 0) {
-                    likersList.innerHTML = data.likers.map(liker => `
-                        <div class="flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer transition-colors mb-2" onclick="closeLikersModal(); window.location.href='${window.APP_URL}/users/${liker.id}'">
-                            <div class="flex-shrink-0">
-                                ${liker.avatar_url 
-                                    ? `<img src="${liker.avatar_url}" alt="${liker.name}" class="w-10 h-10 rounded-full object-cover">`
-                                    : `<div class="w-10 h-10 rounded-full ${liker.avatar_bg_color} flex items-center justify-center text-white font-bold text-sm">${liker.name.charAt(0)}</div>`
-                                }
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="text-sm font-semibold text-slate-900 dark:text-white truncate">${liker.name}</p>
-                            </div>
-                        </div>
-                    `).join('');
-                } else {
-                    likersList.innerHTML = '<p class="text-center text-slate-500 dark:text-slate-400 py-8">{{ __("messages.no_likers") }}</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error loading likers:', error);
-                likersList.innerHTML = '<p class="text-center text-red-500 py-8">{{ __("messages.error.generic") }}</p>';
-            });
+        loadLikers(`${window.APP_URL}/comments/${commentId}/likers`);
     }
 
     function closeLikersModal() {
-        document.getElementById('likers-modal').classList.add('hidden');
+        likersRequestId++;
+        const modal = document.getElementById('likers-modal');
+        const likersList = document.getElementById('likers-list');
+
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+
+        if (likersList) {
+            likersList.innerHTML = '';
+        }
     }
 
-    // Close modal when pressing Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeLikersModal();

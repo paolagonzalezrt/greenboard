@@ -149,10 +149,10 @@
                     <div class="flex items-center gap-3 sm:gap-4">
                         @auth
                             <div class="flex items-center gap-1 text-gray-600 dark:text-gray-400 group relative likers-trigger select-none" data-tip-id="{{ $tip->id }}">
-                                <button onclick="toggleLike({{ $tip->id }})" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors cursor-pointer">
+                                <button onclick="event.stopPropagation(); toggleLike(this)" data-tip-id="{{ $tip->id }}" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors cursor-pointer">
                                     <span class="material-symbols-outlined text-[18px] sm:text-[20px] group-hover:scale-110 transition-transform {{ Auth::user()->hasLiked($tip) ? 'filled text-red-500' : '' }}" @if(Auth::user()->hasLiked($tip)) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>
                                 </button>
-                                <span class="text-[11px] sm:text-xs font-semibold like-count hover:opacity-70 cursor-pointer transition-opacity group-hover:opacity-70" onclick="event.stopPropagation(); openLikersModal({{ $tip->id }})">{{ $tip->likes()->count() }}</span>
+                                <span class="text-[11px] sm:text-xs font-semibold hover:opacity-70 cursor-pointer transition-opacity group-hover:opacity-70" data-like-count onclick="event.stopPropagation(); openLikersModal({{ $tip->id }})">{{ $tip->likes()->count() }}</span>
                             </div>
                         @else
                             <a href="{{ route('login') }}" class="flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors group select-none">

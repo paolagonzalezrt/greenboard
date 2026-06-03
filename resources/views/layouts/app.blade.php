@@ -286,9 +286,21 @@
         }
 
         // Toggle like functionality
-        function toggleLike(tipId) {
+        function toggleLike(element) {
             @auth
-                // Send request to backend
+                const likeButton = element?.closest('button[data-tip-id]') || element;
+                const tipId = likeButton?.dataset?.tipId;
+
+                if (!tipId) {
+                    return;
+                }
+
+                if (likeButton.dataset.loading === 'true') {
+                    return;
+                }
+
+                likeButton.dataset.loading = 'true';
+
                 fetch(`${window.APP_URL}/tips/${tipId}/like`, {
                     method: 'POST',
                     headers: {
@@ -298,78 +310,74 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
-                        // Find the container with this tip ID
-                        const containers = document.querySelectorAll(`[data-tip-id="${tipId}"]`);
-                        containers.forEach(container => {
-                            // Update the heart icon - it's the first material-symbols-outlined in the likers-trigger
-                            const likersTrigger = container.querySelector('.likers-trigger') || container.closest('.likers-trigger');
-                            if (!likersTrigger) return;
-                            
-                            const heartIcon = likersTrigger.querySelector('.material-symbols-outlined');
-                            const likeCount = likersTrigger.querySelector('span:nth-child(2)'); // The count span
-
-                            if (data.liked) {
-                                // Add filled style
-                                heartIcon.classList.add('filled', 'text-red-500');
-                                heartIcon.style.fontVariationSettings = "'FILL' 1";
-
-                                // Pop animation and floating hearts
-                                if (typeof gsap !== 'undefined') {
-                                    gsap.fromTo(heartIcon, 
-                                        { scale: 1 }, 
-                                        { scale: 1.5, duration: 0.4, ease: 'back.out(4)', clearProps: 'transform' }
-                                    );
-
-                                    const rect = heartIcon.getBoundingClientRect();
-                                    for (let i = 0; i < 5; i++) {
-                                        const particle = document.createElement('span');
-                                        particle.className = 'material-symbols-outlined absolute pointer-events-none text-red-500 z-[100]';
-                                        particle.style.fontVariationSettings = "'FILL' 1";
-                                        particle.innerText = 'favorite';
-                                        particle.style.left = (rect.left + window.scrollX + rect.width / 2) + 'px';
-                                        particle.style.top = (rect.top + window.scrollY + rect.height / 2) + 'px';
-                                        particle.style.transform = 'translate(-50%, -50%)';
-                                        document.body.appendChild(particle);
-
-                                        const angle = Math.random() * Math.PI * 2;
-                                        const distance = 25 + Math.random() * 35; 
-
-                                        gsap.fromTo(particle, 
-                                            { scale: 0.2, opacity: 1 },
-                                            {
-                                                x: Math.cos(angle) * distance,
-                                                y: Math.sin(angle) * distance - 45,
-                                                opacity: 0,
-                                                scale: Math.random() * 1.5 + 0.5,
-                                                duration: 1.5 + Math.random() * 1.0,
-                                                ease: 'power1.out',
-                                                onComplete: () => particle.remove()
-                                            }
-                                        );
-                                    }
-                                }
-                            } else {
-                                // Remove filled style
-                                heartIcon.classList.remove('filled', 'text-red-500');
-                                heartIcon.style.fontVariationSettings = "'FILL' 0";
-                            }
-
-                            // Update count
-                            if (likeCount) {
-                                likeCount.textContent = data.likes_count;
-                            }
-                        });
-                    } else {
+                    if (!data.success) {
                         showNotification(@json(__('messages.error.like')), 'error');
+                        return;
+                    }
+
+                    const heartIcon = likeButton.querySelector('.material-symbols-outlined');
+                    const likeContainer = likeButton.closest('.likers-trigger');
+                    const likeCount = likeContainer?.querySelector('[data-like-count]');
+
+                    if (!heartIcon) {
+                        return;
+                    }
+
+                    if (data.liked) {
+                        heartIcon.classList.add('filled', 'text-red-500');
+                        heartIcon.style.fontVariationSettings = "'FILL' 1";
+
+                        if (typeof gsap !== 'undefined') {
+                            gsap.fromTo(heartIcon,
+                                { scale: 1 },
+                                { scale: 1.5, duration: 0.4, ease: 'back.out(4)', clearProps: 'transform' }
+                            );
+
+                            const rect = heartIcon.getBoundingClientRect();
+                            for (let i = 0; i < 5; i++) {
+                                const particle = document.createElement('span');
+                                particle.className = 'material-symbols-outlined absolute pointer-events-none text-red-500 z-[100]';
+                                particle.style.fontVariationSettings = "'FILL' 1";
+                                particle.innerText = 'favorite';
+                                particle.style.left = (rect.left + window.scrollX + rect.width / 2) + 'px';
+                                particle.style.top = (rect.top + window.scrollY + rect.height / 2) + 'px';
+                                particle.style.transform = 'translate(-50%, -50%)';
+                                document.body.appendChild(particle);
+
+                                const angle = Math.random() * Math.PI * 2;
+                                const distance = 25 + Math.random() * 35;
+
+                                gsap.fromTo(particle,
+                                    { scale: 0.2, opacity: 1 },
+                                    {
+                                        x: Math.cos(angle) * distance,
+                                        y: Math.sin(angle) * distance - 45,
+                                        opacity: 0,
+                                        scale: Math.random() * 1.5 + 0.5,
+                                        duration: 1.5 + Math.random() * 1.0,
+                                        ease: 'power1.out',
+                                        onComplete: () => particle.remove()
+                                    }
+                                );
+                            }
+                        }
+                    } else {
+                        heartIcon.classList.remove('filled', 'text-red-500');
+                        heartIcon.style.fontVariationSettings = "'FILL' 0";
+                    }
+
+                    if (likeCount) {
+                        likeCount.textContent = data.likes_count;
                     }
                 })
-                    .catch(error => {
+                .catch(error => {
                     console.error('Error:', error);
                     showNotification(@json(__('messages.error.like')), 'error');
+                })
+                .finally(() => {
+                    delete likeButton.dataset.loading;
                 });
             @else
-                // Redirect to login if not authenticated
                 window.location.href = '{{ route('login') }}';
             @endauth
         }
