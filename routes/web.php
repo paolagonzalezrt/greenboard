@@ -33,6 +33,30 @@ Route::get('/terms-of-service', function () {
     return view('terms-of-service');
 })->name('terms');
 
+// TEMPORARY UTILITY ROUTE FOR HOSTINGER DEPLOYMENT (CLEAR CACHE AND RUN MIGRATIONS)
+Route::get('/clear-cache-migrate', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        $optimizeOutput = \Illuminate\Support\Facades\Artisan::output();
+
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        $migrateOutput = \Illuminate\Support\Facades\Artisan::output();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Cache cleared and migrations run successfully.',
+            'optimize_output' => $optimizeOutput,
+            'migrate_output' => $migrateOutput,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred.',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+});
+
 /*
 |--------------------------------------------------------------------------
 | RUTAS DE AUTENTICACIÓN

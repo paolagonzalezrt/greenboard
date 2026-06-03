@@ -95,12 +95,12 @@
         modal.classList.remove('hidden');
 
         // Fetch likers
-        fetch(`/tips/${tipId}/likers`)
+        fetch(`${window.APP_URL}/tips/${tipId}/likers`)
             .then(response => response.json())
             .then(data => {
                 if (data.success && data.likers.length > 0) {
                     likersList.innerHTML = data.likers.map(liker => `
-                        <div class="flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer transition-colors mb-2" onclick="closeLikersModal(); window.location.href='/users/${liker.id}'">
+                        <div class="flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer transition-colors mb-2" onclick="closeLikersModal(); window.location.href='${window.APP_URL}/users/${liker.id}'">
                             <div class="flex-shrink-0">
                                 ${liker.avatar_url 
                                     ? `<img src="${liker.avatar_url}" alt="${liker.name}" class="w-10 h-10 rounded-full object-cover">`
@@ -130,12 +130,12 @@
         modal.classList.remove('hidden');
 
         // Fetch likers
-        fetch(`/comments/${commentId}/likers`)
+        fetch(`${window.APP_URL}/comments/${commentId}/likers`)
             .then(response => response.json())
             .then(data => {
                 if (data.success && data.likers.length > 0) {
                     likersList.innerHTML = data.likers.map(liker => `
-                        <div class="flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer transition-colors mb-2" onclick="closeLikersModal(); window.location.href='/users/${liker.id}'">
+                        <div class="flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer transition-colors mb-2" onclick="closeLikersModal(); window.location.href='${window.APP_URL}/users/${liker.id}'">
                             <div class="flex-shrink-0">
                                 ${liker.avatar_url 
                                     ? `<img src="${liker.avatar_url}" alt="${liker.name}" class="w-10 h-10 rounded-full object-cover">`

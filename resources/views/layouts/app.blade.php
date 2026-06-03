@@ -4,6 +4,9 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        window.APP_URL = "{{ url('/') }}";
+    </script>
     <title>@yield('title', 'GreenBoard - Explore Community Tips')</title>
 
     {{-- Anti-flash: aplicar tema antes del primer render --}}
@@ -223,7 +226,7 @@
             pendingDeletePostId = null;
 
             // Send delete request to backend
-            fetch(`/tips/${tipId}`, {
+            fetch(`${window.APP_URL}/tips/${tipId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -286,7 +289,7 @@
         function toggleLike(tipId) {
             @auth
                 // Send request to backend
-                fetch(`/tips/${tipId}/like`, {
+                fetch(`${window.APP_URL}/tips/${tipId}/like`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -375,7 +378,7 @@
         function toggleBookmark(tipId, element) {
             @auth
                 // Send request to backend
-                fetch(`/tips/${tipId}/bookmark`, {
+                fetch(`${window.APP_URL}/tips/${tipId}/bookmark`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -541,7 +544,7 @@
             submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> <span>' + @json(__('messages.info.processing')) + '</span>';
 
             // Send report to backend - use appropriate endpoint based on type
-            const endpoint = reportType === 'comment' ? `/comments/${tipId}/report` : `/tips/${tipId}/report`;
+            const endpoint = reportType === 'comment' ? `${window.APP_URL}/comments/${tipId}/report` : `${window.APP_URL}/tips/${tipId}/report`;
 
             fetch(endpoint, {
                 method: 'POST',

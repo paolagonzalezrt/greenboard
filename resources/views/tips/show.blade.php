@@ -425,7 +425,7 @@
             const commentId = pendingCommentId;
             pendingCommentId = null;
 
-            fetch(`/comments/${commentId}`, {
+            fetch(`${window.APP_URL}/comments/${commentId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -497,7 +497,7 @@
             const icon = button.querySelector('.material-symbols-outlined');
             const text = button.querySelector('.follow-text');
 
-            fetch(`/users/${userId}/follow`, {
+            fetch(`${window.APP_URL}/users/${userId}/follow`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -561,7 +561,7 @@
 
         // Toggle like on comments
         function toggleCommentLike(commentId) {
-            fetch(`/comments/${commentId}/like`, {
+            fetch(`${window.APP_URL}/comments/${commentId}/like`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
