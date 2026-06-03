@@ -148,19 +148,19 @@
                 <div class="flex items-center justify-between pt-4">
                     <div class="flex items-center gap-3 sm:gap-4">
                         @auth
-                            <div class="flex items-center gap-1 text-gray-600 dark:text-gray-400 group relative likers-trigger" data-tip-id="{{ $tip->id }}">
+                            <div class="flex items-center gap-1 text-gray-600 dark:text-gray-400 group relative likers-trigger select-none" data-tip-id="{{ $tip->id }}">
                                 <button onclick="toggleLike({{ $tip->id }})" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors cursor-pointer">
                                     <span class="material-symbols-outlined text-[18px] sm:text-[20px] group-hover:scale-110 transition-transform {{ Auth::user()->hasLiked($tip) ? 'filled text-red-500' : '' }}" @if(Auth::user()->hasLiked($tip)) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>
                                 </button>
                                 <span class="text-[11px] sm:text-xs font-semibold like-count hover:opacity-70 cursor-pointer transition-opacity group-hover:opacity-70" onclick="event.stopPropagation(); openLikersModal({{ $tip->id }})">{{ $tip->likes()->count() }}</span>
                             </div>
                         @else
-                            <a href="{{ route('login') }}" class="flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors group">
+                            <a href="{{ route('login') }}" class="flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors group select-none">
                                 <span class="material-symbols-outlined text-[18px] sm:text-[20px] group-hover:scale-110 transition-transform">favorite</span>
                                 <span class="text-[11px] sm:text-xs font-semibold">{{ $tip->likes()->count() }}</span>
                             </a>
                         @endauth
-                        <div class="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+                        <div class="flex items-center gap-1 text-gray-600 dark:text-gray-400 select-none">
                             <span class="material-symbols-outlined text-[18px] sm:text-[20px]">chat_bubble</span>
                             <span class="text-[11px] sm:text-xs font-semibold">{{ $tip->comments()->count() }}</span>
                         </div>
@@ -236,14 +236,14 @@
 
                             <div class="flex items-center gap-4">
                                 @auth
-                                    <div class="flex items-center gap-1 text-xs text-gray-500 group relative likers-trigger" data-comment-id="{{ $comment->id }}">
+                                    <div class="flex items-center gap-1 text-xs text-gray-500 group relative likers-trigger select-none" data-comment-id="{{ $comment->id }}">
                                         <button onclick="toggleCommentLike({{ $comment->id }})" class="flex items-center text-gray-500 hover:text-red-500 transition-colors cursor-pointer">
                                             <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($comment) ? 'filled text-red-500' : '' }}" @if(Auth::user()->hasLikedComment($comment)) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>
                                         </button>
                                         <span class="font-semibold comment-like-count hover:opacity-70 cursor-pointer transition-opacity group-hover:opacity-70" onclick="event.stopPropagation(); openCommentLikersModal({{ $comment->id }})">{{ $comment->likes()->count() > 0 ? $comment->likes()->count() : __('comments.like') }}</span>
                                     </div>
                                 @else
-                                    <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group">
+                                    <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group select-none">
                                         <span class="material-symbols-outlined text-sm">favorite</span>
                                         <span class="font-semibold">{{ $comment->likes()->count() > 0 ? $comment->likes()->count() : __('comments.like') }}</span>
                                     </a>
@@ -317,14 +317,14 @@
                                                 </p>
                                                 <div class="flex items-center gap-4">
                                                     @auth
-                                                            <div class="flex items-center gap-1 text-xs text-gray-500 group relative likers-trigger" data-comment-id="{{ $reply->id }}">
+                                                            <div class="flex items-center gap-1 text-xs text-gray-500 group relative likers-trigger select-none" data-comment-id="{{ $reply->id }}">
                                                                 <button onclick="toggleCommentLike({{ $reply->id }})" class="flex items-center text-gray-500 hover:text-red-500 transition-colors cursor-pointer">
                                                                     <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($reply) ? 'filled text-red-500' : '' }}" @if(Auth::user()->hasLikedComment($reply)) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>
                                                                 </button>
                                                                 <span class="font-semibold comment-like-count hover:opacity-70 cursor-pointer transition-opacity group-hover:opacity-70" onclick="event.stopPropagation(); openCommentLikersModal({{ $reply->id }})">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : __('comments.like') }}</span>
                                                             </div>
                                                         @else
-                                                            <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group">
+                                                            <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group select-none">
                                                                 <span class="material-symbols-outlined text-sm">favorite</span>
                                                                 <span class="font-semibold">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : __('comments.like') }}</span>
                                                             </a>

@@ -45,7 +45,7 @@ return [
     ],
 
     'likes' => 'Me gusta',
-    'likers' => 'Quiénes lo dieron like',
-    'no_likers' => 'Aún no hay likes',
+    'likers' => 'A quiénes les gusta',
+    'no_likers' => 'Aún no hay me gusta',
     'close' => 'Cerrar',
 ];

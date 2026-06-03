@@ -81,7 +81,7 @@
                 <h4 class="text-base sm:text-lg font-bold leading-tight mb-1.5 sm:mb-2 group-hover:text-primary transition-colors line-clamp-2">{{ $title }}</h4>
                 <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-normal leading-relaxed line-clamp-2 sm:line-clamp-3">{{ $description }}</p>
             </div>
-            <div class="flex items-center justify-between text-slate-400 mt-auto">
+            <div class="flex items-center justify-between text-slate-400 mt-auto select-none">
                 <div class="flex items-center gap-3 sm:gap-4">
                     <div class="flex items-center gap-1 hover:text-primary cursor-pointer transition-colors" onclick="event.stopPropagation(); toggleLike({{ $id }}, this)">
                         <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isLiked ? 'filled text-red-500' : '' }}" @if($isLiked) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>
@@ -153,7 +153,7 @@
             </div>
 
             <!-- Actions -->
-            <div class="flex items-center justify-between text-slate-400 mt-auto" data-tip-id="{{ $id }}">
+            <div class="flex items-center justify-between text-slate-400 mt-auto select-none" data-tip-id="{{ $id }}">
                 <div class="flex items-center gap-3 sm:gap-4">
                     <div class="flex items-center gap-1 text-slate-400 group relative likers-trigger">
                         <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isLiked ? 'filled text-red-500' : '' }} hover:text-primary cursor-pointer transition-colors" onclick="event.stopPropagation(); toggleLike({{ $id }})" @if($isLiked) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>

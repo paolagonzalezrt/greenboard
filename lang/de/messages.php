@@ -45,7 +45,7 @@ return [
     ],
 
     'likes' => 'Gefällt mir',
-    'likers' => 'Wer hat es gelikt',
-    'no_likers' => 'Noch keine Likes',
+    'likers' => 'Personen, denen das gefällt',
+    'no_likers' => 'Noch keine Gefällt-mir-Angaben',
     'close' => 'Schließen',
 ];

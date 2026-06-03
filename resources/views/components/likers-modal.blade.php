@@ -69,6 +69,9 @@
         <!-- Header -->
         <div class="flex items-center justify-between px-8 pt-6 pb-2">
             <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">{{ __('messages.likes') }}</h3>
+            <button onclick="closeLikersModal()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">close</span>
+            </button>
         </div>
 
         <!-- Content -->
@@ -115,7 +118,7 @@
             })
             .catch(error => {
                 console.error('Error loading likers:', error);
-                likersList.innerHTML = '<p class="text-center text-red-500 py-8">Error al cargar likers</p>';
+                likersList.innerHTML = '<p class="text-center text-red-500 py-8">{{ __("messages.error.generic") }}</p>';
             });
     }
 
@@ -150,7 +153,7 @@
             })
             .catch(error => {
                 console.error('Error loading likers:', error);
-                likersList.innerHTML = '<p class="text-center text-red-500 py-8">Error al cargar likers</p>';
+                likersList.innerHTML = '<p class="text-center text-red-500 py-8">{{ __("messages.error.generic") }}</p>';
             });
     }
 
