@@ -43,4 +43,9 @@ return [
         'processing' => 'Procesando...',
         'empty' => 'No hay elementos para mostrar.',
     ],
+
+    'likes' => 'Me gusta',
+    'likers' => 'Quiénes lo dieron like',
+    'no_likers' => 'Aún no hay likes',
+    'close' => 'Cerrar',
 ];

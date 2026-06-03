@@ -43,4 +43,9 @@ return [
         'processing' => 'Processing...',
         'empty' => 'No items to display.',
     ],
+
+    'likes' => 'Likes',
+    'likers' => 'Who liked it',
+    'no_likers' => 'No likes yet',
+    'close' => 'Close',
 ];

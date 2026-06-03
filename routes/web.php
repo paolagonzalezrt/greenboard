@@ -62,10 +62,12 @@ Route::post('/comments/{comment}/report', [\App\Http\Controllers\ReportControlle
 Route::post('/tips/{tip}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->middleware('auth')->name('comments.store');
 Route::post('/comments/{comment}/reply', [\App\Http\Controllers\CommentController::class, 'reply'])->middleware('auth')->name('comments.reply');
 Route::post('/comments/{comment}/like', [\App\Http\Controllers\CommentController::class, 'like'])->middleware('auth')->name('comments.like');
+Route::get('/comments/{comment}/likers', [\App\Http\Controllers\CommentController::class, 'getLikers'])->name('comments.likers');
 Route::delete('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'destroy'])->middleware('auth')->name('comments.destroy');
 
 // LIKES
 Route::post('/tips/{tip}/like', [\App\Http\Controllers\LikeController::class, 'toggle'])->middleware('auth')->name('tips.like');
+Route::get('/tips/{tip}/likers', [\App\Http\Controllers\LikeController::class, 'getLikers'])->name('tips.likers');
 
 // BOOKMARKS
 Route::post('/tips/{tip}/bookmark', [\App\Http\Controllers\BookmarkController::class, 'toggle'])->middleware('auth')->name('tips.bookmark');

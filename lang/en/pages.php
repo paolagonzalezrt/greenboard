@@ -45,7 +45,7 @@ return [
     'section_5_content' => 'You can edit your profile or delete your account at any time from the settings. Upon deleting your account, your personal data will be permanently removed from our servers.',
     'section_6_title' => '6. Contact',
     'section_6_content' => 'If you have any questions or comments about how we protect your privacy at GreenBoard, please feel free to get in touch with us at',
-    'privacy_email' => 'privacy@greenboard.io',
+    'privacy_email' => 'contact@greenboard.com',
     
     // Terms of Service
     'terms_title' => 'Terms and Conditions',
@@ -65,7 +65,7 @@ return [
     'terms_section_6_content' => 'GreenBoard is provided "as is". We do not guarantee that the service will be uninterrupted or error-free. We will not be liable for indirect or consequential damages arising from the use of the platform.',
     'terms_contact_title' => '7. Contact',
     'terms_contact_content' => 'If you have questions about these terms and conditions, please contact us at ',
-    'contact_email' => 'contact@greenboard.io',
+    'contact_email' => 'contact@greenboard.com',
     
     // Following
     'following_title' => 'Following',

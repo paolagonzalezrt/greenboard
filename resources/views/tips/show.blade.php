@@ -148,10 +148,12 @@
                 <div class="flex items-center justify-between pt-4">
                     <div class="flex items-center gap-3 sm:gap-4">
                         @auth
-                            <button onclick="toggleLike({{ $tip->id }}, this)" class="flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors group cursor-pointer">
-                                <span class="material-symbols-outlined text-[18px] sm:text-[20px] group-hover:scale-110 transition-transform {{ Auth::user()->hasLiked($tip) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLiked($tip) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
-                                <span class="text-[11px] sm:text-xs font-semibold like-count">{{ $tip->likes()->count() }}</span>
-                            </button>
+                            <div class="flex items-center gap-1 text-gray-600 dark:text-gray-400 group relative likers-trigger" data-tip-id="{{ $tip->id }}">
+                                <button onclick="toggleLike({{ $tip->id }})" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors cursor-pointer">
+                                    <span class="material-symbols-outlined text-[18px] sm:text-[20px] group-hover:scale-110 transition-transform {{ Auth::user()->hasLiked($tip) ? 'filled text-red-500' : '' }}" @if(Auth::user()->hasLiked($tip)) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>
+                                </button>
+                                <span class="text-[11px] sm:text-xs font-semibold like-count hover:opacity-70 cursor-pointer transition-opacity group-hover:opacity-70" onclick="event.stopPropagation(); openLikersModal({{ $tip->id }})">{{ $tip->likes()->count() }}</span>
+                            </div>
                         @else
                             <a href="{{ route('login') }}" class="flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors group">
                                 <span class="material-symbols-outlined text-[18px] sm:text-[20px] group-hover:scale-110 transition-transform">favorite</span>
@@ -169,7 +171,7 @@
                         </button>
                         @auth
                             <button class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors p-1 bookmark-btn" onclick="toggleBookmark({{ $tip->id }}, this)" data-tip-id="{{ $tip->id }}">
-                                <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ Auth::user()->hasBookmarked($tip) ? 'filled text-primary' : '' }}" style="{{ Auth::user()->hasBookmarked($tip) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">bookmark</span>
+                                <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ Auth::user()->hasBookmarked($tip) ? 'filled text-primary' : '' }}" @if(Auth::user()->hasBookmarked($tip)) style="font-variation-settings: 'FILL' 1;" @endif>bookmark</span>
                             </button>
                         @else
                             <a href="{{ route('login') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors p-1">
@@ -234,10 +236,12 @@
 
                             <div class="flex items-center gap-4">
                                 @auth
-                                    <button onclick="toggleCommentLike({{ $comment->id }}, this)" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group cursor-pointer">
-                                        <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($comment) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLikedComment($comment) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
-                                        <span class="font-semibold comment-like-count">{{ $comment->likes()->count() > 0 ? $comment->likes()->count() : __('comments.like') }}</span>
-                                    </button>
+                                    <div class="flex items-center gap-1 text-xs text-gray-500 group relative likers-trigger" data-comment-id="{{ $comment->id }}">
+                                        <button onclick="toggleCommentLike({{ $comment->id }})" class="flex items-center text-gray-500 hover:text-red-500 transition-colors cursor-pointer">
+                                            <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($comment) ? 'filled text-red-500' : '' }}" @if(Auth::user()->hasLikedComment($comment)) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>
+                                        </button>
+                                        <span class="font-semibold comment-like-count hover:opacity-70 cursor-pointer transition-opacity group-hover:opacity-70" onclick="event.stopPropagation(); openCommentLikersModal({{ $comment->id }})">{{ $comment->likes()->count() > 0 ? $comment->likes()->count() : __('comments.like') }}</span>
+                                    </div>
                                 @else
                                     <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group">
                                         <span class="material-symbols-outlined text-sm">favorite</span>
@@ -313,10 +317,12 @@
                                                 </p>
                                                 <div class="flex items-center gap-4">
                                                     @auth
-                                                            <button onclick="toggleCommentLike({{ $reply->id }}, this)" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group cursor-pointer">
-                                                                <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($reply) ? 'filled text-red-500' : '' }}" style="{{ Auth::user()->hasLikedComment($reply) ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
-                                                                <span class="font-semibold comment-like-count">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : __('comments.like') }}</span>
-                                                            </button>
+                                                            <div class="flex items-center gap-1 text-xs text-gray-500 group relative likers-trigger" data-comment-id="{{ $reply->id }}">
+                                                                <button onclick="toggleCommentLike({{ $reply->id }})" class="flex items-center text-gray-500 hover:text-red-500 transition-colors cursor-pointer">
+                                                                    <span class="material-symbols-outlined text-sm {{ Auth::user()->hasLikedComment($reply) ? 'filled text-red-500' : '' }}" @if(Auth::user()->hasLikedComment($reply)) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>
+                                                                </button>
+                                                                <span class="font-semibold comment-like-count hover:opacity-70 cursor-pointer transition-opacity group-hover:opacity-70" onclick="event.stopPropagation(); openCommentLikersModal({{ $reply->id }})">{{ $reply->likes()->count() > 0 ? $reply->likes()->count() : __('comments.like') }}</span>
+                                                            </div>
                                                         @else
                                                             <a href="{{ route('login') }}" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors group">
                                                                 <span class="material-symbols-outlined text-sm">favorite</span>
@@ -554,7 +560,7 @@
         }
 
         // Toggle like on comments
-        function toggleCommentLike(commentId, element) {
+        function toggleCommentLike(commentId) {
             fetch(`/comments/${commentId}/like`, {
                 method: 'POST',
                 headers: {
@@ -565,67 +571,78 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Update the heart icon
-                    const heartIcon = element.querySelector('.material-symbols-outlined');
-                    const likeCount = element.querySelector('.comment-like-count');
+                    // Find all likers-trigger containers for this comment
+                    const containers = document.querySelectorAll(`[data-comment-id="${commentId}"]`);
+                    containers.forEach(container => {
+                        const likersTrigger = container.querySelector('.likers-trigger') || container.closest('.likers-trigger');
+                        if (!likersTrigger) return;
 
-                    if (data.liked) {
-                        // Add filled style
-                        heartIcon.classList.add('filled', 'text-red-500');
-                        heartIcon.style.fontVariationSettings = "'FILL' 1";
+                        // Update the heart icon
+                        const heartIcon = likersTrigger.querySelector('.material-symbols-outlined');
+                        const likeCount = likersTrigger.querySelector('span:nth-child(2)'); // The count span
 
-                        // Pop animation and floating hearts
-                        if (typeof gsap !== 'undefined') {
-                            gsap.fromTo(heartIcon, 
-                                { scale: 1 }, 
-                                { scale: 1.5, duration: 0.4, ease: 'back.out(4)', clearProps: 'transform' }
-                            );
+                        if (data.liked) {
+                            // Add filled style
+                            heartIcon.classList.add('filled', 'text-red-500');
+                            heartIcon.style.fontVariationSettings = "'FILL' 1";
 
-                            const rect = heartIcon.getBoundingClientRect();
-                            for (let i = 0; i < 5; i++) {
-                                const particle = document.createElement('span');
-                                particle.className = 'material-symbols-outlined absolute pointer-events-none text-red-500 z-[100]';
-                                particle.style.fontVariationSettings = "'FILL' 1";
-                                particle.innerText = 'favorite';
-                                particle.style.left = (rect.left + window.scrollX + rect.width / 2) + 'px';
-                                particle.style.top = (rect.top + window.scrollY + rect.height / 2) + 'px';
-                                particle.style.transform = 'translate(-50%, -50%)';
-                                document.body.appendChild(particle);
-
-                                const angle = Math.random() * Math.PI * 2;
-                                const distance = 25 + Math.random() * 35; 
-
-                                gsap.fromTo(particle, 
-                                    { scale: 0.2, opacity: 1 },
-                                    {
-                                        x: Math.cos(angle) * distance,
-                                        y: Math.sin(angle) * distance - 45,
-                                        opacity: 0,
-                                        scale: Math.random() * 1.5 + 0.5,
-                                        duration: 1.5 + Math.random() * 1.0,
-                                        ease: 'power1.out',
-                                        onComplete: () => particle.remove()
-                                    }
+                            // Pop animation and floating hearts
+                            if (typeof gsap !== 'undefined') {
+                                gsap.fromTo(heartIcon, 
+                                    { scale: 1 }, 
+                                    { scale: 1.5, duration: 0.4, ease: 'back.out(4)', clearProps: 'transform' }
                                 );
+
+                                const rect = heartIcon.getBoundingClientRect();
+                                for (let i = 0; i < 5; i++) {
+                                    const particle = document.createElement('span');
+                                    particle.className = 'material-symbols-outlined absolute pointer-events-none text-red-500 z-[100]';
+                                    particle.style.fontVariationSettings = "'FILL' 1";
+                                    particle.innerText = 'favorite';
+                                    particle.style.left = (rect.left + window.scrollX + rect.width / 2) + 'px';
+                                    particle.style.top = (rect.top + window.scrollY + rect.height / 2) + 'px';
+                                    particle.style.transform = 'translate(-50%, -50%)';
+                                    document.body.appendChild(particle);
+
+                                    const angle = Math.random() * Math.PI * 2;
+                                    const distance = 25 + Math.random() * 35; 
+
+                                    gsap.fromTo(particle, 
+                                        { scale: 0.2, opacity: 1 },
+                                        {
+                                            x: Math.cos(angle) * distance,
+                                            y: Math.sin(angle) * distance - 45,
+                                            opacity: 0,
+                                            scale: Math.random() * 1.5 + 0.5,
+                                            duration: 1.5 + Math.random() * 1.0,
+                                            ease: 'power1.out',
+                                            onComplete: () => particle.remove()
+                                        }
+                                    );
+                                }
+                            }
+                        } else {
+                            // Remove filled style
+                            heartIcon.classList.remove('filled', 'text-red-500');
+                            heartIcon.style.fontVariationSettings = "'FILL' 0";
+                        }
+
+                        // Update count
+                        if (likeCount) {
+                            if (data.likes_count > 0) {
+                                likeCount.textContent = data.likes_count;
+                            } else {
+                                likeCount.textContent = 'Like';
                             }
                         }
-                    } else {
-                        // Remove filled style
-                        heartIcon.classList.remove('filled', 'text-red-500');
-                        heartIcon.style.fontVariationSettings = "'FILL' 0";
-                    }
-
-                    // Update count - show number or "Like" text
-                    if (data.likes_count > 0) {
-                        likeCount.textContent = data.likes_count;
-                    } else {
-                        likeCount.textContent = 'Like';
-                    }
+                    });
+                } else {
+                    alert(@json(__('messages.error.like')));
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Error al procesar el like. Por favor intenta de nuevo.');
+                alert(@json(__('messages.error.like')));
             });
         }
     </script>

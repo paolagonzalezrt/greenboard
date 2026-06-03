@@ -45,7 +45,7 @@ return [
     'section_5_content' => 'Puedes editar tu perfil o eliminar tu cuenta en cualquier momento desde los ajustes. Al eliminar tu cuenta, tus datos personales serán borrados de nuestros servidores de forma permanente.',
     'section_6_title' => '6. Contacto',
     'section_6_content' => 'Si tienes cualquier duda o comentario sobre cómo protegemos tu privacidad en GreenBoard, no dudes en ponerte en contacto con nosotros a través de',
-    'privacy_email' => 'privacy@greenboard.io',
+    'privacy_email' => 'contact@greenboard.com',
     
     // Terms of Service
     'terms_title' => 'Términos y Condiciones',
@@ -65,7 +65,7 @@ return [
     'terms_section_6_content' => 'GreenBoard se proporciona "tal cual". No garantizamos que el servicio sea ininterrumpido o libre de errores. No seremos responsables de daños indirectos o consecuentes derivados del uso de la plataforma.',
     'terms_contact_title' => '7. Contacto',
     'terms_contact_content' => 'Si tienes preguntas sobre estos términos y condiciones, contáctanos a través de ',
-    'contact_email' => 'contact@greenboard.io',
+    'contact_email' => 'contact@greenboard.com',
     
     // Following
     'following_title' => 'Siguiendo',

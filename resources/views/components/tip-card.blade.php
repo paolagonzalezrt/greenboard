@@ -84,7 +84,7 @@
             <div class="flex items-center justify-between text-slate-400 mt-auto">
                 <div class="flex items-center gap-3 sm:gap-4">
                     <div class="flex items-center gap-1 hover:text-primary cursor-pointer transition-colors" onclick="event.stopPropagation(); toggleLike({{ $id }}, this)">
-                        <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isLiked ? 'filled text-red-500' : '' }}" style="{{ $isLiked ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
+                        <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isLiked ? 'filled text-red-500' : '' }}" @if($isLiked) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>
                         <span class="text-[11px] sm:text-xs font-bold like-count">{{ $likes }}</span>
                     </div>
                     <div class="flex items-center gap-1 hover:text-primary cursor-pointer transition-colors">
@@ -97,7 +97,7 @@
                         <span class="material-symbols-outlined text-[18px] sm:text-[20px]">share</span>
                     </button>
                     <button class="hover:text-primary transition-colors p-1 bookmark-btn" onclick="event.stopPropagation(); toggleBookmark({{ $id }}, this)" data-tip-id="{{ $id }}">
-                        <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isBookmarked ? 'filled text-primary' : '' }}" style="{{ $isBookmarked ? 'font-variation-settings: \'FILL\' 1;' : '' }}">bookmark</span>
+                        <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isBookmarked ? 'filled text-primary' : '' }}" @if($isBookmarked) style="font-variation-settings: 'FILL' 1;" @endif>bookmark</span>
                     </button>
                 </div>
             </div>
@@ -153,11 +153,11 @@
             </div>
 
             <!-- Actions -->
-            <div class="flex items-center justify-between text-slate-400 mt-auto">
+            <div class="flex items-center justify-between text-slate-400 mt-auto" data-tip-id="{{ $id }}">
                 <div class="flex items-center gap-3 sm:gap-4">
-                    <div class="flex items-center gap-1 hover:text-primary cursor-pointer transition-colors" onclick="event.stopPropagation(); toggleLike({{ $id }}, this)">
-                        <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isLiked ? 'filled text-red-500' : '' }}" style="{{ $isLiked ? 'font-variation-settings: \'FILL\' 1;' : '' }}">favorite</span>
-                        <span class="text-[11px] sm:text-xs font-bold like-count">{{ $likes }}</span>
+                    <div class="flex items-center gap-1 text-slate-400 group relative likers-trigger">
+                        <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isLiked ? 'filled text-red-500' : '' }} hover:text-primary cursor-pointer transition-colors" onclick="event.stopPropagation(); toggleLike({{ $id }})" @if($isLiked) style="font-variation-settings: 'FILL' 1;" @endif>favorite</span>
+                        <span class="text-[11px] sm:text-xs font-bold hover:text-primary cursor-pointer transition-colors group-hover:opacity-70" onclick="event.stopPropagation(); openLikersModal({{ $id }})">{{ $likes }}</span>
                     </div>
                     <div class="flex items-center gap-1 hover:text-primary cursor-pointer transition-colors">
                         <span class="material-symbols-outlined text-[18px] sm:text-[20px]">chat_bubble</span>
@@ -169,7 +169,7 @@
                         <span class="material-symbols-outlined text-[18px] sm:text-[20px]">share</span>
                     </button>
                     <button class="hover:text-primary transition-colors p-1 bookmark-btn" onclick="event.stopPropagation(); toggleBookmark({{ $id }}, this)" data-tip-id="{{ $id }}">
-                        <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isBookmarked ? 'filled text-primary' : '' }}" style="{{ $isBookmarked ? 'font-variation-settings: \'FILL\' 1;' : '' }}">bookmark</span>
+                        <span class="material-symbols-outlined text-[18px] sm:text-[20px] {{ $isBookmarked ? 'filled text-primary' : '' }}" @if($isBookmarked) style="font-variation-settings: 'FILL' 1;" @endif>bookmark</span>
                     </button>
                 </div>
             </div>

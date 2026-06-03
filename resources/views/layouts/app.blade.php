@@ -100,6 +100,14 @@
             0%, 100% { transform: translateY(0px) translateX(0px); }
             50% { transform: translateY(-20px) translateX(10px); }
         }
+        
+        /* Prevent selection of material icons */
+        .material-symbols-outlined {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen @yield('body-class', 'p-0 m-0') overflow-x-hidden @yield('body-position', 'relative')">
@@ -275,7 +283,7 @@
         }
 
         // Toggle like functionality
-        function toggleLike(tipId, element) {
+        function toggleLike(tipId) {
             @auth
                 // Send request to backend
                 fetch(`/tips/${tipId}/like`, {
@@ -288,58 +296,69 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Update the heart icon
-                        const heartIcon = element.querySelector('.material-symbols-outlined');
-                        const likeCount = element.querySelector('.like-count');
+                        // Find the container with this tip ID
+                        const containers = document.querySelectorAll(`[data-tip-id="${tipId}"]`);
+                        containers.forEach(container => {
+                            // Update the heart icon - it's the first material-symbols-outlined in the likers-trigger
+                            const likersTrigger = container.querySelector('.likers-trigger') || container.closest('.likers-trigger');
+                            if (!likersTrigger) return;
+                            
+                            const heartIcon = likersTrigger.querySelector('.material-symbols-outlined');
+                            const likeCount = likersTrigger.querySelector('span:nth-child(2)'); // The count span
 
-                        if (data.liked) {
-                            // Add filled style
-                            heartIcon.classList.add('filled', 'text-red-500');
-                            heartIcon.style.fontVariationSettings = "'FILL' 1";
+                            if (data.liked) {
+                                // Add filled style
+                                heartIcon.classList.add('filled', 'text-red-500');
+                                heartIcon.style.fontVariationSettings = "'FILL' 1";
 
-                            // Pop animation and floating hearts
-                            if (typeof gsap !== 'undefined') {
-                                gsap.fromTo(heartIcon, 
-                                    { scale: 1 }, 
-                                    { scale: 1.5, duration: 0.4, ease: 'back.out(4)', clearProps: 'transform' }
-                                );
-
-                                const rect = heartIcon.getBoundingClientRect();
-                                for (let i = 0; i < 5; i++) {
-                                    const particle = document.createElement('span');
-                                    particle.className = 'material-symbols-outlined absolute pointer-events-none text-red-500 z-[100]';
-                                    particle.style.fontVariationSettings = "'FILL' 1";
-                                    particle.innerText = 'favorite';
-                                    particle.style.left = (rect.left + window.scrollX + rect.width / 2) + 'px';
-                                    particle.style.top = (rect.top + window.scrollY + rect.height / 2) + 'px';
-                                    particle.style.transform = 'translate(-50%, -50%)';
-                                    document.body.appendChild(particle);
-
-                                    const angle = Math.random() * Math.PI * 2;
-                                    const distance = 25 + Math.random() * 35; 
-
-                                    gsap.fromTo(particle, 
-                                        { scale: 0.2, opacity: 1 },
-                                        {
-                                            x: Math.cos(angle) * distance,
-                                            y: Math.sin(angle) * distance - 45,
-                                            opacity: 0,
-                                            scale: Math.random() * 1.5 + 0.5,
-                                            duration: 1.5 + Math.random() * 1.0,
-                                            ease: 'power1.out',
-                                            onComplete: () => particle.remove()
-                                        }
+                                // Pop animation and floating hearts
+                                if (typeof gsap !== 'undefined') {
+                                    gsap.fromTo(heartIcon, 
+                                        { scale: 1 }, 
+                                        { scale: 1.5, duration: 0.4, ease: 'back.out(4)', clearProps: 'transform' }
                                     );
-                                }
-                            }
-                        } else {
-                            // Remove filled style
-                            heartIcon.classList.remove('filled', 'text-red-500');
-                            heartIcon.style.fontVariationSettings = "'FILL' 0";
-                        }
 
-                        // Update count
-                        likeCount.textContent = data.likes_count;
+                                    const rect = heartIcon.getBoundingClientRect();
+                                    for (let i = 0; i < 5; i++) {
+                                        const particle = document.createElement('span');
+                                        particle.className = 'material-symbols-outlined absolute pointer-events-none text-red-500 z-[100]';
+                                        particle.style.fontVariationSettings = "'FILL' 1";
+                                        particle.innerText = 'favorite';
+                                        particle.style.left = (rect.left + window.scrollX + rect.width / 2) + 'px';
+                                        particle.style.top = (rect.top + window.scrollY + rect.height / 2) + 'px';
+                                        particle.style.transform = 'translate(-50%, -50%)';
+                                        document.body.appendChild(particle);
+
+                                        const angle = Math.random() * Math.PI * 2;
+                                        const distance = 25 + Math.random() * 35; 
+
+                                        gsap.fromTo(particle, 
+                                            { scale: 0.2, opacity: 1 },
+                                            {
+                                                x: Math.cos(angle) * distance,
+                                                y: Math.sin(angle) * distance - 45,
+                                                opacity: 0,
+                                                scale: Math.random() * 1.5 + 0.5,
+                                                duration: 1.5 + Math.random() * 1.0,
+                                                ease: 'power1.out',
+                                                onComplete: () => particle.remove()
+                                            }
+                                        );
+                                    }
+                                }
+                            } else {
+                                // Remove filled style
+                                heartIcon.classList.remove('filled', 'text-red-500');
+                                heartIcon.style.fontVariationSettings = "'FILL' 0";
+                            }
+
+                            // Update count
+                            if (likeCount) {
+                                likeCount.textContent = data.likes_count;
+                            }
+                        });
+                    } else {
+                        showNotification(@json(__('messages.error.like')), 'error');
                     }
                 })
                     .catch(error => {
@@ -467,6 +486,9 @@
         onConfirm="performDeletePost"
         isDangerous="true"
     />
+
+    <!-- Likers Modal Component -->
+    <x-likers-modal />
 
     <script>
 

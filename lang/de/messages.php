@@ -43,4 +43,9 @@ return [
         'processing' => 'Wird verarbeitet...',
         'empty' => 'Keine Elemente anzuzeigen.',
     ],
+
+    'likes' => 'Gefällt mir',
+    'likers' => 'Wer hat es gelikt',
+    'no_likers' => 'Noch keine Likes',
+    'close' => 'Schließen',
 ];

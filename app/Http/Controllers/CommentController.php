@@ -93,6 +93,31 @@ class CommentController extends Controller
     }
 
     /**
+     * Obtener la lista de usuarios que dieron like a un comentario
+     */
+    public function getLikers(Comment $comment)
+    {
+        $likers = $comment->likes()
+            ->with('user:id,name,photo')
+            ->get()
+            ->map(function($like) {
+                return [
+                    'id' => $like->user->id,
+                    'name' => $like->user->name,
+                    'photo' => $like->user->photo,
+                    'avatar_url' => $like->user->getAvatarUrl(),
+                    'avatar_bg_color' => $like->user->getAvatarBgColor(),
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'likers' => $likers,
+            'count' => $likers->count(),
+        ]);
+    }
+
+    /**
      * Eliminar un comentario o respuesta
      */
     public function destroy(Comment $comment)
