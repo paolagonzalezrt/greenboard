@@ -5,10 +5,15 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Str;
 use App\Http\Controllers\TipController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Rules\StrongPassword;
+use App\Mail\ResetPasswordMail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -207,6 +212,88 @@ Route::post('/register', function (Request $request) {
             ->withInput();
     }
 });
+
+// FORGOT PASSWORD - Mostrar formulario para solicitar enlace
+Route::get('/forgot-password', function () {
+    return view('auth.passwords.email');
+})->middleware('guest')->name('password.request');
+
+// FORGOT PASSWORD - Enviar enlace de recuperación por correo
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate([
+        'email' => ['required', 'email'],
+    ], [
+        'email.required' => __('passwords.error_email_required'),
+        'email.email'    => __('passwords.error_email_invalid'),
+    ]);
+
+    $status = Password::sendResetLink(
+        $request->only('email'),
+        function (User $user, string $token) {
+            $resetUrl = url(route('password.reset', [
+                'token' => $token,
+                'email' => $user->getEmailForPasswordReset(),
+            ], false));
+
+            $expireMinutes = config('auth.passwords.users.expire', 60);
+
+            Mail::to($user->email)->send(
+                new ResetPasswordMail($resetUrl, $user->name, $expireMinutes)
+            );
+        }
+    );
+
+    if ($status === Password::RESET_LINK_SENT) {
+        return back()->with('status', __($status));
+    }
+
+    if ($status === Password::RESET_THROTTLED) {
+        return back()->withErrors(['email' => __('passwords.throttled')])->onlyInput('email');
+    }
+
+    // Para no revelar si el correo existe o no, mostramos el mismo mensaje de éxito
+    return back()->with('status', __('passwords.sent'));
+})->middleware('guest')->name('password.email');
+
+// RESET PASSWORD - Mostrar formulario de nueva contraseña (desde el enlace del email)
+Route::get('/reset-password/{token}', function (string $token, Request $request) {
+    return view('auth.passwords.reset', [
+        'token' => $token,
+        'email' => $request->query('email'),
+    ]);
+})->middleware('guest')->name('password.reset');
+
+// RESET PASSWORD - Procesar y guardar la nueva contraseña
+Route::post('/reset-password', function (Request $request) {
+    $request->validate([
+        'token'    => ['required'],
+        'email'    => ['required', 'email'],
+        'password' => ['required', 'string', new StrongPassword(), 'confirmed'],
+    ], [
+        'email.required'    => __('passwords.error_email_required'),
+        'email.email'       => __('passwords.error_email_invalid'),
+        'password.required' => __('register.error_password_required'),
+        'password.confirmed' => __('register.error_password_mismatch'),
+    ]);
+
+    $status = Password::reset(
+        $request->only('email', 'password', 'password_confirmation', 'token'),
+        function (User $user, string $password) {
+            $user->forceFill([
+                'password'       => Hash::make($password),
+                'remember_token' => Str::random(60),
+            ])->save();
+
+            event(new PasswordReset($user));
+        }
+    );
+
+    if ($status === Password::PASSWORD_RESET) {
+        return redirect()->route('login')->with('success', __('passwords.reset_success'));
+    }
+
+    return back()->withErrors(['email' => __('passwords.error_token')])->onlyInput('email');
+})->middleware('guest')->name('password.update');
 
 // LOGOUT (IMPORTANTE: Laravel recomienda que sea POST por seguridad)
 Route::post('/logout', function (Request $request) {

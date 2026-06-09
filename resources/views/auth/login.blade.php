@@ -69,8 +69,11 @@
                 </div>
 
                 <div>
-                    <div class="mb-2">
+                    <div class="mb-2 flex items-center justify-between">
                         <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">{{ __('login.password') }}</label>
+                        <a href="{{ route('password.request') }}" class="text-xs font-medium text-primary hover:underline">
+                            {{ __('login.forgot') }}
+                        </a>
                     </div>
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock</span>
