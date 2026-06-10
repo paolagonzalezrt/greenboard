@@ -338,3 +338,9 @@ Route::get('/api/locales', [LocaleController::class, 'getAvailableLocales'])->na
 
 // Compatibilidad con ruta anterior
 Route::get('/lang/{locale}', [LocaleController::class, 'switch']);
+
+// PREVIEW
+if (config('app.debug')) {
+    Route::get('/preview/404', fn() => response(view('errors.404'), 404))->name('preview.404');
+    Route::get('/preview/419', fn() => response(view('errors.419'), 419))->name('preview.419');
+}
