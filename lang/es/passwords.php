@@ -27,10 +27,13 @@ return [
     'email_subject'          => 'Recupera tu contraseña - GreenBoard',
     'email_greeting'         => 'Hola :name,',
     'email_intro'            => 'Recibimos una solicitud para restablecer la contraseña de tu cuenta.',
-    'email_action'           => 'Haz clic en el botón de abajo para crear una nueva contraseña. Este enlace expirará en :count minutos.',
+    'email_action'           => 'Haz clic en el botón de abajo para crear una nueva contraseña.',
     'email_button'           => 'Restablecer contraseña',
     'email_ignore'           => 'Si no solicitaste este cambio, puedes ignorar este correo.',
     'email_expire'           => 'Este enlace expirará en :count minutos.',
+    'email_fallback_text'    => 'Si el botón no funciona, copia y pega la siguiente URL en tu navegador web:',
+    'email_tagline'          => 'Comunidad de consejos sostenibles',
+    'email_auto_notice'      => 'Este es un mensaje automático. Por favor, no respondas directamente a este correo.',
 
     // Errores
     'error_email_required'   => 'El correo electrónico es requerido.',

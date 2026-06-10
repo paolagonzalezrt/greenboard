@@ -27,10 +27,13 @@ return [
     'email_subject'          => 'Passwort zurücksetzen - GreenBoard',
     'email_greeting'         => 'Hallo :name,',
     'email_intro'            => 'Wir haben eine Anfrage erhalten, dein Kontopasswort zurückzusetzen.',
-    'email_action'           => 'Klicke auf den Button unten, um ein neues Passwort zu erstellen. Dieser Link läuft in :count Minuten ab.',
+    'email_action'           => 'Klicke auf den Button unten, um ein neues Passwort zu erstellen.',
     'email_button'           => 'Passwort zurücksetzen',
     'email_ignore'           => 'Wenn du dies nicht angefordert hast, kannst du diese E-Mail ignorieren.',
     'email_expire'           => 'Dieser Link läuft in :count Minuten ab.',
+    'email_fallback_text'    => 'Wenn der Button nicht funktioniert, kopiere und füge die folgende URL in deinen Webbrowser ein:',
+    'email_tagline'          => 'Community für nachhaltige Tipps',
+    'email_auto_notice'      => 'Dies ist eine automatische Nachricht. Bitte antworte nicht direkt auf diese E-Mail.',
 
     // Fehler
     'error_email_required'   => 'E-Mail-Adresse ist erforderlich.',

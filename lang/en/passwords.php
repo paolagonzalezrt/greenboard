@@ -27,10 +27,13 @@ return [
     'email_subject'          => 'Reset your password - GreenBoard',
     'email_greeting'         => 'Hello :name,',
     'email_intro'            => 'We received a request to reset your account password.',
-    'email_action'           => 'Click the button below to create a new password. This link will expire in :count minutes.',
+    'email_action'           => 'Click the button below to create a new password.',
     'email_button'           => 'Reset password',
     'email_ignore'           => 'If you did not request this, you can ignore this email.',
     'email_expire'           => 'This link will expire in :count minutes.',
+    'email_fallback_text'    => 'If the button does not work, copy and paste the following URL in your web browser:',
+    'email_tagline'          => 'Sustainable tips community',
+    'email_auto_notice'      => 'This is an automatic message. Please do not reply directly to this email.',
 
     // Errors
     'error_email_required'   => 'Email address is required.',
