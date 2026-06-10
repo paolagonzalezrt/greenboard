@@ -392,9 +392,11 @@
                 });
                 const data = await res.json();
                 if (data.success) {
+                    detectNew(data.notifications);
                     updateBadge(data.unread_count);
                     renderNotifications(data.notifications, 'notification-list-desktop');
                     renderNotifications(data.notifications, 'notification-list-mobile');
+                    lastUnreadCount = data.unread_count;
                 }
             } catch (e) {
                 console.error('Error fetching notifications:', e);
@@ -448,6 +450,11 @@
 
         // ── Mark all read (header button) ───────────────────────
         window.markAllRead = function() {
+            // Update UI immediately — don't wait for the server round-trip
+            updateBadge(0);
+            renderNotifications([], 'notification-list-desktop');
+            renderNotifications([], 'notification-list-mobile');
+
             fetch('/notifications/read-all', {
                 method: 'POST',
                 headers: {
@@ -455,7 +462,7 @@
                     'X-Requested-With': 'XMLHttpRequest',
                 }
             }).then(() => {
-                updateBadge(0);
+                // Confirm with server state after marking
                 fetchNotifications();
             });
         };
@@ -473,38 +480,30 @@
             }
         });
 
-        // ── Initial fetch + poll every 15 s + page visibility ──
+        // ── Initial fetch + poll + page visibility ─────────────
         let lastUnreadCount = 0;
         let lastNotifIds    = new Set();
 
-        // Request browser notification permission on first interaction
         function requestNotifPermission() {
             if ('Notification' in window && Notification.permission === 'default') {
                 Notification.requestPermission();
             }
         }
 
-        // Show a native browser/OS notification
-        function showBrowserNotif(title, body, url, icon) {
+        function showBrowserNotif(title, body, url) {
             if (!('Notification' in window) || Notification.permission !== 'granted') return;
             const n = new Notification(title, {
-                body:    body,
-                icon:    icon || '/favicon.svg',
-                badge:   '/favicon.svg',
-                tag:     url, // prevents duplicate toasts for the same item
+                body:  body,
+                icon:  '/favicon.svg',
+                badge: '/favicon.svg',
+                tag:   url,
             });
-            n.onclick = function () {
-                window.focus();
-                window.location.href = url;
-                n.close();
-            };
+            n.onclick = function () { window.focus(); window.location.href = url; n.close(); };
             setTimeout(() => n.close(), 7000);
         }
 
-        // Detect new notifications by comparing IDs
         function detectNew(notifications) {
             if (lastNotifIds.size === 0) {
-                // First load — just seed the set, don't toast
                 notifications.forEach(n => lastNotifIds.add(n.id));
                 return;
             }
@@ -516,43 +515,17 @@
             });
         }
 
-        // Wrap original fetchNotifications to add new-notif detection
-        const _originalFetch = fetchNotifications;
-        fetchNotifications = async function () {
-            try {
-                const res  = await fetch('/notifications', {
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                });
-                const data = await res.json();
-                if (data.success) {
-                    detectNew(data.notifications);
-                    updateBadge(data.unread_count);
-                    renderNotifications(data.notifications, 'notification-list-desktop');
-                    renderNotifications(data.notifications, 'notification-list-mobile');
-                    lastUnreadCount = data.unread_count;
-                }
-            } catch (e) {
-                console.error('Error fetching notifications:', e);
-            }
-        };
-
         document.addEventListener('DOMContentLoaded', function () {
-            // Ask for permission when user clicks the bell
             ['desktop', 'mobile'].forEach(scope => {
                 const bell = document.getElementById(`notification-bell-${scope}`);
                 if (bell) bell.addEventListener('click', requestNotifPermission, { once: true });
             });
 
             fetchNotifications();
-
-            // Poll every 15 seconds
             setInterval(fetchNotifications, 15000);
 
-            // Fetch immediately when user comes back to the tab
             document.addEventListener('visibilitychange', function () {
-                if (document.visibilityState === 'visible') {
-                    fetchNotifications();
-                }
+                if (document.visibilityState === 'visible') fetchNotifications();
             });
         });
     })();
