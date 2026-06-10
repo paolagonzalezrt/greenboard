@@ -215,43 +215,6 @@ class="w-full pl-12 pr-14 py-3.5 bg-white dark:bg-custom-dark-input border @erro
 
 </div>
 
-<!-- PASSWORD REQUIREMENTS -->
-
-<div id="password-requirements" class="mt-3 p-3 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 rounded-lg space-y-2 hidden transition-all">
-
-<div class="text-xs font-semibold text-slate-600 dark:text-slate-400">{{ __('register.password_requirements') ?? 'Password must contain:' }}</div>
-
-<div class="space-y-1 text-xs">
-
-<div class="flex items-center gap-2">
-<span class="w-4 h-4 flex items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400" id="req-length"></span>
-<span class="text-slate-600 dark:text-slate-400">{{ __('register.min_chars') ?? 'At least 8 characters' }}</span>
-</div>
-
-<div class="flex items-center gap-2">
-<span class="w-4 h-4 flex items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400" id="req-uppercase"></span>
-<span class="text-slate-600 dark:text-slate-400">{{ __('register.uppercase') ?? 'Uppercase letter (A-Z)' }}</span>
-</div>
-
-<div class="flex items-center gap-2">
-<span class="w-4 h-4 flex items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400" id="req-lowercase"></span>
-<span class="text-slate-600 dark:text-slate-400">{{ __('register.lowercase') ?? 'Lowercase letter (a-z)' }}</span>
-</div>
-
-<div class="flex items-center gap-2">
-<span class="w-4 h-4 flex items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400" id="req-number"></span>
-<span class="text-slate-600 dark:text-slate-400">{{ __('register.number') ?? 'Number (0-9)' }}</span>
-</div>
-
-<div class="flex items-center gap-2">
-<span class="w-4 h-4 flex items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400" id="req-special"></span>
-<span class="text-slate-600 dark:text-slate-400">{{ __('register.special_char') ?? 'Special character: !@#$%^&*()_+-=[]{};:,.<>?' }}</span>
-</div>
-
-</div>
-
-</div>
-
 @include('components.field-error', ['fieldName' => 'password'])
 
 </div>
@@ -352,7 +315,6 @@ dark:disabled:text-white/70" type="submit">
 function togglePasswordVisibility(fieldId) {
     const input = document.getElementById(fieldId);
     const icon = document.getElementById(fieldId + '-icon');
-
     if (input.type === 'password') {
         input.type = 'text';
         icon.innerText = 'visibility';
@@ -362,243 +324,113 @@ function togglePasswordVisibility(fieldId) {
     }
 }
 
-function toggleLangDropdown(){
-const dropdown=document.getElementById('lang-dropdown');
-dropdown.classList.toggle('hidden');
+function toggleLangDropdown() {
+    const dropdown = document.getElementById('lang-dropdown');
+    dropdown.classList.toggle('hidden');
 }
 
-// Password validation and strength checking
 function validatePassword() {
     const password = document.getElementById('register-password').value;
     const confirmPassword = document.getElementById('register-password-confirm').value;
     const entropy = calculateEntropy(password);
-
-    // Check requirements - Support Spanish, English, and German characters
-    const hasLength = password.length >= 8;
-    const hasUppercase = /\p{Lu}/u.test(password);
-    const hasLowercase = /\p{Ll}/u.test(password);
-    const hasNumber = /\p{N}/u.test(password);
-    const hasSpecial = /[\p{P}\p{S}]/u.test(password);
-    
-    // Update requirement indicators
-    updateRequirement('req-length', hasLength);
-    updateRequirement('req-uppercase', hasUppercase);
-    updateRequirement('req-lowercase', hasLowercase);
-    updateRequirement('req-number', hasNumber);
-    updateRequirement('req-special', hasSpecial);
-    
-    // Calculate strength
     updateStrengthBar(entropy);
-    
-    // Check if passwords match
     updatePasswordMatch(password, confirmPassword);
-    
-    // Enable/disable submit button
-    const allRequirementsMet =
-    hasLength &&
-    hasUppercase &&
-    hasLowercase &&
-    hasNumber &&
-    hasSpecial &&
-    entropy >= 50;
-    const passwordsMatch = password === confirmPassword && password !== '';
-    const acceptTerms = document.getElementById('accept_terms').checked;
-    const submitButton = document.getElementById('submit-button');
-    
-    // Keep submit button always enabled
-    submitButton.disabled = false;
 }
 
-// Validate checkboxes for terms and privacy
-function validateCheckboxes() {
-    const acceptTerms = document.getElementById('accept_terms').checked;
-    const password = document.getElementById('register-password').value;
-    const confirmPassword = document.getElementById('register-password-confirm').value;
-    const entropy = calculateEntropy(password);
-    const submitButton = document.getElementById('submit-button');
-    
-    // Check requirements
-    const hasLength = password.length >= 8;
-    const hasUppercase = /\p{Lu}/u.test(password);
-    const hasLowercase = /\p{Ll}/u.test(password);
-    const hasNumber = /\p{N}/u.test(password);
-    const hasSpecial = /[\p{P}\p{S}]/u.test(password);
-    
-    const allRequirementsMet =
-    hasLength &&
-    hasUppercase &&
-    hasLowercase &&
-    hasNumber &&
-    hasSpecial &&
-    entropy >= 50;
-    const passwordsMatch = password === confirmPassword && password !== '';
-    
-    // Keep submit button always enabled
-    submitButton.disabled = false;
-}
-
-function updateRequirement(elementId, isMet) {
-    const element = document.getElementById(elementId);
-    if (isMet) {
-        element.className = 'w-4 h-4 flex items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-500';
-        element.innerText = '✓';
-    } else {
-        element.className = 'w-4 h-4 flex items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700';
-        element.innerText = '';
-    }
-}
+function validateCheckboxes() {}
 
 function updateStrengthBar(entropy) {
-    const strengthText = document.getElementById('strength-value');
+    const strengthBox = document.getElementById('password-strength');
+    const strengthValue = document.getElementById('strength-value');
+    const bars = ['strength-bar-1', 'strength-bar-2', 'strength-bar-3', 'strength-bar-4'];
     const password = document.getElementById('register-password').value;
 
-    const bars = [
-        'strength-bar-1',
-        'strength-bar-2',
-        'strength-bar-3',
-        'strength-bar-4'
-    ];
-
-    // If no password entered, clear strength text and reset bars
     if (!password) {
-        strengthText.innerText = '';
-        const barsReset = [
-            'strength-bar-1',
-            'strength-bar-2',
-            'strength-bar-3',
-            'strength-bar-4'
-        ];
-        barsReset.forEach((barId) => {
-            const bar = document.getElementById(barId);
-            if (bar) bar.className = 'flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full transition-all';
+        strengthBox.classList.add('hidden');
+        strengthValue.innerText = '';
+        bars.forEach(id => {
+            document.getElementById(id).className = 'flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full transition-all';
         });
-        const strengthBox = document.getElementById('password-strength');
-        if (strengthBox) strengthBox.classList.add('hidden');
         const matchIndicator = document.getElementById('match-indicator');
         if (matchIndicator) matchIndicator.classList.add('hidden');
         return;
     }
 
+    strengthBox.classList.remove('hidden');
+
     let activeBars = 1;
-    let strengthLabel = '{{ __("register.strength_very_weak") }}';
-    let strengthColor = 'bg-red-500';
+    let label = '{{ __("register.strength_very_weak") }}';
+    let color = 'bg-red-500';
 
     if (entropy >= 75) {
-        activeBars = 4;
-        strengthLabel = '{{ __("register.strength_strong") }}';
-        strengthColor = 'bg-green-500';
+        activeBars = 4; label = '{{ __("register.strength_strong") }}'; color = 'bg-green-500';
     } else if (entropy >= 50) {
-        activeBars = 3;
-        strengthLabel = '{{ __("register.strength_good") }}';
-        strengthColor = 'bg-blue-500';
+        activeBars = 3; label = '{{ __("register.strength_good") }}'; color = 'bg-blue-500';
     } else if (entropy >= 30) {
-        activeBars = 2;
-        strengthLabel = '{{ __("register.strength_fair") }}';
-        strengthColor = 'bg-yellow-500';
+        activeBars = 2; label = '{{ __("register.strength_fair") }}'; color = 'bg-yellow-500';
     }
 
-    strengthText.innerText = strengthLabel;
+    strengthValue.innerText = label;
 
-    bars.forEach((barId, index) => {
-        const bar = document.getElementById(barId);
-
-        if (index < activeBars) {
-            bar.className = `flex-1 h-1.5 ${strengthColor} rounded-full transition-all`;
-        } else {
-            bar.className = 'flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full transition-all';
-        }
+    bars.forEach((id, index) => {
+        const bar = document.getElementById(id);
+        bar.className = index < activeBars
+            ? `flex-1 h-1.5 ${color} rounded-full transition-all`
+            : 'flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full transition-all';
     });
 }
 
 function updatePasswordMatch(password, confirmPassword) {
     const matchIndicator = document.getElementById('match-indicator');
     const confirmInput = document.getElementById('register-password-confirm');
-    
+
     if (password && confirmPassword) {
         if (password === confirmPassword) {
             matchIndicator.classList.remove('hidden');
-            confirmInput.classList.add('border-green-500', 'dark:border-green-600');
-            confirmInput.classList.remove('border-red-500', 'dark:border-red-600');
+            confirmInput.classList.add('border-green-500');
+            confirmInput.classList.remove('border-red-500');
         } else {
             matchIndicator.classList.add('hidden');
-            confirmInput.classList.add('border-red-500', 'dark:border-red-600');
-            confirmInput.classList.remove('border-green-500', 'dark:border-green-600');
+            confirmInput.classList.add('border-red-500');
+            confirmInput.classList.remove('border-green-500');
         }
     } else {
         matchIndicator.classList.add('hidden');
-        confirmInput.classList.remove('border-red-500', 'dark:border-red-600', 'border-green-500', 'dark:border-green-600');
+        confirmInput.classList.remove('border-red-500', 'border-green-500');
     }
 }
 
 function calculateEntropy(password) {
-
     let score = 0;
-
-    // LENGTH
-    if (password.length >= 8) score += 10;
+    if (password.length >= 8)  score += 10;
     if (password.length >= 12) score += 15;
     if (password.length >= 16) score += 20;
-
-    // CHARACTER SETS
-    if (/\p{Ll}/u.test(password)) score += 10;
-    if (/\p{Lu}/u.test(password)) score += 10;
-    if (/\p{N}/u.test(password)) score += 10;
+    if (/\p{Ll}/u.test(password))    score += 10;
+    if (/\p{Lu}/u.test(password))    score += 10;
+    if (/\p{N}/u.test(password))     score += 10;
     if (/[\p{P}\p{S}]/u.test(password)) score += 15;
-
-    // UNICODE BONUS
-    if (/[^\u0000-\u007f]/u.test(password)) {
-        score += 10;
-    }
-
-    // VARIETY BONUS
+    if (/[^\u0000-\u007f]/u.test(password)) score += 10;
     const uniqueChars = new Set(password).size;
-
     if (uniqueChars >= 10) score += 10;
     if (uniqueChars >= 15) score += 10;
-
-    // PENALIZE COMMON PATTERNS
-    const weakPatterns = [
-        /12345/,
-        /password/i,
-        /qwerty/i,
-        /admin/i,
-        /1111/,
-        /0000/,
-        /(.)\1{2,}/
-    ];
-
-    weakPatterns.forEach(pattern => {
-        if (pattern.test(password)) {
-            score -= 15;
-        }
+    [/12345/, /password/i, /qwerty/i, /admin/i, /1111/, /0000/, /(.)\1{2,}/].forEach(p => {
+        if (p.test(password)) score -= 15;
     });
-
-    // LIMIT SCORE
-    score = Math.max(0, Math.min(score, 100));
-
-    return score;
+    return Math.max(0, Math.min(score, 100));
 }
 
 function showRequirements() {
-    const requirementsBox = document.getElementById('password-requirements');
-    const strengthBox = document.getElementById('password-strength');
-    requirementsBox.classList.remove('hidden');
-    strengthBox.classList.remove('hidden');
+    if (document.getElementById('register-password').value) {
+        document.getElementById('password-strength').classList.remove('hidden');
+    }
 }
 
 function hideRequirements() {
-    const requirementsBox = document.getElementById('password-requirements');
-    const strengthBox = document.getElementById('password-strength');
-    // Hide only the detailed requirements box on blur; keep strength/match indicator visible
-    requirementsBox.classList.add('hidden');
-    // ensure strength box remains visible so match indicator and strength text persist
-    strengthBox.classList.remove('hidden');
+    // Keep visible after blur so the indicator stays
 }
 
-// Inicializar estado del formulario al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-    // Ejecutar validación para ajustar el estado del botón de envío
-    try { validatePassword(); } catch (e) { /* ignore */ }
+document.addEventListener('DOMContentLoaded', function () {
+    try { validatePassword(); } catch (e) {}
 });
 
 </script>

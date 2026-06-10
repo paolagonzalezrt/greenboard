@@ -12,31 +12,10 @@ class StrongPassword implements ValidationRule
     {
         $password = (string) $value;
 
-        // Longitud
+        // Only minimum length is required
         if (mb_strlen($password) < 8 || mb_strlen($password) > 128) {
-            $fail(__('register.error_password_length'));
+            $fail(__('register.error_password_min'));
             return;
-        }
-
-        // Unicode uppercase
-        $hasUppercase = preg_match('/\p{Lu}/u', $password);
-
-        // Unicode lowercase
-        $hasLowercase = preg_match('/\p{Ll}/u', $password);
-
-        // Unicode number
-        $hasNumber = preg_match('/\p{N}/u', $password);
-
-        // Unicode symbols/punctuation
-        $hasSpecial = preg_match('/[\p{P}\p{S}]/u', $password);
-
-        if (
-            !$hasUppercase ||
-            !$hasLowercase ||
-            !$hasNumber ||
-            !$hasSpecial
-        ) {
-            $fail(__('register.error_password_requirements'));
         }
     }
 }
